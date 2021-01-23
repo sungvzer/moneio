@@ -39,12 +39,18 @@ class Application extends StatelessWidget {
           future: JSONReader.readFromJSON(context),
           initialData: <Transaction>[],
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData)
-              return TransactionList(snapshot.data);
-            else if (snapshot.connectionState == ConnectionState.waiting) {
-              return Container(
-                child: CircularProgressIndicator(),
-              );
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return CircularProgressIndicator();
+
+              case ConnectionState.done:
+                return snapshot.hasData
+                    ? TransactionList(snapshot.data)
+                    : Text(snapshot.error);
+              default:
+                return Container(
+                  child: Text("Something went REALLY wrong here."),
+                );
             }
           },
         ),

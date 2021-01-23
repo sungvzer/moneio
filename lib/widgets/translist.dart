@@ -12,8 +12,8 @@ class TransactionList extends StatelessWidget {
     return ListView.separated(
       physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       separatorBuilder: (context, index) => Divider(
-        indent: 20,
-        endIndent: 20,
+        indent: 25,
+        endIndent: 25,
         thickness: 1,
       ),
       itemBuilder: (context, index) => TransactionTile(_elements[index]),

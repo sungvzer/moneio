@@ -16,7 +16,7 @@ class Application extends StatelessWidget {
       title: "mone.io",
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 240, 240, 240),
+          backgroundColor: Color.fromARGB(0, 0, 0, 0),
           elevation: 0,
           title: Title(
             title: "mone.io",

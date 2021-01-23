@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:moneio/json_reader.dart';
+import 'package:moneio/models/transaction.dart';
+import 'package:moneio/widgets/translist.dart';
+import 'color_palette.dart';
+
+void main() {
+  runApp(Application());
+}
+
+class Application extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "mone.io",
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 240, 240, 240),
+          elevation: 0,
+          title: Title(
+            title: "mone.io",
+            color: Colors.black,
+            child: Center(
+              child: Text(
+                "mone.io",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 26,
+                  color: ColorPalette.ImperialPrimer,
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
+          ),
+        ),
+        body: FutureBuilder(
+          future: JSONReader.readFromJSON(context),
+          initialData: <Transaction>[],
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData)
+              return TransactionList(snapshot.data);
+            else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Container(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+}

@@ -68,7 +68,7 @@ class _TransactionTile extends StatelessWidget {
       leading: Text(
         _current.icon,
       ),
-      minLeadingWidth: 7,
+      minLeadingWidth: 3,
       dense: true,
       onTap: () => print("TODO: Short press"),
       title: DefaultTextStyle(
@@ -89,7 +89,7 @@ class _TransactionTile extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 0,
               child: Text(date.day.toString().padLeft(2, '0') +
                   '/' +
                   date.month.toString().padLeft(2, '0') +
@@ -97,7 +97,7 @@ class _TransactionTile extends StatelessWidget {
                   date.year.toString().padLeft(4, '')),
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Text(
                 amountString,
                 textAlign: TextAlign.right,

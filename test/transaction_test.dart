@@ -71,7 +71,6 @@ main() {
       expect(fNegative.getSeparatedAmountString(), '10.000,00');
     });
     test('Negative: Six digits - 100000', () {
-      var r = gNegative.getSeparatedAmountString();
       expect(gNegative.getSeparatedAmountString(), '100.000,00');
     });
     test('Negative: Seven digits - 1000000', () {

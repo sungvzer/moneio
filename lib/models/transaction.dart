@@ -44,7 +44,7 @@ class Transaction {
     int decimal = amount.toInt();
     String result = '';
 
-    // To get the fractional part without losing precision we go thgough
+    // To get the fractional part without losing precision we go through
     // the String form first.
     // 312.31 => "312.31" => [312, 31] => 31
     int fractional = int.parse(amount.toString().split('.')[1]);

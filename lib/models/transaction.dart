@@ -39,19 +39,20 @@ class Transaction {
   String getCurrencySymbol() => Transaction.symbols[this.currency];
 
   String getSeparatedAmountString({bool sign = false}) {
-    /*TODO: Maybe there's a more efficient way to do this, 
-    but I'm too tired of this function to think about it.*/
-    int decimal = amount.toInt();
+    int decimal, fractional;
     String result = '';
+    List<String> split, reversedList;
 
-    // To get the fractional part without losing precision we go through
-    // the String form first.
+    // To get the decimal and fractional parts without losing precision
+    // we go through the String form first.
     // 312.31 => "312.31" => [312, 31] => 31
-    int fractional = int.parse(amount.toString().split('.')[1]);
+    split = amount.abs().toString().split('.');
+    decimal = int.parse(split[0]);
+    fractional = int.parse(split[1]);
 
     // Iterate through the digits of the decimal part in reverse
     // and add a point where it belongs
-    List<String> reversedList = decimal.toString().split('').reversed.toList();
+    reversedList = decimal.toString().split('').reversed.toList();
     for (int i = 0; i < reversedList.length; i++) {
       result += reversedList[i];
       if (i % 3 == 2 && i != reversedList.length - 1) result += '.';
@@ -61,10 +62,10 @@ class Transaction {
     result = result.split('').reversed.join();
     result += ',' + fractional.toString().padRight(2, '0');
 
-    // Add or remove a sign where needed
-    if (!sign && amount < 0)
-      result = result.replaceAll('-', '');
-    else if (sign && amount > 0) result = '+' + result;
+    // Add sign back if needed
+    if (sign) {
+      result = (amount > 0 ? '+' : '-') + result;
+    }
 
     return result;
   }

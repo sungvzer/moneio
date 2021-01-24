@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneio/json_reader.dart';
-import 'package:moneio/models/transaction.dart';
-import 'package:moneio/widgets/translist.dart';
+import 'package:moneio/widgets/transaction_list.dart';
 import 'color_palette.dart';
 
 void main() {
@@ -16,7 +14,7 @@ class Application extends StatelessWidget {
       title: "mone.io",
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(0, 0, 0, 0),
+          backgroundColor: Colors.transparent,
           elevation: 0,
           title: Title(
             title: "mone.io",
@@ -35,25 +33,7 @@ class Application extends StatelessWidget {
             ),
           ),
         ),
-        body: FutureBuilder(
-          future: JSONReader.readFromJSON(context),
-          initialData: <Transaction>[],
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
-
-              case ConnectionState.done:
-                return snapshot.hasData
-                    ? TransactionList(snapshot.data)
-                    : Text(snapshot.error);
-              default:
-                return Container(
-                  child: Text("Something went REALLY wrong here."),
-                );
-            }
-          },
-        ),
+        body: TransactionListBuilder(),
       ),
     );
   }

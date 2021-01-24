@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Transaction {
+class Transaction extends Comparable {
   static const Map<String, String> symbols = {
     "EUR": "€",
     "USD": "\$",
@@ -68,5 +68,13 @@ class Transaction {
     }
 
     return result;
+  }
+
+  @override
+  int compareTo(other) {
+    if (other.runtimeType != this.runtimeType)
+      throw TypeError();
+    else
+      return this.date.compareTo(other.date);
   }
 }

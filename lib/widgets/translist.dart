@@ -15,6 +15,7 @@ class TransactionList extends StatelessWidget {
         indent: 25,
         endIndent: 25,
         thickness: 1,
+        height: 0,
       ),
       itemBuilder: (context, index) => TransactionTile(_elements[index]),
       itemCount: _elements.length,
@@ -39,6 +40,8 @@ class TransactionTile extends StatelessWidget {
       leading: Text(
         current.icon,
       ),
+      minLeadingWidth: 7,
+      dense: true,
       onTap: () => print("TODO: Short press"),
       title: DefaultTextStyle(
         style: TextStyle(
@@ -50,11 +53,15 @@ class TransactionTile extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              flex: 2,
-              child: Text(current.tag),
+              flex: 3,
+              child: Text(
+                current.tag,
+                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+              ),
             ),
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Text(date.day.toString().padLeft(2, '0') +
                   '/' +
                   date.month.toString().padLeft(2, '0') +

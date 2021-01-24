@@ -33,7 +33,30 @@ class Application extends StatelessWidget {
             ),
           ),
         ),
-        body: TransactionListBuilder(),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "History",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.bold,
+                  color: ColorPalette.ImperialPrimer,
+                ),
+              ),
+              Divider(
+                color: ColorPalette.ImperialPrimer,
+                thickness: 1,
+              ),
+              Expanded(
+                child: TransactionListBuilder(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,10 +1,16 @@
 import "dart:convert";
 import 'package:flutter/material.dart';
+import 'package:moneio/constants.dart';
 
 import 'package:moneio/models/transaction.dart';
 
 class JSONReader {
   static Future<List<Transaction>> readFromJSON(BuildContext context) async {
+    if (DEBUG) {
+      // Used to test loading times in FutureBuilder
+      Duration debugArtificialDelay = Duration(seconds: 4);
+      await Future.delayed(debugArtificialDelay, () => print("Delay done"));
+    }
     String data = await DefaultAssetBundle.of(context)
         .loadString("./data/transactions.json");
     var decodedJSON;

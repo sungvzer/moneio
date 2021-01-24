@@ -41,7 +41,7 @@ class Application extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
 
               case ConnectionState.done:
                 return snapshot.hasData

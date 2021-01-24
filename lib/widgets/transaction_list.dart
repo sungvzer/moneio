@@ -1,11 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:moneio/color_palette.dart';
+import 'package:moneio/json_reader.dart';
 import 'package:moneio/models/transaction.dart';
 
-class TransactionList extends StatelessWidget {
+class TransactionListBuilder extends StatelessWidget {
+  const TransactionListBuilder({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: JSONReader.readTransactionsFromJSON(),
+      initialData: <Transaction>[],
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(child: CircularProgressIndicator());
+
+          case ConnectionState.done:
+            return snapshot.hasData
+                ? _TransactionList(snapshot.data)
+                : Text(snapshot.error);
+          default:
+            return Container(
+              child: Text("Something went REALLY wrong here."),
+            );
+        }
+      },
+    );
+  }
+}
+
+class _TransactionList extends StatelessWidget {
   final List<Transaction> _elements;
 
-  TransactionList(this._elements);
+  _TransactionList(this._elements);
 
   @override
   Widget build(BuildContext context) {
@@ -17,28 +45,28 @@ class TransactionList extends StatelessWidget {
         thickness: 1,
         height: 0,
       ),
-      itemBuilder: (context, index) => TransactionTile(_elements[index]),
+      itemBuilder: (context, index) => _TransactionTile(_elements[index]),
       itemCount: _elements.length,
     );
   }
 }
 
-class TransactionTile extends StatelessWidget {
-  final Transaction current;
-  TransactionTile(this.current);
+class _TransactionTile extends StatelessWidget {
+  final Transaction _current;
+  _TransactionTile(this._current);
 
   @override
   Widget build(BuildContext context) {
-    final DateTime date = current.date;
-    final double amount = current.amount;
-    String amountString = current.getSeparatedAmountString();
+    final DateTime date = _current.date;
+    final double amount = _current.amount;
+    String amountString = _current.getSeparatedAmountString();
     amountString =
-        (amount < 0 ? '-' : '+') + current.getCurrencySymbol() + amountString;
+        (amount < 0 ? '-' : '+') + _current.getCurrencySymbol() + amountString;
 
     return ListTile(
       onLongPress: () => print("TODO: Long press"),
       leading: Text(
-        current.icon,
+        _current.icon,
       ),
       minLeadingWidth: 7,
       dense: true,
@@ -55,7 +83,7 @@ class TransactionTile extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Text(
-                current.tag,
+                _current.tag,
                 overflow: TextOverflow.ellipsis,
                 softWrap: false,
               ),

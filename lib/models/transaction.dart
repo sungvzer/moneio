@@ -21,19 +21,22 @@ class Transaction extends Comparable {
   Transaction(
       {this.id, this.tag, this.icon, this.amount, this.currency, this.date});
 
-  Transaction.fromJSON(Map<String, dynamic> json) {
-    this.id = json["id"] as int;
-    this.tag = json["tag"] as String;
-    this.icon = json["icon"] as String;
-    this.amount = json["amount"] as double;
-    this.currency = json["currency"] as String;
-
+  factory Transaction.fromJSON(Map<String, dynamic> json) {
+    DateTime parsed;
     try {
-      this.date = DateTime.parse(json["date"]);
-    } on FormatException catch (exception) {
-      debugPrint(exception.message);
-      this.date = DateTime(0);
+      parsed = DateTime.parse(json["date"]);
+    } on FormatException catch (e) {
+      debugPrint(e.message);
+      parsed = DateTime(0);
     }
+    return Transaction(
+      id: json["id"] as int,
+      tag: json["tag"] as String,
+      icon: json["icon"] as String,
+      amount: json["amount"] as double,
+      currency: json["currency"] as String,
+      date: parsed,
+    );
   }
 
   String getCurrencySymbol() => Transaction.symbols[this.currency];

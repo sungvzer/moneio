@@ -1,0 +1,1 @@
+enum Ciao { SI, NO }

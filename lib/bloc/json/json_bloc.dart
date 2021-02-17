@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'json_event.dart';
 part 'json_state.dart';
@@ -15,8 +16,11 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
 
   @override
   Stream<JsonState> mapEventToState(JsonEvent event) async* {
-    JsonState state;
+    // Code that's used in both codepaths
+    Directory d = await getApplicationDocumentsDirectory();
     File activeFile;
+    String fileName = event.fileName, fullPath = d.path + "/$fileName";
+    activeFile = File(fullPath);
 
     // If we're debugging delete every json file
     // if (kDebugMode) {
@@ -28,17 +32,12 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
     //   }
     // }
 
-      // Catch errors in opening a file
-      try {
-        activeFile = File(event.fileName);
-      } catch (e, trace) {
-        state = JsonState(
-          isError: true,
-          message: "Could not open file ${event.fileName}",
-        );
-        debugPrint("Could not open file ${event.fileName}.\n$trace");
-        yield state;
-      }
+    // TODO: Do we create it if we only need to write from it?
+    // Or do we return a JSONState with isError?
+    // Actually create a new file if we need one.
+    if (!activeFile.existsSync()) {
+      activeFile.createSync(recursive: true);
+    }
 
     // If in debug mode, load a dummy file.
     if (kDebugMode) {
@@ -48,35 +47,42 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
       //     '[{"id": 0,"tag": "Pizza","icon": "🍕","amount": -15.0,"currency": "USD","date": "2020-07-30T22:32"},{"id": 1,"tag": "Games","icon": "🎮","amount": -32.0,"currency": "USD","date": "2020-07-23T22:32"},{"id": 2,"tag": "Trip to Rome","icon": "🛫","amount": -30.0,"currency": "USD","date": "2020-07-20T22:32"},{"id": 3,"tag": "Work Salary","icon": "💼","amount": 1250.37,"currency": "USD","date": "2020-07-17T22:32"},{"id": 4,"tag": "Electricity Bill","icon": "💡","amount": -250.0,"currency": "USD","date": "2020-07-13T22:32"},{"id": 5,"tag": "Water Bill","icon": "💧","amount": -150.0,"currency": "USD","date": "2020-07-10T22:32"},{"id": 3,"tag": "Rent","icon": "🏠","amount": -500.0,"currency": "USD","date": "2020-07-10T22:32"},{"id": 3,"tag": "Phone&Internet","icon": "📞","amount": -30.0,"currency": "USD","date": "2020-07-05T22:32"}]';
       // activeFile.writeAsStringSync(dummy);
     }
+    assert(activeFile != null);
+    assert(activeFile.existsSync());
 
-      state = JsonState(isError: false, value: decoded);
+    // Codepaths
+    if (event is JsonRead) {
+      yield _read(activeFile);
     } else if (event is JsonWrite) {
-      assert(event.fileName != null && event.value != null);
+      yield _write(
+          activeFile, event.value != null ? event.value : "", event.append);
+    }
+  }
 
-      // Catch errors in opening a file (created if it doesn't exist)
-      try {
-        activeFile = await File(event.fileName).create(recursive: true);
-      } catch (e, trace) {
-        state = JsonState(
-          isError: true,
-          message: "Could not create file ${event.fileName}",
-        );
-        debugPrint("Could not create file ${event.fileName}.\n$trace");
-        yield state;
-      }
+  JsonState _write(File activeFile, value, bool append) {
+    activeFile.writeAsStringSync(jsonEncode(value),
+        mode: append ? FileMode.append : FileMode.write);
+    // debugPrint(activeFile.lastModifiedSync().toString());
+    return JsonState(
+        isError: false, message: "Written contents to ${activeFile.path}");
+  }
 
-      // Convert the value to a JSON string and try to write it to the file
-      String valueToString = jsonEncode(event.value);
+  JsonState _read(File activeFile) {
+    var decoded;
+    String buffer = activeFile.readAsStringSync();
+
+    // Empty file
+    if (buffer == '') {
+      return JsonState(isError: false, value: []);
+    } else {
       try {
-        await activeFile.writeAsString(valueToString);
-        state =
-            JsonState(isError: false, message: "Written value: ${event.value}");
+        decoded = json.decode(buffer);
+        return JsonState(isError: false, value: decoded);
       } catch (e, trace) {
-        state = JsonState(isError: true, message: "Could not write to file");
-        debugPrint("Error writing to file ${event.fileName}.\n$trace");
-        yield state;
+        String msgString = "Could not decode ${activeFile.path}";
+        debugPrint(msgString + "\n$trace");
+        return JsonState(isError: true, message: msgString);
       }
     }
-    yield state;
   }
 }

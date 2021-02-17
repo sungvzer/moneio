@@ -1,15 +1,19 @@
 part of 'json_bloc.dart';
 
 @immutable
-abstract class JsonEvent {}
+abstract class JsonEvent {
+  final String _fileName;
+  JsonEvent(this._fileName);
+
+  get fileName => _fileName;
+}
 
 class JsonRead extends JsonEvent {
-  final String fileName;
-  JsonRead({this.fileName});
+  JsonRead({fileName}) : super(fileName);
 }
 
 class JsonWrite extends JsonEvent {
-  final String fileName;
   final dynamic value;
-  JsonWrite({this.fileName, this.value});
+  final bool append;
+  JsonWrite({fileName, this.value, this.append = true}) : super(fileName);
 }

@@ -41,7 +41,7 @@ class Transaction extends Comparable {
 
   String getCurrencySymbol() => Transaction.symbols[this.currency];
 
-  String getSeparatedAmountString({bool sign = false, bool currency = true}) {
+  String getSeparatedAmountString({bool sign = false, bool currency = false}) {
     int decimal, fractional;
     String result = '';
     List<String> split, reversedList;

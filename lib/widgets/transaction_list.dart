@@ -66,7 +66,8 @@ class _TransactionTile extends StatelessWidget {
       leading: Text(
         _current.icon,
       ),
-      minLeadingWidth: 3,
+      // This only applies to flutter-dev apparently
+      // minLeadingWidth: 3,
       dense: true,
       onTap: () => print("TODO: Short press"),
       title: DefaultTextStyle(

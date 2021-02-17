@@ -59,9 +59,7 @@ class _TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateTime date = _current.date;
     final double amount = _current.amount;
-    String amountString = _current.getSeparatedAmountString();
-    amountString =
-        (amount < 0 ? '-' : '+') + _current.getCurrencySymbol() + amountString;
+    String amountString = _current.getSeparatedAmountString(sign: true);
 
     return ListTile(
       onLongPress: () => print("TODO: Long press"),

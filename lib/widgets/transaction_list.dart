@@ -1,30 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/color_palette.dart';
-import 'package:moneio/json_reader.dart';
 import 'package:moneio/models/transaction.dart';
 
-class TransactionListBuilder extends StatelessWidget {
+class TransactionListBuilder extends StatefulWidget {
   const TransactionListBuilder({Key key}) : super(key: key);
+
+  _TransactionListBuilderState createState() => _TransactionListBuilderState();
+}
+
+class _TransactionListBuilderState extends State<TransactionListBuilder> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: JSONReader.readTransactionsFromJSON(),
-      initialData: <Transaction>[],
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
-
-          case ConnectionState.done:
-            return snapshot.hasData
-                ? _TransactionList(snapshot.data)
-                : Text(snapshot.error);
-          default:
-            return Container(
-              child: Text("Something went REALLY wrong here."),
-            );
+    BlocProvider.of<JsonBloc>(context)
+        .add(JsonRead(fileName: "transactions.json"));
+    return BlocBuilder<JsonBloc, JsonState>(
+      builder: (context, state) {
+        // debugPrint(
+        //     "State{error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
+        if (state.isError) {
+          debugPrint("Error, returning container.");
+          return Container(
+            child: Text("Something went REALLY wrong here.\n${state.message}"),
+          );
+        } else {
+          List<Transaction> l = [];
+          if (state.hasValue) {
+            if (state.value is List) {
+              List v = state.value as List;
+              if (v.isNotEmpty) {
+                for (var x in state.value) {
+                  l.add(Transaction.fromJSON(x));
+                }
+              } else {
+                // TODO: Maybe do an EmptyTransactionList so we can add fancy stuff to that?
+                return Container();
+              }
+            } else {
+              l.add(Transaction.fromJSON(state.value));
+            }
+          }
+          if (l != null) return _TransactionList(l);
         }
+        return Center(child: CircularProgressIndicator());
       },
     );
   }

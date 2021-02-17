@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -17,10 +18,15 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
     JsonState state;
     File activeFile;
 
-    if (event is JsonRead) {
-      assert(event.fileName != null);
-      String buffer;
-      var decoded;
+    // If we're debugging delete every json file
+    // if (kDebugMode) {
+    //   List<FileSystemEntity> entries = d.listSync();
+    //   for (var entity in entries) {
+    //     if (entity.absolute.path.contains("json")) {
+    //       entity.deleteSync();
+    //     }
+    //   }
+    // }
 
       // Catch errors in opening a file
       try {
@@ -34,19 +40,14 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
         yield state;
       }
 
-      // File is open, we try to read from it and decode the string
-      buffer = await activeFile.readAsString();
-
-      try {
-        decoded = jsonDecode(buffer);
-      } catch (e, trace) {
-        state = JsonState(
-          isError: true,
-          message: "Could not decode file ${event.fileName}",
-        );
-        debugPrint("Could not decode file ${event.fileName}.\n$trace");
-        yield state;
-      }
+    // If in debug mode, load a dummy file.
+    if (kDebugMode) {
+      // TODO: Comments
+      // debugPrint("Loading dummy string...");
+      // const String dummy =
+      //     '[{"id": 0,"tag": "Pizza","icon": "🍕","amount": -15.0,"currency": "USD","date": "2020-07-30T22:32"},{"id": 1,"tag": "Games","icon": "🎮","amount": -32.0,"currency": "USD","date": "2020-07-23T22:32"},{"id": 2,"tag": "Trip to Rome","icon": "🛫","amount": -30.0,"currency": "USD","date": "2020-07-20T22:32"},{"id": 3,"tag": "Work Salary","icon": "💼","amount": 1250.37,"currency": "USD","date": "2020-07-17T22:32"},{"id": 4,"tag": "Electricity Bill","icon": "💡","amount": -250.0,"currency": "USD","date": "2020-07-13T22:32"},{"id": 5,"tag": "Water Bill","icon": "💧","amount": -150.0,"currency": "USD","date": "2020-07-10T22:32"},{"id": 3,"tag": "Rent","icon": "🏠","amount": -500.0,"currency": "USD","date": "2020-07-10T22:32"},{"id": 3,"tag": "Phone&Internet","icon": "📞","amount": -30.0,"currency": "USD","date": "2020-07-05T22:32"}]';
+      // activeFile.writeAsStringSync(dummy);
+    }
 
       state = JsonState(isError: false, value: decoded);
     } else if (event is JsonWrite) {

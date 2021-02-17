@@ -41,7 +41,7 @@ class Transaction extends Comparable {
 
   String getCurrencySymbol() => Transaction.symbols[this.currency];
 
-  String getSeparatedAmountString({bool sign = false}) {
+  String getSeparatedAmountString({bool sign = false, bool currency = true}) {
     int decimal, fractional;
     String result = '';
     List<String> split, reversedList;
@@ -64,6 +64,10 @@ class Transaction extends Comparable {
     // Reverse the result back and add the fractional part padded
     result = result.split('').reversed.join();
     result += ',' + fractional.toString().padRight(2, '0');
+
+    if (currency) {
+      result = this.getCurrencySymbol() + result;
+    }
 
     // Add sign back if needed
     if (sign) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Transaction extends Comparable {
-  static const Map<String, String> symbols = {
+  static const Map<String, String> _symbols = {
     "EUR": "€",
     "USD": "\$",
     "JPY": "¥",
@@ -26,7 +26,7 @@ class Transaction extends Comparable {
     try {
       parsed = DateTime.parse(json["date"]);
     } on FormatException catch (e) {
-      debugPrint(e.message);
+      debugPrint("Failed to parse date: ${e.message}");
       parsed = DateTime(0);
     }
     return Transaction(

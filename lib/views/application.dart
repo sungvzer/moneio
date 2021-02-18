@@ -32,6 +32,7 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     loadPaths();
+    // ignore: close_sinks
     JsonBloc b = BlocProvider.of<JsonBloc>(context);
 
     if (kDebugMode)

@@ -39,7 +39,7 @@ class Transaction extends Comparable {
     );
   }
 
-  String getCurrencySymbol() => Transaction.symbols[this.currency];
+  String getCurrencySymbol() => Transaction._symbols[this.currency];
 
   String getSeparatedAmountString({bool sign = false, bool currency = false}) {
     int decimal, fractional;

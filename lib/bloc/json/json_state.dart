@@ -6,7 +6,7 @@ class JsonState {
   bool hasValue;
   final dynamic value;
 
-  JsonState({this.isError, this.message, this.value}) {
+  JsonState({this.isError = false, this.message, this.value}) {
     hasValue = value != null;
   }
 }

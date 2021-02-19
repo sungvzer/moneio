@@ -22,16 +22,6 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
     String fileName = event.fileName, fullPath = d.path + "/$fileName";
     activeFile = File(fullPath);
 
-    // If we're debugging delete every json file
-    // if (kDebugMode) {
-    //   List<FileSystemEntity> entries = d.listSync();
-    //   for (var entity in entries) {
-    //     if (entity.absolute.path.contains("json")) {
-    //       entity.deleteSync();
-    //     }
-    //   }
-    // }
-
     // TODO: Do we create it if we only need to write from it?
     // Or do we return a JSONState with isError?
     // Actually create a new file if we need one.
@@ -39,49 +29,62 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
       activeFile.createSync(recursive: true);
     }
 
-    // If in debug mode, load a dummy file.
-    if (kDebugMode) {
-      // TODO: Comments
-      // debugPrint("Loading dummy string...");
-      // const String dummy =
-      //     '[{"id": 0,"tag": "Pizza","icon": "🍕","amount": -15.0,"currency": "USD","date": "2020-07-30T22:32"},{"id": 1,"tag": "Games","icon": "🎮","amount": -32.0,"currency": "USD","date": "2020-07-23T22:32"},{"id": 2,"tag": "Trip to Rome","icon": "🛫","amount": -30.0,"currency": "USD","date": "2020-07-20T22:32"},{"id": 3,"tag": "Work Salary","icon": "💼","amount": 1250.37,"currency": "USD","date": "2020-07-17T22:32"},{"id": 4,"tag": "Electricity Bill","icon": "💡","amount": -250.0,"currency": "USD","date": "2020-07-13T22:32"},{"id": 5,"tag": "Water Bill","icon": "💧","amount": -150.0,"currency": "USD","date": "2020-07-10T22:32"},{"id": 3,"tag": "Rent","icon": "🏠","amount": -500.0,"currency": "USD","date": "2020-07-10T22:32"},{"id": 3,"tag": "Phone&Internet","icon": "📞","amount": -30.0,"currency": "USD","date": "2020-07-05T22:32"}]';
-      // activeFile.writeAsStringSync(dummy);
-    }
     assert(activeFile != null);
     assert(activeFile.existsSync());
 
     // Codepaths
-    if (event is JsonRead) {
-      yield _read(activeFile);
-    } else if (event is JsonWrite) {
-      yield _write(
-          activeFile, event.value != null ? event.value : "", event.append);
+    switch (event.runtimeType) {
+      case JsonRead:
+        yield _read(activeFile);
+        break;
+      case JsonWrite:
+        var e = event as JsonWrite;
+        yield _write(activeFile, e.value != null ? e.value : "", e.append);
+        break;
+      case JsonClear:
+        yield _write(activeFile, "", false);
+        break;
     }
   }
 
-  JsonState _write(File activeFile, value, bool append) {
-    activeFile.writeAsStringSync(jsonEncode(value),
-        mode: append ? FileMode.append : FileMode.write);
+  JsonWriteState _write(File activeFile, value, bool append) {
+    if (value.toString().trim() == "" && !append) {
+      activeFile.writeAsStringSync("");
+      return JsonWriteState(
+          isError: false, message: "Written contents to ${activeFile.path}");
+    }
+    var values = [];
+    JsonReadState s = _read(activeFile);
+    if (s.isError) return JsonWriteState(isError: true, message: s.message);
+    var read = s.hasValue ? s.value : "";
+
+    if (read != "" && append) {
+      assert(read is List);
+      for (var x in read) values.add(x);
+    }
+    values.add(value);
+    activeFile.writeAsStringSync(jsonEncode(values));
+
     // debugPrint(activeFile.lastModifiedSync().toString());
-    return JsonState(
+    return JsonWriteState(
         isError: false, message: "Written contents to ${activeFile.path}");
   }
 
-  JsonState _read(File activeFile) {
+  JsonReadState _read(File activeFile) {
     var decoded;
     String buffer = activeFile.readAsStringSync();
 
     // Empty file
     if (buffer == '') {
-      return JsonState(isError: false, value: []);
+      return JsonReadState(isError: false, value: []);
     } else {
       try {
         decoded = json.decode(buffer);
-        return JsonState(isError: false, value: decoded);
-      } catch (e, trace) {
+        return JsonReadState(isError: false, value: decoded);
+      } catch (e) {
         String msgString = "Could not decode ${activeFile.path}";
-        debugPrint(msgString + "\n$trace");
-        return JsonState(isError: true, message: msgString);
+        debugPrint("buffer is: $buffer");
+        return JsonReadState(isError: true, message: msgString);
       }
     }
   }

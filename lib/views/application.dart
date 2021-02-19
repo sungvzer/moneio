@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,23 +33,30 @@ class Application extends StatelessWidget {
     // ignore: close_sinks
     JsonBloc b = BlocProvider.of<JsonBloc>(context);
 
-    if (kDebugMode)
-      b.add(JsonWrite(
-          fileName: "transactions.json",
-          value: {
-            "id": 5,
-            "tag": "Water Bill",
-            "icon": "💧",
-            "amount": -150.0,
-            "currency": "EUR",
-            "date": "2020-07-10T22:32",
-          },
-          append: false));
+    if (kDebugMode) b.add(JsonClear("transactions.json"));
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "mone.io",
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            b.add(JsonWrite(
+              "transactions.json",
+              value: {
+                "id": 5,
+                "tag": "Water Bill",
+                "icon": "💧",
+                "amount": -150.0,
+                "currency": "EUR",
+                "date": "2020-07-10T22:32",
+              },
+              append: true,
+            ));
+            b.add(JsonRead("transactions.json"));
+          },
+          child: Icon(Icons.add),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,

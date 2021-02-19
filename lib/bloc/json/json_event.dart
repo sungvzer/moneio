@@ -9,11 +9,15 @@ abstract class JsonEvent {
 }
 
 class JsonRead extends JsonEvent {
-  JsonRead({fileName}) : super(fileName);
+  JsonRead(fileName) : super(fileName);
+}
+
+class JsonClear extends JsonEvent {
+  JsonClear(fileName) : super(fileName);
 }
 
 class JsonWrite extends JsonEvent {
   final dynamic value;
   final bool append;
-  JsonWrite({fileName, this.value, this.append = true}) : super(fileName);
+  JsonWrite(fileName, {this.value, this.append = true}) : super(fileName);
 }

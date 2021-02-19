@@ -61,6 +61,26 @@ class _TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // If our elements list is empty we fall back to an empty screen!
+    if (_elements != null && _elements.isEmpty) {
+      return Container(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Icon(Icons.money_off),
+              Text(
+                "No mone, try adding some.",
+                style: TextStyle(
+                    fontFamily: "Poppins", fontWeight: FontWeight.w500),
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+        ),
+      );
+    }
+
     return ListView.separated(
       physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       separatorBuilder: (context, index) => Divider(

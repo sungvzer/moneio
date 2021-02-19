@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/color_palette.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 
 class TransactionListBuilder extends StatefulWidget {
@@ -16,37 +17,44 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
     super.initState();
   }
 
+  List<Transaction> readState(JsonReadState state) {
+    List<Transaction> list = [];
+    if (!state.hasValue) return list;
+
+    if (state.value is List) {
+      List v = state.value as List;
+      if (v.isEmpty) return [];
+      for (var x in state.value) {
+        if (x is Map) list.add(Transaction.fromJSON(x));
+      }
+    } else if (state.value is Map<String, dynamic>) {
+      list.add(Transaction.fromJSON(state.value));
+    }
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<JsonBloc>(context)
-        .add(JsonRead(fileName: "transactions.json"));
+    BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
     return BlocBuilder<JsonBloc, JsonState>(
       builder: (context, state) {
-        // debugPrint(
-        //     "State{error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
+        if (MORE_PRINTING)
+          debugPrint(
+              "State{type: ${state.runtimeType}, error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
+        // TODO: Do a file watcher kind of stuff instead of manually checking when building
+        if (state is JsonWriteState && !state.isError)
+          BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
+
         if (state.isError) {
-          debugPrint("Error, returning container.");
-          return Container(
-            child: Text("Something went REALLY wrong here.\n${state.message}"),
-          );
-        } else {
-          List<Transaction> l = [];
-          if (state.hasValue) {
-            if (state.value is List) {
-              List v = state.value as List;
-              if (v.isNotEmpty) {
-                for (var x in state.value) {
-                  l.add(Transaction.fromJSON(x));
-                }
-              } else {
-                // TODO: Maybe do an EmptyTransactionList so we can add fancy stuff to that?
-                return Container();
-              }
-            } else {
-              l.add(Transaction.fromJSON(state.value));
-            }
-          }
-          if (l != null) return _TransactionList(l);
+          String errMsg = "Something went wrong...\n${state.message}";
+          return Container(child: Text(errMsg));
+        }
+        if (state.hasValue) {
+          List<Transaction> l = readState(state);
+          if (l != null)
+            return _TransactionList(l);
+          else
+            return _TransactionList([]);
         }
         return Center(child: CircularProgressIndicator());
       },
@@ -61,6 +69,26 @@ class _TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // If our elements list is empty we fall back to an empty screen!
+    if (_elements != null && _elements.isEmpty) {
+      return Container(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Icon(Icons.money_off),
+              Text(
+                "No mone, try adding some.",
+                style: TextStyle(
+                    fontFamily: "Poppins", fontWeight: FontWeight.w500),
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+        ),
+      );
+    }
+
     return ListView.separated(
       physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       separatorBuilder: (context, index) => Divider(

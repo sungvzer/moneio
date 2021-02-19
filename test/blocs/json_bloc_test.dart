@@ -23,7 +23,7 @@ main() async {
       expect(state.message, "Written value: ${state.value}");
     });
     x.add(JsonWrite(
-      fileName: fileName,
+      fileName,
       value: validJson,
     ));
 
@@ -38,7 +38,7 @@ main() async {
       expect(state.value, validJson);
     });
 
-    x.add(JsonRead(fileName: fileName));
+    x.add(JsonRead(fileName));
 
     x.close();
   });

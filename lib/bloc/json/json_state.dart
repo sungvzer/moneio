@@ -10,3 +10,13 @@ class JsonState {
     hasValue = value != null;
   }
 }
+
+class JsonReadState extends JsonState {
+  JsonReadState({isError = false, message, value})
+      : super(isError: isError, message: message, value: value);
+}
+
+class JsonWriteState extends JsonState {
+  JsonWriteState({isError = false, message, value})
+      : super(isError: isError, message: message, value: value);
+}

@@ -2,26 +2,26 @@ import 'package:test/test.dart';
 import 'package:moneio/models/transaction.dart';
 
 main() {
-  Transaction a = new Transaction(amount: 1.0);
-  Transaction aNegative = new Transaction(amount: -1.0);
+  Transaction a = Transaction(amount: 1.0);
+  Transaction aNegative = Transaction(amount: -1.0);
 
-  Transaction c = new Transaction(amount: 10.0);
-  Transaction cNegative = new Transaction(amount: -10.0);
+  Transaction c = Transaction(amount: 10.0);
+  Transaction cNegative = Transaction(amount: -10.0);
 
-  Transaction d = new Transaction(amount: 100.0);
-  Transaction dNegative = new Transaction(amount: -100.0);
+  Transaction d = Transaction(amount: 100.0);
+  Transaction dNegative = Transaction(amount: -100.0);
 
-  Transaction e = new Transaction(amount: 1000.0);
-  Transaction eNegative = new Transaction(amount: -1000.0);
+  Transaction e = Transaction(amount: 1000.0);
+  Transaction eNegative = Transaction(amount: -1000.0);
 
-  Transaction f = new Transaction(amount: 10000.0);
-  Transaction fNegative = new Transaction(amount: -10000.0);
+  Transaction f = Transaction(amount: 10000.0);
+  Transaction fNegative = Transaction(amount: -10000.0);
 
-  Transaction g = new Transaction(amount: 100000.0);
-  Transaction gNegative = new Transaction(amount: -100000.0);
+  Transaction g = Transaction(amount: 100000.0);
+  Transaction gNegative = Transaction(amount: -100000.0);
 
-  Transaction h = new Transaction(amount: 1000000.0);
-  Transaction hNegative = new Transaction(amount: -1000000.0);
+  Transaction h = Transaction(amount: 1000000.0);
+  Transaction hNegative = Transaction(amount: -1000000.0);
 
   group('positive getSeparatedAmountString', () {
     test('Positive: Single digit - 1', () {

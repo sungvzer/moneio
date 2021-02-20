@@ -1,30 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/color_palette.dart';
-import 'package:moneio/json_reader.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 
-class TransactionListBuilder extends StatelessWidget {
+class TransactionListBuilder extends StatefulWidget {
   const TransactionListBuilder({Key key}) : super(key: key);
+
+  _TransactionListBuilderState createState() => _TransactionListBuilderState();
+}
+
+class _TransactionListBuilderState extends State<TransactionListBuilder> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  List<Transaction> readState(JsonReadState state) {
+    List<Transaction> list = [];
+    if (!state.hasValue) return list;
+
+    if (state.value is List) {
+      List v = state.value as List;
+      if (v.isEmpty) return [];
+      for (var x in state.value) {
+        if (x is Map) list.add(Transaction.fromJSON(x));
+      }
+    } else if (state.value is Map<String, dynamic>) {
+      list.add(Transaction.fromJSON(state.value));
+    }
+    return list;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: JSONReader.readTransactionsFromJSON(),
-      initialData: <Transaction>[],
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
+    BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
+    return BlocBuilder<JsonBloc, JsonState>(
+      builder: (context, state) {
+        if (MORE_PRINTING)
+          debugPrint(
+              "State{type: ${state.runtimeType}, error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
+        // TODO: Do a file watcher kind of stuff instead of manually checking when building
+        if (state is JsonWriteState && !state.isError)
+          BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
 
-          case ConnectionState.done:
-            return snapshot.hasData
-                ? _TransactionList(snapshot.data)
-                : Text(snapshot.error);
-          default:
-            return Container(
-              child: Text("Something went REALLY wrong here."),
-            );
+        if (state.isError) {
+          String errMsg = "Something went wrong...\n${state.message}";
+          return Container(child: Text(errMsg));
         }
+        if (state.hasValue) {
+          List<Transaction> l = readState(state);
+          if (l != null)
+            return _TransactionList(l);
+          else
+            return _TransactionList([]);
+        }
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -37,6 +69,26 @@ class _TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // If our elements list is empty we fall back to an empty screen!
+    if (_elements != null && _elements.isEmpty) {
+      return Container(
+        child: Align(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Icon(Icons.money_off),
+              Text(
+                "No mone, try adding some.",
+                style: TextStyle(
+                    fontFamily: "Poppins", fontWeight: FontWeight.w500),
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+        ),
+      );
+    }
+
     return ListView.separated(
       physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       separatorBuilder: (context, index) => Divider(
@@ -59,16 +111,16 @@ class _TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateTime date = _current.date;
     final double amount = _current.amount;
-    String amountString = _current.getSeparatedAmountString();
-    amountString =
-        (amount < 0 ? '-' : '+') + _current.getCurrencySymbol() + amountString;
+    String amountString =
+        _current.getSeparatedAmountString(sign: true, currency: true);
 
     return ListTile(
       onLongPress: () => print("TODO: Long press"),
       leading: Text(
         _current.icon,
       ),
-      minLeadingWidth: 3,
+      // This only applies to flutter-dev apparently
+      // minLeadingWidth: 3,
       dense: true,
       onTap: () => print("TODO: Short press"),
       title: DefaultTextStyle(

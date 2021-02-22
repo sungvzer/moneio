@@ -7,6 +7,8 @@ import 'package:moneio/widgets/transaction_list.dart';
 import '../color_palette.dart';
 
 class HomePage extends StatelessWidget {
+  static const String id = "/home";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

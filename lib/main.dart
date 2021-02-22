@@ -44,7 +44,7 @@ class Application extends StatelessWidget {
       title: "mone.io",
       initialRoute: "/home",
       routes: {
-        '/home': (context) => HomePage(),
+        HomePage.id: (context) => HomePage(),
       },
     );
   }

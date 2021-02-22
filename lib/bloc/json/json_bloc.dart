@@ -6,8 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:moneio/views/application.dart';
+import 'package:moneio/main.dart';
 
 part 'json_event.dart';
 part 'json_state.dart';

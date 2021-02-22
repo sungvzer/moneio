@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:moneio/main.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'json_event.dart';
 part 'json_state.dart';
@@ -17,7 +18,7 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
   @override
   Stream<JsonState> mapEventToState(JsonEvent event) async* {
     // Code that's used in both codepaths
-    String path = Application.localPath;
+    String path = (await getApplicationDocumentsDirectory()).path;
     File activeFile;
     String fileName = event.fileName, fullPath = path + "/$fileName";
     activeFile = File(fullPath);

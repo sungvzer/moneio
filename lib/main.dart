@@ -38,13 +38,14 @@ class Application extends StatelessWidget {
     loadPaths();
     // ignore: close_sinks
     JsonBloc b = BlocProvider.of<JsonBloc>(context);
-
     if (kDebugMode) b.add(JsonClear("transactions.json"));
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "mone.io",
-      home: HomePage(),
+      initialRoute: "/home",
+      routes: {
+        '/home': (context) => HomePage(),
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/views/add_transaction_page.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
 import '../color_palette.dart';
@@ -11,6 +12,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddTransactionPage(),
+            ),
+          );
           // ignore: close_sinks
           JsonBloc b = BlocProvider.of<JsonBloc>(context);
           b.add(JsonWrite(

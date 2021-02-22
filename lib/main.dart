@@ -38,6 +38,7 @@ class Application extends StatelessWidget {
     loadPaths();
     // ignore: close_sinks
     JsonBloc b = BlocProvider.of<JsonBloc>(context);
+
     if (kDebugMode) b.add(JsonClear("transactions.json"));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -46,6 +47,7 @@ class Application extends StatelessWidget {
       routes: {
         HomePage.id: (context) => HomePage(),
       },
+
     );
   }
 }

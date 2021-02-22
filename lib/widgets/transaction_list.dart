@@ -123,6 +123,7 @@ class _TransactionTile extends StatelessWidget {
       // minLeadingWidth: 3,
       //minLeadingWidth: 3,
       //dense: true,
+      //minLeadingWidth: 3
       onTap: () => print("TODO: Short press"),
       title: DefaultTextStyle(
         style: TextStyle(

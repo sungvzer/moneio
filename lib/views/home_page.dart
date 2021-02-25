@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: ColorPalette.CasandoraYellow,
         elevation: 0,
         title: Title(
           title: "mone.io",

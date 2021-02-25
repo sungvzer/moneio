@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/views/add_transaction_page.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
@@ -22,21 +20,6 @@ class HomePage extends StatelessWidget {
               builder: (context) => AddTransactionPage(),
             ),
           );
-          // ignore: close_sinks
-          JsonBloc b = BlocProvider.of<JsonBloc>(context);
-          b.add(JsonWrite(
-            "transactions.json",
-            value: {
-              "id": 5,
-              "tag": "Water Bill",
-              "icon": "💧",
-              "amount": -150.0,
-              "currency": "EUR",
-              "date": "2020-07-10T22:32",
-            },
-            append: true,
-          ));
-          b.add(JsonRead("transactions.json"));
         },
         child: Icon(Icons.add),
       ),

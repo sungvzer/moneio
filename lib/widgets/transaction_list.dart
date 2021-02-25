@@ -41,14 +41,16 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
         if (MORE_PRINTING)
           debugPrint(
               "State{type: ${state.runtimeType}, error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
-        // TODO: Do a file watcher kind of stuff instead of manually checking when building
-        if (state is JsonWriteState && !state.isError)
-          BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
-
         if (state.isError) {
           String errMsg = "Something went wrong...\n${state.message}";
           return Container(child: Text(errMsg));
         }
+
+        // TODO: Do a file watcher kind of stuff instead of manually checking when building
+        // We've written the file and now we update.
+        if (state is JsonWriteState)
+          BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
+
         if (state.hasValue) {
           List<Transaction> l = readState(state);
           if (l != null)

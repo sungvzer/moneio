@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:moneio/constants.dart';
 
 class Transaction extends Comparable {
-  static const Map<String, String> _symbols = {
-    "EUR": "€",
-    "USD": "\$",
-    "JPY": "¥",
-    "GBP": "£",
-    "AUD": "\$",
-    "CAD": "\$",
-    "CHN": "¥",
-    "NZD": "\$"
-  };
   int id;
   String tag;
   String icon;
   double amount;
   String currency;
+  String category;
   DateTime date;
 
   Transaction(
-      {this.id, this.tag, this.icon, this.amount, this.currency, this.date});
+      {this.id,
+      this.tag,
+      this.icon,
+      this.amount,
+      this.currency,
+      this.date,
+      this.category});
 
   factory Transaction.fromJSON(Map<String, dynamic> json) {
     DateTime parsed;
@@ -36,10 +34,11 @@ class Transaction extends Comparable {
       amount: json["amount"] as double,
       currency: json["currency"] as String,
       date: parsed,
+      category: json["category"] as String,
     );
   }
 
-  String getCurrencySymbol() => Transaction._symbols[this.currency];
+  String getCurrencySymbol() => CURRENCY_TO_SYMBOL[this.currency];
 
   String getSeparatedAmountString({bool sign = false, bool currency = false}) {
     int decimal, fractional;

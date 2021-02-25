@@ -13,6 +13,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorPalette.CasandoraYellow,
+        foregroundColor: ColorPalette.ImperialPrimer,
         onPressed: () {
           Navigator.push(
             context,

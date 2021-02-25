@@ -58,12 +58,12 @@ class Transaction extends Comparable {
     reversedList = decimal.toString().split('').reversed.toList();
     for (int i = 0; i < reversedList.length; i++) {
       result += reversedList[i];
-      if (i % 3 == 2 && i != reversedList.length - 1) result += '.';
+      if (i % 3 == 2 && i != reversedList.length - 1) result += ',';
     }
 
     // Reverse the result back and add the fractional part padded
     result = result.split('').reversed.join();
-    result += ',' + fractional.toString().padRight(2, '0');
+    result += '.' + fractional.toString().padRight(2, '0');
 
     if (currency) {
       result = this.getCurrencySymbol() + result;

@@ -107,7 +107,7 @@ class _TransactionForm extends StatelessWidget {
               "Tag",
               child: TextFormField(
                 textInputAction: TextInputAction.next,
-                decoration: _decoration,
+                decoration: _decoration.copyWith(hintText: "Untitled"),
                 controller: _controllers["tag"],
                 style: TextStyle(
                   fontFamily: "Poppins",

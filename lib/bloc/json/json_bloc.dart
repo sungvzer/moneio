@@ -22,11 +22,16 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
     String fileName = event.fileName, fullPath = path + "/$fileName";
     activeFile = File(fullPath);
 
-    // TODO: Do we create it if we only need to write from it?
-    // Or do we return a JSONState with isError?
-    // Actually create a new file if we need one.
-    if (!activeFile.existsSync()) {
-      activeFile.createSync(recursive: true);
+    if (event.createFileIfNeeded) {
+      if (!activeFile.existsSync()) {
+        activeFile.createSync(recursive: true);
+      }
+    } else {
+      yield JsonState(
+          isError: true,
+          message:
+              "File $fullPath does not exist and createIfNeeded is set to false.");
+      return;
     }
 
     assert(activeFile != null);

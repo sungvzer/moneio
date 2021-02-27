@@ -3,7 +3,8 @@ part of 'json_bloc.dart';
 @immutable
 abstract class JsonEvent {
   final String _fileName;
-  JsonEvent(this._fileName);
+  final bool createFileIfNeeded;
+  JsonEvent(this._fileName, {this.createFileIfNeeded = false});
 
   get fileName => _fileName;
 }

@@ -78,9 +78,21 @@ class Transaction extends Comparable {
 
   @override
   int compareTo(other) {
-    if (other.runtimeType != this.runtimeType)
+    if (other is! Transaction) {
       throw TypeError();
-    else
-      return this.date.compareTo(other.date);
+    } else {
+      final int dateCompare = this.date.compareTo(other.date);
+      bool equal = true;
+      equal &= (this.tag == other.tag);
+      equal &= (this.amount == other.amount);
+      equal &= (this.category == other.category);
+      equal &= (this.currency == other.currency);
+      equal &= (this.icon == other.icon);
+      equal &= dateCompare == 0;
+      if (equal)
+        return 0;
+      else
+        return dateCompare;
+    }
   }
 }

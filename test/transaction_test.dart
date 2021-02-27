@@ -50,31 +50,46 @@ main() {
       expect(h.getSeparatedAmountString(), '1.000.000,00');
     });
   });
-  group('negative getSeparatedAmountString', () {
-    test('Negative: Single digit - 1', () {
-      expect(aNegative.getSeparatedAmountString(), '1,00');
+  group('Transaction compareTo', () {
+    test('Equal transactions return 0', () {
+      final DateTime now = DateTime.now();
+      Transaction a = Transaction(
+        amount: 3.2,
+        category: "FOOD",
+        currency: "EUR",
+        date: now,
+        icon: "🍕",
+        tag: "Food!",
+      );
+      Transaction b = Transaction(
+        amount: 3.2,
+        category: "FOOD",
+        currency: "EUR",
+        date: now,
+        icon: "🍕",
+        tag: "Food!",
+      );
+      expect(a.compareTo(b), 0);
     });
 
-    test('Negative: Two digits - 10', () {
-      expect(cNegative.getSeparatedAmountString(), '10,00');
-    });
-
-    test('Negative: Three digits - 100', () {
-      expect(dNegative.getSeparatedAmountString(), '100,00');
-    });
-
-    test('Negative: Four digits - 1000', () {
-      expect(eNegative.getSeparatedAmountString(), '1.000,00');
-    });
-
-    test('Negative: Five digits - 10000', () {
-      expect(fNegative.getSeparatedAmountString(), '10.000,00');
-    });
-    test('Negative: Six digits - 100000', () {
-      expect(gNegative.getSeparatedAmountString(), '100.000,00');
-    });
-    test('Negative: Seven digits - 1000000', () {
-      expect(hNegative.getSeparatedAmountString(), '1.000.000,00');
+    test('Different transactions return date compareTo', () {
+      Transaction a = Transaction(
+        amount: 5,
+        category: "CLOTHING",
+        currency: "USD",
+        date: DateTime(2000, 1, 1),
+        icon: "👕",
+        tag: "T-Shirt!",
+      );
+      Transaction b = Transaction(
+        amount: 3.2,
+        category: "FOOD",
+        currency: "EUR",
+        date: DateTime(2000, 1, 2),
+        icon: "🍕",
+        tag: "Food!",
+      );
+      expect(a.compareTo(b) < 0, true);
     });
   });
 }

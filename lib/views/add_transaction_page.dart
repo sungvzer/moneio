@@ -157,10 +157,12 @@ class _TransactionForm extends StatelessWidget {
                   child: LabelledFormField(
                     "Currency",
                     child: DropdownButtonFormField(
+                      validator: (str) =>
+                          str == null ? "Please insert a currency" : null,
                       decoration: _decoration,
                       isExpanded: true,
                       onChanged: (value) {
-                        _selectedCurrency = value.toString().trim();
+                        _selectedCurrency = value.trim();
                       },
                       style: TextStyle(
                         fontFamily: "Poppins",
@@ -283,6 +285,8 @@ class _TransactionForm extends StatelessWidget {
                 onChanged: (value) {
                   _selectedCategory = value.toString().trim();
                 },
+                validator: (str) =>
+                    str == null ? "Please enter a category" : null,
                 style: TextStyle(
                   fontFamily: "Poppins",
                   color: ColorPalette.ImperialPrimer,

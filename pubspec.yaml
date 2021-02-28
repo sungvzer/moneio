@@ -23,12 +23,11 @@ environment:
 dependencies:
     flutter:
         sdk: flutter
+
+    # Our dependencies.
     currency_text_input_formatter: ^1.0.4
-
     flutter_bloc: ^6.1.1
-
     intl: ^0.16.1
-
     path_provider: ^1.6.27
     http: ^0.12.2
 

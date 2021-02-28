@@ -64,7 +64,7 @@ class Transaction extends Comparable {
     result = result.split('').reversed.join();
     result += '.' + fractional.toString().padRight(2, '0');
 
-    if (currency) {
+    if (currency && this.currency != null) {
       result = this.getCurrencySymbol() + result;
     }
 

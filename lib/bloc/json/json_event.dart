@@ -21,5 +21,7 @@ class JsonClear extends JsonEvent {
 class JsonWrite extends JsonEvent {
   final dynamic value;
   final bool append;
-  JsonWrite(fileName, {this.value, this.append = true}) : super(fileName);
+  JsonWrite(fileName,
+      {this.value, this.append = true, createFileIfNeeded = false})
+      : super(fileName, createFileIfNeeded: createFileIfNeeded);
 }

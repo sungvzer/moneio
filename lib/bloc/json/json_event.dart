@@ -10,11 +10,12 @@ abstract class JsonEvent {
 }
 
 class JsonRead extends JsonEvent {
-  JsonRead(fileName) : super(fileName);
+  JsonRead(fileName) : super(fileName, createFileIfNeeded: false);
 }
 
 class JsonClear extends JsonEvent {
-  JsonClear(fileName) : super(fileName);
+  JsonClear(fileName, {createFileIfNeeded = false})
+      : super(fileName, createFileIfNeeded: createFileIfNeeded);
 }
 
 class JsonWrite extends JsonEvent {

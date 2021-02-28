@@ -113,8 +113,21 @@ class _TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateTime date = _current.date;
     final double amount = _current.amount;
+
+    // TODO: compute MAX_AMOUNT_LENGTH based on device width?!
+    const int MAX_AMOUNT_LENGTH = 10;
     String amountString =
         _current.getSeparatedAmountString(sign: true, currency: true);
+
+    // This is a little hack to make TextOverflow work
+    // on a single word string.
+    // Example:
+    // '+$30,000,000.00' -> '+$30,000[space],000.00'
+    if (amountString.length > MAX_AMOUNT_LENGTH) {
+      amountString = amountString.substring(0, MAX_AMOUNT_LENGTH) +
+          ' ' +
+          amountString.substring(MAX_AMOUNT_LENGTH);
+    }
 
     return ListTile(
       onLongPress: () => print("TODO: Long press"),
@@ -164,6 +177,9 @@ class _TransactionTile extends StatelessWidget {
                   fontFamily: "Poppins",
                   fontWeight: FontWeight.w500,
                 ),
+                softWrap: false,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],

@@ -38,7 +38,7 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
     BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
     return BlocBuilder<JsonBloc, JsonState>(
       builder: (context, state) {
-        if (MORE_PRINTING)
+        if (morePrinting)
           debugPrint(
               "State{type: ${state.runtimeType}, error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
         if (state.isError) {

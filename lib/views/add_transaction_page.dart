@@ -174,8 +174,8 @@ class _TransactionForm extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
-                      items: CURRENCY_TO_SYMBOL.keys.map((final String key) {
-                        const Map<String, String> map = CURRENCY_TO_SYMBOL;
+                      items: currencyToSymbol.keys.map((final String key) {
+                        const Map<String, String> map = currencyToSymbol;
                         String value = map[key];
                         return DropdownMenuItem(
                           child: Text("$value - $key"),
@@ -297,11 +297,11 @@ class _TransactionForm extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
-                items: CATEGORIES_TO_TEXT.values.map((final String value) {
-                  const Map<String, String> map = CATEGORIES_TO_TEXT;
+                items: categoriesToText.values.map((final String value) {
+                  const Map<String, String> map = categoriesToText;
                   String key;
                   key = map.keys.where((y) => map[y] == value).first;
-                  final String emoji = CATEGORIES_TO_EMOJI[key];
+                  final String emoji = categoriesToEmoji[key];
                   return DropdownMenuItem(
                     child: Text("$emoji - $value"),
                     value: key,
@@ -375,7 +375,7 @@ class _TransactionForm extends StatelessWidget {
                         map["amount"] = amountNumber;
                         map["tag"] = tag;
                         map["category"] = _selectedCategory;
-                        map["icon"] = CATEGORIES_TO_EMOJI[_selectedCategory];
+                        map["icon"] = categoriesToEmoji[_selectedCategory];
                         map["date"] = DateTime(dateList[2], dateList[1],
                                 dateList[0], parsedTime.hour, parsedTime.minute)
                             .toIso8601String();
@@ -448,7 +448,7 @@ class _TransactionForm extends StatelessWidget {
     bool isAM = false, isPM = false, isTwelveHour = false;
     int hour, minute;
 
-    if (MORE_PRINTING) debugPrint("Got string: $time");
+    if (morePrinting) debugPrint("Got string: $time");
 
     isTwelveHour = time.contains(twelveHourRegEx);
 
@@ -464,7 +464,7 @@ class _TransactionForm extends StatelessWidget {
       if (isPM && hour != 12) hour += 12;
     }
     parsedTime = TimeOfDay(hour: hour, minute: minute);
-    if (MORE_PRINTING) debugPrint("Parsed it to: ${parsedTime.toString()}");
+    if (morePrinting) debugPrint("Parsed it to: ${parsedTime.toString()}");
     return parsedTime;
   }
 }

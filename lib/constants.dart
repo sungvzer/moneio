@@ -1,6 +1,6 @@
-const bool DEBUG = false;
-const bool MORE_PRINTING = false;
-const Map<String, String> CATEGORIES_TO_TEXT = {
+const bool debug = false;
+const bool morePrinting = false;
+const Map<String, String> categoriesToText = {
   "CLOTHING": "Clothing and Accessories",
   "FOOD": "Food",
   "ANIMAL": "Animals",
@@ -31,7 +31,7 @@ const Map<String, String> CATEGORIES_TO_TEXT = {
   "SHOPPING": "Shopping"
 };
 
-const Map<String, String> CATEGORIES_TO_EMOJI = {
+const Map<String, String> categoriesToEmoji = {
   "CLOTHING": "👚",
   "FOOD": "🍕",
   "ANIMAL": "🐶",
@@ -62,7 +62,7 @@ const Map<String, String> CATEGORIES_TO_EMOJI = {
   "SHOPPING": "🛍️"
 };
 
-const Map<String, String> CURRENCY_TO_SYMBOL = {
+const Map<String, String> currencyToSymbol = {
   "EUR": "€",
   "USD": "\$",
   "JPY": "¥",

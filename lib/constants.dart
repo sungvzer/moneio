@@ -1,66 +1,41 @@
+import 'package:moneio/models/transaction_category.dart';
+
 const bool debug = false;
 const bool morePrinting = false;
-const Map<String, String> categoriesToText = {
-  "CLOTHING": "Clothing and Accessories",
-  "FOOD": "Food",
-  "ANIMAL": "Animals",
-  "INSURANCE": "Insurance",
-  "BILLS": "Bills and subscriptions",
-  "HOME": "Home",
-  "BODY_CARE": "Body care",
-  "ELECTRONIC": "Electronics and Software",
-  "FAMILY": "Family",
-  "FINANCING": "Financing and Loan",
-  "ENTERTAINMENT": "Entertainment",
-  "INVESTMENT": "Investments",
-  "EDUCATION": "Education",
-  "WORK_SALARY": "Work and Salary",
-  "GIFT": "Gifts and donations",
-  "GENERIC": "Generic",
-  "REFUND": "Refunds",
-  "RESTAURANTS": "Restaurants and Coffee Shops",
-  "HEALTH": "Health",
-  "SPORT": "Sports",
-  "HOBBY": "Hobbies",
-  "TAX": "Taxes and commissions",
-  "TRANSPORT": "Means of transportation",
-  "SALE": "Sales",
-  "TOPUP": "Top ups",
-  "ATM": "ATM",
-  "CRYPTO": "Cryptocurrency",
-  "SHOPPING": "Shopping"
-};
 
-const Map<String, String> categoriesToEmoji = {
-  "CLOTHING": "👚",
-  "FOOD": "🍕",
-  "ANIMAL": "🐶",
-  "INSURANCE": "⛑",
-  "BILLS": "🧾",
-  "HOME": "🏠",
-  "BODY_CARE": "🧼",
-  "ELECTRONIC": "🤖",
-  "FAMILY": "👪", // TODO: Find a better, inclusive emoji ?
-  "FINANCING": "📊",
-  "ENTERTAINMENT": "🎥",
-  "INVESTMENT": "📈",
-  "EDUCATION": "📚",
-  "WORK_SALARY": "⚒",
-  "GIFT": "🎁",
-  "GENERIC": "💰",
-  "REFUND": "↩",
-  "RESTAURANTS": "🍽️",
-  "HEALTH": "🩺",
-  "SPORT": "⚽",
-  "HOBBY": "🔨",
-  "TAX": "📝",
-  "TRANSPORT": "🚌",
-  "SALE": "💰",
-  "TOPUP": "🔃",
-  "ATM": "🏧",
-  "CRYPTO": "💸",
-  "SHOPPING": "🛍️"
-};
+
+List<TransactionCategory> categories = [
+  TransactionCategory("CLOTHING", "Clothing and Accessories", "👚"),
+  TransactionCategory("FOOD", "Food", "🍕"),
+  TransactionCategory("ANIMAL", "Animals", "🐶"),
+  TransactionCategory("INSURANCE", "Insurance", "⛑"),
+  TransactionCategory("BILLS", "Bills and subscriptions", "🧾"),
+  TransactionCategory("HOME", "Home", "🏠"),
+  TransactionCategory("BODY_CARE", "Body care", "🧼"),
+  TransactionCategory("ELECTRONIC", "Electronics and Software", "🤖"),
+  TransactionCategory("FAMILY", "Family", "👪"),
+  TransactionCategory("FINANCING", "Financing and Loan", "📊"),
+  TransactionCategory("ENTERTAINMENT", "Entertainment", "🎥"),
+  TransactionCategory("INVESTMENT", "Investments", "📈"),
+  TransactionCategory("EDUCATION", "Education", "📚"),
+  TransactionCategory("WORK_SALARY", "Work and Salary", "⚒"),
+  TransactionCategory("GIFT", "Gifts and donations", "🎁"),
+  TransactionCategory("GENERIC", "Generic", "💰"),
+  TransactionCategory("REFUND", "Refunds", "↩"),
+  TransactionCategory("RESTAURANTS", "Restaurants and Coffee Shops", "🍽️"),
+  TransactionCategory("HEALTH", "Health", "🩺"),
+  TransactionCategory("SPORT", "Sports", "⚽"),
+  TransactionCategory("HOBBY", "Hobbies", "🔨"),
+  TransactionCategory("TAX", "Taxes and commissions", "📝"),
+  TransactionCategory("TRANSPORT", "Means of transportation", "🚌"),
+  TransactionCategory("SALE", "Sales", "💰"),
+  TransactionCategory("TOPUP", "Top ups", "🔃"),
+  TransactionCategory("ATM", "ATM", "🏧"),
+  TransactionCategory("CRYPTO", "Cryptocurrency", "💸"),
+  TransactionCategory("SHOPPING", "Shopping", "🛍️"),
+]
+// This HACK enables us to cache initial values in TransactionCategory._cache if needed
+.toList();
 
 const Map<String, String> currencyToSymbol = {
   "EUR": "€",

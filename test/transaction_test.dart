@@ -1,3 +1,4 @@
+import 'package:moneio/models/transaction_category.dart';
 import 'package:test/test.dart';
 import 'package:moneio/models/transaction.dart';
 
@@ -83,18 +84,16 @@ main() {
       final DateTime now = DateTime.now();
       Transaction a = Transaction(
         amount: 3.2,
-        category: "FOOD",
+        category: TransactionCategory("FOOD"),
         currency: "EUR",
         date: now,
-        icon: "🍕",
         tag: "Food!",
       );
       Transaction b = Transaction(
         amount: 3.2,
-        category: "FOOD",
+        category: TransactionCategory("FOOD"),
         currency: "EUR",
         date: now,
-        icon: "🍕",
         tag: "Food!",
       );
       expect(a.compareTo(b), 0);
@@ -103,18 +102,16 @@ main() {
     test('Different transactions return date compareTo', () {
       Transaction a = Transaction(
         amount: 5,
-        category: "CLOTHING",
+        category: TransactionCategory("CLOTHING"),
         currency: "USD",
         date: DateTime(2000, 1, 1),
-        icon: "👕",
         tag: "T-Shirt!",
       );
       Transaction b = Transaction(
         amount: 3.2,
-        category: "FOOD",
+        category: TransactionCategory("FOOD"),
         currency: "EUR",
         date: DateTime(2000, 1, 2),
-        icon: "🍕",
         tag: "Food!",
       );
       expect(a.compareTo(b) < 0, true);

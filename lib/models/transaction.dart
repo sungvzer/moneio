@@ -21,7 +21,7 @@ class Transaction extends Comparable {
     this.date,
   });
 
-  factory Transaction.fromJSON(Map<String, dynamic> json) {
+  factory Transaction.fromMap(Map<String, dynamic> json) {
     DateTime parsed;
     try {
       parsed = DateTime.parse(json["date"]);
@@ -37,6 +37,17 @@ class Transaction extends Comparable {
       currency: json["currency"] as String,
       date: parsed,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      "id": this.id,
+      "tag": this.tag,
+      "category": this.category.toMap(),
+      "amount": this.amount,
+      "currency": this.currency,
+      "date": date.toIso8601String(),
+    };
   }
 
   String getCurrencySymbol() => currencyToSymbol[this.currency];

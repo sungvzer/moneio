@@ -25,10 +25,10 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
       List v = state.value as List;
       if (v.isEmpty) return [];
       for (var x in state.value) {
-        if (x is Map) list.add(Transaction.fromJSON(x));
+        if (x is Map) list.add(Transaction.fromMap(x));
       }
     } else if (state.value is Map<String, dynamic>) {
-      list.add(Transaction.fromJSON(state.value));
+      list.add(Transaction.fromMap(state.value));
     }
     return list;
   }

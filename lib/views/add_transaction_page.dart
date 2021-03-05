@@ -8,6 +8,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/models/transaction_category.dart';
 
 class AddTransactionPage extends StatefulWidget {
   AddTransactionPage({Key key}) : super(key: key);
@@ -297,16 +298,23 @@ class _TransactionForm extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
-                items: categoriesToText.values.map((final String value) {
-                  const Map<String, String> map = categoriesToText;
-                  String key;
-                  key = map.keys.where((y) => map[y] == value).first;
-                  final String emoji = categoriesToEmoji[key];
+                items:
+                    categories.map((final TransactionCategory cat) {
                   return DropdownMenuItem(
-                    child: Text("$emoji - $value"),
-                    value: key,
+                    child: Text(cat.emoji + ' - ' + cat.name),
+                    value: cat.uniqueID,
                   );
                 }).toList(),
+                // items: categoriesToText.values.map((final String value) {
+                //   const Map<String, String> map = categoriesToText;
+                //   String key;
+                //   key = map.keys.where((y) => map[y] == value).first;
+                //   final String emoji = categoriesToEmoji[key];
+                //   return DropdownMenuItem(
+                //     child: Text("$emoji - $value"),
+                //     value: key,
+                //   );
+                // }).toList(),
                 hint: Center(child: Text("Please select a category")),
               ),
             ),
@@ -374,8 +382,8 @@ class _TransactionForm extends StatelessWidget {
                         // Initialize map
                         map["amount"] = amountNumber;
                         map["tag"] = tag;
-                        map["category"] = _selectedCategory;
-                        map["icon"] = categoriesToEmoji[_selectedCategory];
+                        map["category"] =
+                            TransactionCategory(_selectedCategory).toMap();
                         map["date"] = DateTime(dateList[2], dateList[1],
                                 dateList[0], parsedTime.hour, parsedTime.minute)
                             .toIso8601String();

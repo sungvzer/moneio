@@ -132,7 +132,7 @@ class _TransactionTile extends StatelessWidget {
     return ListTile(
       onLongPress: () => print("TODO: Long press"),
       leading: Text(
-        _current.icon,
+        _current.category.emoji,
       ),
       // This only applies to flutter-dev apparently
       // minLeadingWidth: 3,

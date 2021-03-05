@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {
+  TransactionCategory category;
+
+  // TODO: Is ID really necessary??
   int id;
   String tag;
-  String icon;
   double amount;
   String currency;
-  String category;
   DateTime date;
 
-  Transaction(
-      {this.id,
-      this.tag,
-      this.icon,
-      this.amount,
-      this.currency,
-      this.date,
-      this.category});
+  Transaction({
+    this.id,
+    this.tag,
+    this.category,
+    this.amount,
+    this.currency,
+    this.date,
+  });
 
   factory Transaction.fromJSON(Map<String, dynamic> json) {
     DateTime parsed;
@@ -30,11 +32,10 @@ class Transaction extends Comparable {
     return Transaction(
       id: json["id"] as int,
       tag: json["tag"] as String,
-      icon: json["icon"] as String,
+      category: TransactionCategory.fromMap(json["category"] as Map),
       amount: json["amount"] as double,
       currency: json["currency"] as String,
       date: parsed,
-      category: json["category"] as String,
     );
   }
 
@@ -78,21 +79,17 @@ class Transaction extends Comparable {
 
   @override
   int compareTo(other) {
-    if (other is! Transaction) {
-      throw TypeError();
-    } else {
-      final int dateCompare = this.date.compareTo(other.date);
-      bool equal = true;
-      equal &= (this.tag == other.tag);
-      equal &= (this.amount == other.amount);
-      equal &= (this.category == other.category);
-      equal &= (this.currency == other.currency);
-      equal &= (this.icon == other.icon);
-      equal &= dateCompare == 0;
-      if (equal)
-        return 0;
-      else
-        return dateCompare;
-    }
+    if (other is! Transaction) throw TypeError();
+    final int dateCompare = this.date.compareTo(other.date);
+    bool equal = true;
+    equal &= (this.tag == other.tag);
+    equal &= (this.amount == other.amount);
+    equal &= (this.category == other.category);
+    equal &= (this.currency == other.currency);
+    equal &= dateCompare == 0;
+    if (equal)
+      return 0;
+    else
+      return dateCompare;
   }
 }

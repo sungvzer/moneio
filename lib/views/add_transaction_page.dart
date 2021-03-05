@@ -175,8 +175,10 @@ class _TransactionForm extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
-                      items: currencyToSymbol.keys.map((final String key) {
-                        const Map<String, String> map = currencyToSymbol;
+                      items: currencyToSymbol.keys
+                          .map((final String key) {
+                        const Map<String, String> map =
+                            currencyToSymbol;
                         String value = map[key];
                         return DropdownMenuItem(
                           child: Text("$value - $key"),
@@ -472,7 +474,6 @@ class _TransactionForm extends StatelessWidget {
       if (isPM && hour != 12) hour += 12;
     }
     parsedTime = TimeOfDay(hour: hour, minute: minute);
-    if (morePrinting) debugPrint("Parsed it to: ${parsedTime.toString()}");
     return parsedTime;
   }
 }

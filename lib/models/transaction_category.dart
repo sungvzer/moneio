@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class TransactionCategory extends Comparable {
   String _key;
   String _name;
@@ -16,7 +18,7 @@ class TransactionCategory extends Comparable {
 
     key = key.toUpperCase();
 
-    print("_cache: $_cache");
+    if (kDebugMode) print("_cache: $_cache");
     if (_cache.containsKey(key)) return _cache[key];
     final TransactionCategory cat =
         TransactionCategory._internal(key, name, emoji);

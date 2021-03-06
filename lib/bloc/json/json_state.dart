@@ -9,6 +9,11 @@ class JsonState {
   JsonState({this.isError = false, this.message, this.value}) {
     hasValue = value != null;
   }
+
+  @override
+  String toString() {
+    return "State (isError: $isError, message: $message, value: $value)";
+  }
 }
 
 class JsonReadState extends JsonState {

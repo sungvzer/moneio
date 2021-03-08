@@ -53,23 +53,15 @@ class Transaction extends Comparable {
   String getCurrencySymbol() => currencyToSymbol[this.currency];
 
   String getSeparatedAmountString({bool sign = false, bool currency = false}) {
-    int decimal, fractional;
+    final int absoluteAmount = amount.abs();
+    final int decimal = (absoluteAmount / 100).truncate();
+    final int fractional = absoluteAmount - decimal.abs() * 100;
     String result = '';
-    List<String> split, reversedList;
-
-    decimal = (amount / 100).truncate();
-    fractional = amount - decimal * 100;
-
-    // To get the decimal and fractional parts without losing precision
-    // we go through the String form first.
-    // 312.31 => "312.31" => [312, 31] => 31
-    // split = amount.abs().toString().split('.');
-    // decimal = int.parse(split[0]);
-    // fractional = int.parse(split[1]);
-
+    final List<String> reversedList =
+        decimal.toString().split('').reversed.toList();
+        
     // Iterate through the digits of the decimal part in reverse
     // and add a point where it belongs
-    reversedList = decimal.toString().split('').reversed.toList();
     for (int i = 0; i < reversedList.length; i++) {
       result += reversedList[i];
       if (i % 3 == 2 && i != reversedList.length - 1) result += ',';

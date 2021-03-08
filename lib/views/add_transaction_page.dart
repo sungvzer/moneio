@@ -300,8 +300,7 @@ class _TransactionForm extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
-                items:
-                    categories.map((final TransactionCategory cat) {
+                items: categories.map((final TransactionCategory cat) {
                   return DropdownMenuItem(
                     child: Text(cat.emoji + ' - ' + cat.name),
                     value: cat.uniqueID,

@@ -3,26 +3,26 @@ import 'package:test/test.dart';
 import 'package:moneio/models/transaction.dart';
 
 main() {
-  Transaction a = Transaction(amount: 1.0);
-  Transaction aNegative = Transaction(amount: -1.0);
+  Transaction a = Transaction(amount: 100);
+  Transaction aNegative = Transaction(amount: -100);
 
-  Transaction c = Transaction(amount: 10.0);
-  Transaction cNegative = Transaction(amount: -10.0);
+  Transaction c = Transaction(amount: 1000);
+  Transaction cNegative = Transaction(amount: -1000);
 
-  Transaction d = Transaction(amount: 100.0);
-  Transaction dNegative = Transaction(amount: -100.0);
+  Transaction d = Transaction(amount: 10000);
+  Transaction dNegative = Transaction(amount: -10000);
 
-  Transaction e = Transaction(amount: 1000.0);
-  Transaction eNegative = Transaction(amount: -1000.0);
+  Transaction e = Transaction(amount: 100000);
+  Transaction eNegative = Transaction(amount: -100000);
 
-  Transaction f = Transaction(amount: 10000.0);
-  Transaction fNegative = Transaction(amount: -10000.0);
+  Transaction f = Transaction(amount: 1000000);
+  Transaction fNegative = Transaction(amount: -1000000);
 
-  Transaction g = Transaction(amount: 100000.0);
-  Transaction gNegative = Transaction(amount: -100000.0);
+  Transaction g = Transaction(amount: 10000000);
+  Transaction gNegative = Transaction(amount: -10000000);
 
-  Transaction h = Transaction(amount: 1000000.0);
-  Transaction hNegative = Transaction(amount: -1000000.0);
+  Transaction h = Transaction(amount: 100000000);
+  Transaction hNegative = Transaction(amount: -100000000);
   group('Transaction getSeparatedAmountString', () {
     group('positive getSeparatedAmountString', () {
       test('Positive: Single digit - 1', () {
@@ -83,14 +83,14 @@ main() {
     test('Equal transactions return 0', () {
       final DateTime now = DateTime.now();
       Transaction a = Transaction(
-        amount: 3.2,
+        amount: 320,
         category: TransactionCategory("FOOD"),
         currency: "EUR",
         date: now,
         tag: "Food!",
       );
       Transaction b = Transaction(
-        amount: 3.2,
+        amount: 320,
         category: TransactionCategory("FOOD"),
         currency: "EUR",
         date: now,
@@ -108,7 +108,7 @@ main() {
         tag: "T-Shirt!",
       );
       Transaction b = Transaction(
-        amount: 3.2,
+        amount: 320,
         category: TransactionCategory("FOOD"),
         currency: "EUR",
         date: DateTime(2000, 1, 2),

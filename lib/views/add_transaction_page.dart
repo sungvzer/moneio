@@ -350,14 +350,14 @@ class _TransactionForm extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          ColorPalette.CasandoraYellow),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(accentColor),
                       foregroundColor: MaterialStateProperty.all<Color>(
                           ColorPalette.ImperialPrimer),
                     ),
                     onPressed: () {
                       if (transactionFormKey.currentState.validate()) {
-                        double amountNumber;
+                        int amountNumber;
 
                         Map<String, dynamic> map = {};
 
@@ -378,7 +378,7 @@ class _TransactionForm extends StatelessWidget {
                         tag = tag.isNotEmpty ? tag : "Untitled";
                         if (amount.contains('-')) isNegative = true;
                         amount = amount.replaceAll(RegExp(r"\D"), "");
-                        amountNumber = double.parse(amount) / 100;
+                        amountNumber = int.parse(amount);
 
                         if (isNegative) amountNumber *= -1;
                         // Initialize map

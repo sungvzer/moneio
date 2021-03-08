@@ -112,7 +112,7 @@ class _TransactionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime date = _current.date;
-    final double amount = _current.amount;
+    final int amount = _current.amount;
 
     // TODO: compute MAX_AMOUNT_LENGTH based on device width?!
     const int MAX_AMOUNT_LENGTH = 10;

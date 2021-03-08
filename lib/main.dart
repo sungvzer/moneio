@@ -42,7 +42,7 @@ class Application extends StatelessWidget {
     if (kDebugMode)
       b.add(JsonWrite("transactions.json",
           value: {
-            "amount": 3.2,
+            "amount": 320,
             "date": DateTime(2020, 05, 02, 10, 10).toIso8601String(),
             "icon": "🍕",
             "tag": "Pizzamandolino",

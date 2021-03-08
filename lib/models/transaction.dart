@@ -8,7 +8,7 @@ class Transaction extends Comparable {
   // TODO: Is ID really necessary??
   int id;
   String tag;
-  double amount;
+  int amount;
   String currency;
   DateTime date;
 
@@ -33,7 +33,7 @@ class Transaction extends Comparable {
       id: json["id"] as int,
       tag: json["tag"] as String,
       category: TransactionCategory.fromMap(json["category"] as Map),
-      amount: json["amount"] as double,
+      amount: json["amount"] as int,
       currency: json["currency"] as String,
       date: parsed,
     );
@@ -57,12 +57,15 @@ class Transaction extends Comparable {
     String result = '';
     List<String> split, reversedList;
 
+    decimal = (amount / 100).truncate();
+    fractional = amount - decimal * 100;
+
     // To get the decimal and fractional parts without losing precision
     // we go through the String form first.
     // 312.31 => "312.31" => [312, 31] => 31
-    split = amount.abs().toString().split('.');
-    decimal = int.parse(split[0]);
-    fractional = int.parse(split[1]);
+    // split = amount.abs().toString().split('.');
+    // decimal = int.parse(split[0]);
+    // fractional = int.parse(split[1]);
 
     // Iterate through the digits of the decimal part in reverse
     // and add a point where it belongs

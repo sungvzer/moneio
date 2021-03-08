@@ -175,10 +175,7 @@ class _TransactionForm extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
-                      items: currencyToSymbol.keys
-                          .map((final String key) {
-                        const Map<String, String> map =
-                            currencyToSymbol;
+                        const Map<String, String> map = currencyToSymbol;
                         String value = map[key];
                         return DropdownMenuItem(
                           child: Text("$value - $key"),

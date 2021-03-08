@@ -33,9 +33,8 @@ List<TransactionCategory> categories = [
   TransactionCategory("ATM", "ATM", "🏧"),
   TransactionCategory("CRYPTO", "Cryptocurrency", "💸"),
   TransactionCategory("SHOPPING", "Shopping", "🛍️"),
-]
-// This HACK enables us to cache initial values in TransactionCategory._cache if needed
-.toList();
+].toList();// This HACK enables us to cache initial values in TransactionCategory._cache if needed
+
 
 const Map<String, String> currencyToSymbol = {
   "EUR": "€",

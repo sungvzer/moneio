@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/views/add_transaction_page.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
@@ -10,8 +11,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        elevation: 1,
+      ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorPalette.CasandoraYellow,
+        backgroundColor: accentColor,
         foregroundColor: ColorPalette.ImperialPrimer,
         onPressed: () {
           Navigator.push(
@@ -24,21 +28,29 @@ class HomePage extends StatelessWidget {
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
-        backgroundColor: ColorPalette.CasandoraYellow,
-        elevation: 0,
+        centerTitle: true,
+        leading: Builder(builder: (BuildContext context) {
+          return IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: ColorPalette.ImperialPrimer,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          );
+        }),
+        backgroundColor: accentColor,
         title: Title(
           title: "mone.io",
           color: Colors.black,
-          child: Center(
-            child: Text(
-              "mone.io",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 26,
-                color: ColorPalette.ImperialPrimer,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w900,
-              ),
+          child: Text(
+            "mone.io",
+            style: TextStyle(
+              fontSize: 26,
+              color: ColorPalette.ImperialPrimer,
+              fontFamily: "Poppins",
+              fontWeight: FontWeight.w900,
             ),
           ),
         ),
@@ -46,7 +58,6 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "History",
@@ -62,7 +73,27 @@ class HomePage extends StatelessWidget {
               thickness: 1,
             ),
             Expanded(
-              child: TransactionListBuilder(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "History",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "Poppins",
+                      fontWeight: FontWeight.bold,
+                      color: ColorPalette.ImperialPrimer,
+                    ),
+                  ),
+                  Divider(
+                    color: ColorPalette.ImperialPrimer,
+                    thickness: 1,
+                  ),
+                  Expanded(
+                    child: TransactionListBuilder(),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

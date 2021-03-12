@@ -8,6 +8,8 @@ class Transaction extends Comparable {
   // TODO: Is ID really necessary??
   int id;
   String tag;
+
+  // TODO: Should we switch to BigInt instead?
   int amount;
   String currency; // TODO: Null safety
   DateTime? date; // TODO: Null safety
@@ -77,7 +79,7 @@ class Transaction extends Comparable {
       } else if (isMillionsOrMore) {
         result = (absoluteAmount / millionsDivider).floor().toString() + 'M';
       }
-      debugPrint("Amount: $amount -> $result");
+      // debugPrint("Amount: $amount -> $result");
     } else {
       final int decimal = (absoluteAmount / 100).truncate();
       final int fractional = absoluteAmount - decimal.abs() * 100;

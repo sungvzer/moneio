@@ -68,7 +68,7 @@ class SumWidgetState extends State<SumWidget> {
     // FIXME: SUM IS BROKEN
     for (var key in sumsByCurrency.keys) {
       currentSum = sumsByCurrency[key]!;
-      debugPrint("Key: $key, value: $currentSum");
+      // debugPrint("Key: $key, value: $currentSum");
       if (maxKey == "") maxKey = key;
       if (currentSum.abs() >= amount.abs()) {
         amount = currentSum;
@@ -76,7 +76,7 @@ class SumWidgetState extends State<SumWidget> {
       }
     }
 
-    debugPrint("maxKey: $maxKey, maxSum: $amount");
+    // debugPrint("maxKey: $maxKey, maxSum: $amount");
 
     // TODO: User preference for humanReadable
     amountString = Transaction(amount: amount, currency: maxKey)

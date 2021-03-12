@@ -38,7 +38,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: ColorPalette.CasandoraYellow,
+        backgroundColor: accentColor,
         elevation: 0,
         leading: Container(),
         centerTitle: true,
@@ -176,8 +176,9 @@ class _TransactionForm extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
+                      items: currencyToSymbol.keys.map((final String key) {
                         const Map<String, String> map = currencyToSymbol;
-                        String value = map[key];
+                        String value = map[key] as String;
                         return DropdownMenuItem(
                           child: Text("$value - $key"),
                           value: key,

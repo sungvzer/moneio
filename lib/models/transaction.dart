@@ -53,25 +53,48 @@ class Transaction extends Comparable {
 
   String? getCurrencySymbol() => currencyToSymbol[this.currency];
 
-  String getSeparatedAmountString({bool sign = false, bool currency = false}) {
-    final int absoluteAmount = amount.abs();
-    final int decimal = (absoluteAmount / 100).truncate();
-    final int fractional = absoluteAmount - decimal.abs() * 100;
+  String getSeparatedAmountString({
+    bool sign = false,
+    bool currency = false,
+    bool humanReadable = false,
+  }) {
     String result = '';
-    final List<String> reversedList =
-        decimal.toString().split('').reversed.toList();
+    final int absoluteAmount = amount.abs();
 
-    // Iterate through the digits of the decimal part in reverse
-    // and add a point where it belongs
-    for (int i = 0; i < reversedList.length; i++) {
-      result += reversedList[i];
-      if (i % 3 == 2 && i != reversedList.length - 1) result += ',';
+    const int thousandsLowerBound = 1000000,
+        thousandsUpperBound = 99999999,
+        thousandsDivider = 100000;
+
+    const int millionsLowerBound = 100000000,
+        millionsDivider = millionsLowerBound;
+
+    if (humanReadable && amount.abs() >= thousandsLowerBound) {
+      final bool isThousands = absoluteAmount >= thousandsLowerBound &&
+          absoluteAmount <= thousandsUpperBound;
+      final bool isMillionsOrMore = absoluteAmount >= millionsLowerBound;
+      if (isThousands) {
+        result = (absoluteAmount / thousandsDivider).floor().toString() + 'K';
+      } else if (isMillionsOrMore) {
+        result = (absoluteAmount / millionsDivider).floor().toString() + 'M';
+      }
+      debugPrint("Amount: $amount -> $result");
+    } else {
+      final int decimal = (absoluteAmount / 100).truncate();
+      final int fractional = absoluteAmount - decimal.abs() * 100;
+      final List<String> reversedList =
+          decimal.toString().split('').reversed.toList();
+
+      // Iterate through the digits of the decimal part in reverse
+      // and add a point where it belongs
+      for (int i = 0; i < reversedList.length; i++) {
+        result += reversedList[i];
+        if (i % 3 == 2 && i != reversedList.length - 1) result += ',';
+      }
+
+      // Reverse the result back and add the fractional part padded
+      result = result.split('').reversed.join();
+      result += '.' + fractional.toString().padRight(2, '0');
     }
-
-    // Reverse the result back and add the fractional part padded
-    result = result.split('').reversed.join();
-    result += '.' + fractional.toString().padRight(2, '0');
-
     if (currency) {
       // TODO: Null safety
       String? currencySymbol = this.getCurrencySymbol();

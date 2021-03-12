@@ -116,8 +116,9 @@ class _TransactionTile extends StatelessWidget {
 
     // TODO: compute MAX_AMOUNT_LENGTH based on device width?!
     const int MAX_AMOUNT_LENGTH = 10;
-    String amountString =
-        _current.getSeparatedAmountString(sign: true, currency: true);
+    // TODO: User preference humanReadable
+    String amountString = _current.getSeparatedAmountString(
+        sign: true, currency: true, humanReadable: true);
 
     // This is a little hack to make TextOverflow work
     // on a single word string.

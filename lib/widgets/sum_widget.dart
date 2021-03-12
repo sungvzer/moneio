@@ -78,9 +78,10 @@ class SumWidgetState extends State<SumWidget> {
 
     debugPrint("maxKey: $maxKey, maxSum: $amount");
 
-    // TODO: we got the value, now let's format it!
+    // TODO: User preference for humanReadable
     amountString = Transaction(amount: amount, currency: maxKey)
-        .getSeparatedAmountString(currency: true, sign: false);
+        .getSeparatedAmountString(
+            currency: true, sign: false, humanReadable: true);
 
     // Trick to split at my desired length.
     const int MAX_AMOUNT_LENGTH = 10;

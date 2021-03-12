@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "167225728702",
+    "project_id": "moneio",
+    "storage_bucket": "moneio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167225728702:android:27ce081e3eaa40c59688ef",
+        "android_client_info": {
+          "package_name": "com.moneio.moneio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167225728702-2fi8thcof5f9eshk2hjo7tfr4211nb2n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbo-Q0HCkbmaEBN58A_S5WnL2LY_hdOGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167225728702-2fi8thcof5f9eshk2hjo7tfr4211nb2n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/add_transaction_page.dart';
 import 'package:moneio/widgets/transaction_list.dart';
+import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
 
 import '../color_palette.dart';
 
@@ -59,18 +60,9 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Text(
-              "History",
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.bold,
-                color: ColorPalette.ImperialPrimer,
-              ),
-            ),
-            Divider(
-              color: ColorPalette.ImperialPrimer,
-              thickness: 1,
+            SumWidget(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 100 * 4,
             ),
             Expanded(
               child: Column(

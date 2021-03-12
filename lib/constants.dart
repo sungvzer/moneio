@@ -1,8 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:moneio/color_palette.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 const bool debug = false;
 const bool morePrinting = false;
 
+// TODO: Favourite user color!
+const Color accentColor = ColorPalette.CasandoraYellow;
 
 List<TransactionCategory> categories = [
   TransactionCategory("CLOTHING", "Clothing and Accessories", "👚"),

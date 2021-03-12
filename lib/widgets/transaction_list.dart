@@ -30,6 +30,9 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
     } else if (state.value is Map<String, dynamic>) {
       list.add(Transaction.fromMap(state.value));
     }
+
+    // TODO: Sort based on preferences
+    list.sort((a, b) => a.compareTo(b) * -1);
     return list;
   }
 

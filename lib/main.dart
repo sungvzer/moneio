@@ -14,9 +14,9 @@ void main() {
 }
 
 class Application extends StatelessWidget {
-  static String _localPath;
-  static String _tempPath;
-  static String _supportPath;
+  static String _localPath = "";
+  static String _tempPath = "";
+  static String _supportPath = "";
 
   static String get localPath => _localPath;
   static String get tempPath => _tempPath;

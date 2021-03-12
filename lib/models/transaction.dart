@@ -3,21 +3,21 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {
-  TransactionCategory category;
+  TransactionCategory? category; // TODO: Null safety
 
   // TODO: Is ID really necessary??
   int id;
   String tag;
   int amount;
-  String currency;
-  DateTime date;
+  String currency; // TODO: Null safety
+  DateTime? date; // TODO: Null safety
 
   Transaction({
-    this.id,
-    this.tag,
+    this.id = -1,
+    this.tag = "",
     this.category,
-    this.amount,
-    this.currency,
+    this.amount = 0,
+    this.currency = "",
     this.date,
   });
 
@@ -30,9 +30,10 @@ class Transaction extends Comparable {
       parsed = DateTime(0);
     }
     return Transaction(
-      id: json["id"] as int,
+      id: json["id"] == null ? 0 : json["id"] as int,
       tag: json["tag"] as String,
-      category: TransactionCategory.fromMap(json["category"] as Map),
+      category:
+          TransactionCategory.fromMap(json["category"] as Map<String, dynamic>),
       amount: json["amount"] as int,
       currency: json["currency"] as String,
       date: parsed,
@@ -43,14 +44,14 @@ class Transaction extends Comparable {
     return <String, dynamic>{
       "id": this.id,
       "tag": this.tag,
-      "category": this.category.toMap(),
+      "category": this.category?.toMap(), // TODO: Null safety
       "amount": this.amount,
       "currency": this.currency,
-      "date": date.toIso8601String(),
+      "date": date?.toIso8601String(), // TODO: Null safety
     };
   }
 
-  String getCurrencySymbol() => currencyToSymbol[this.currency];
+  String? getCurrencySymbol() => currencyToSymbol[this.currency];
 
   String getSeparatedAmountString({bool sign = false, bool currency = false}) {
     final int absoluteAmount = amount.abs();
@@ -59,7 +60,7 @@ class Transaction extends Comparable {
     String result = '';
     final List<String> reversedList =
         decimal.toString().split('').reversed.toList();
-        
+
     // Iterate through the digits of the decimal part in reverse
     // and add a point where it belongs
     for (int i = 0; i < reversedList.length; i++) {
@@ -71,8 +72,10 @@ class Transaction extends Comparable {
     result = result.split('').reversed.join();
     result += '.' + fractional.toString().padRight(2, '0');
 
-    if (currency && this.currency != null) {
-      result = this.getCurrencySymbol() + result;
+    if (currency) {
+      // TODO: Null safety
+      String? currencySymbol = this.getCurrencySymbol();
+      if (currencySymbol != null) result = currencySymbol + result;
     }
 
     // Add sign back if needed
@@ -86,13 +89,17 @@ class Transaction extends Comparable {
   @override
   int compareTo(other) {
     if (other is! Transaction) throw TypeError();
-    final int dateCompare = this.date.compareTo(other.date);
+
+    // TODO: Null safety
+    int dateCompare = 0;
+    DateTime? thisDate = this.date, otherDate = other.date;
+    if (thisDate != null && otherDate != null)
+      dateCompare = thisDate.compareTo(otherDate);
     bool equal = true;
     equal &= (this.tag == other.tag);
     equal &= (this.amount == other.amount);
     equal &= (this.category == other.category);
     equal &= (this.currency == other.currency);
-    equal &= dateCompare == 0;
     if (equal)
       return 0;
     else

@@ -11,7 +11,7 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class AddTransactionPage extends StatefulWidget {
-  AddTransactionPage({Key key}) : super(key: key);
+  AddTransactionPage();
 
   @override
   AddTransactionPageState createState() => AddTransactionPageState();
@@ -146,10 +146,11 @@ class _TransactionForm extends StatelessWidget {
                       ),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                        CurrencyTextInputFormatter(),
+                        CurrencyTextInputFormatter(symbol: ""),
                       ],
                       controller: _controllers["amount"],
                       validator: (value) {
+                        if (value == null) return null;
                         if (value.isEmpty) return "Please enter an amount.";
                         return null;
                       },
@@ -166,8 +167,8 @@ class _TransactionForm extends StatelessWidget {
                           str == null ? "Please insert a currency" : null,
                       decoration: _decoration,
                       isExpanded: true,
-                      onChanged: (value) {
-                        _selectedCurrency = value.trim();
+                      onChanged: (String? value) {
+                        if (value != null) _selectedCurrency = value.trim();
                       },
                       style: TextStyle(
                         fontFamily: "Poppins",
@@ -223,6 +224,7 @@ class _TransactionForm extends StatelessWidget {
                           ).then((value) {
                             final DateFormat f = DateFormat("dd/MM/yyyy");
                             var controller = _controllers["date"];
+                            if (controller == null) return;
                             if (value == null) {
                               controller.text = "";
                               return;
@@ -259,6 +261,7 @@ class _TransactionForm extends StatelessWidget {
                               initialTime: TimeOfDay.now(),
                             ).then((value) {
                               var controller = _controllers["time"];
+                              if (controller == null) return;
                               if (value == null) {
                                 controller.text = "";
                                 return;
@@ -352,15 +355,14 @@ class _TransactionForm extends StatelessWidget {
                           ColorPalette.ImperialPrimer),
                     ),
                     onPressed: () {
-                      if (transactionFormKey.currentState.validate()) {
+                      if (transactionFormKey.currentState!.validate()) {
                         int amountNumber;
 
                         Map<String, dynamic> map = {};
-
-                        String tag = _controllers["tag"].text.trim(),
-                            date = _controllers["date"].text.trim(),
-                            time = _controllers["time"].text.trim(),
-                            amount = _controllers["amount"].text.trim(),
+                        String tag = _controllers["tag"]!.text.trim(),
+                            date = _controllers["date"]!.text.trim(),
+                            time = _controllers["time"]!.text.trim(),
+                            amount = _controllers["amount"]!.text.trim(),
                             currency = _selectedCurrency;
 
                         TimeOfDay parsedTime = _parseTimeString(time);
@@ -476,8 +478,9 @@ class _TransactionForm extends StatelessWidget {
 
 class LabelledFormField extends StatelessWidget {
   final String _label;
-  final Widget child;
-  final TextStyle style;
+  // TODO: Null safety
+  final Widget? child;
+  final TextStyle? style;
   const LabelledFormField(this._label, {this.child, this.style});
 
   @override
@@ -490,7 +493,9 @@ class LabelledFormField extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        child,
+        // TODO: Null safety
+
+        child!,
       ],
     );
   }

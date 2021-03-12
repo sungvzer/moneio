@@ -9,28 +9,25 @@ class TransactionCategory extends Comparable {
   String get name => _name;
   String get emoji => _emoji;
 
-  bool get hasEmoji => emoji != null;
+  bool get hasEmoji => emoji != "";
 
   static Map<String, TransactionCategory> _cache = {};
 
-  factory TransactionCategory(String key, [String name, String emoji]) {
-    assert(key != null, "Category key must not be null");
+  factory TransactionCategory(String key,
+      [String name = "", String emoji = ""]) {
+    assert(key != "", "Category key must not be empty");
 
     key = key.toUpperCase();
 
-    if (kDebugMode) print("_cache: $_cache");
-    if (_cache.containsKey(key)) return _cache[key];
-    final TransactionCategory cat =
-        TransactionCategory._internal(key, name, emoji);
+    TransactionCategory? cat = _cache[key];
+    if (cat != null) return cat;
+
+    cat = TransactionCategory._internal(key, name, emoji);
     _cache[key] = cat;
     return cat;
   }
 
-  TransactionCategory._internal(String key, String name, String emoji) {
-    _key = key;
-    _name = name;
-    _emoji = emoji;
-  }
+  TransactionCategory._internal(this._key, this._name, this._emoji);
 
   Map<String, dynamic> toMap() {
     return {

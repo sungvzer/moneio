@@ -6,7 +6,7 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 
 class TransactionListBuilder extends StatefulWidget {
-  const TransactionListBuilder({Key key}) : super(key: key);
+  const TransactionListBuilder();
 
   _TransactionListBuilderState createState() => _TransactionListBuilderState();
 }
@@ -25,7 +25,7 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
       List v = state.value as List;
       if (v.isEmpty) return [];
       for (var x in state.value) {
-        if (x is Map) list.add(Transaction.fromMap(x));
+        if (x is Map<String, dynamic>) list.add(Transaction.fromMap(x));
       }
     } else if (state.value is Map<String, dynamic>) {
       list.add(Transaction.fromMap(state.value));
@@ -52,11 +52,8 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
           BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
 
         if (state.hasValue) {
-          List<Transaction> l = readState(state);
-          if (l != null)
-            return _TransactionList(l);
-          else
-            return _TransactionList([]);
+          List<Transaction> l = readState(state as JsonReadState);
+          return _TransactionList(l);
         }
         return Center(child: CircularProgressIndicator());
       },
@@ -72,7 +69,7 @@ class _TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // If our elements list is empty we fall back to an empty screen!
-    if (_elements != null && _elements.isEmpty) {
+    if (_elements.isEmpty) {
       return Container(
         child: Align(
           alignment: Alignment.center,
@@ -111,7 +108,7 @@ class _TransactionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime date = _current.date;
+    final DateTime date = _current.date!;
     final int amount = _current.amount;
 
     // TODO: compute MAX_AMOUNT_LENGTH based on device width?!
@@ -132,7 +129,8 @@ class _TransactionTile extends StatelessWidget {
     return ListTile(
       onLongPress: () => print("TODO: Long press"),
       leading: Text(
-        _current.category.emoji,
+        // TODO: Null safety
+        _current.category == null ? "" : _current.category!.emoji,
       ),
       // This only applies to flutter-dev apparently
       // minLeadingWidth: 3,

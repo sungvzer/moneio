@@ -34,7 +34,6 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
       }
     }
 
-    assert(activeFile != null);
     assert(activeFile.existsSync());
 
     // Codepaths

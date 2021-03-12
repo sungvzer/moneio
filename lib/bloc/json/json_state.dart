@@ -3,10 +3,10 @@ part of 'json_bloc.dart';
 class JsonState {
   final bool isError;
   final String message;
-  bool hasValue;
+  late bool hasValue;
   final dynamic value;
 
-  JsonState({this.isError = false, this.message, this.value}) {
+  JsonState({this.isError = false, this.message = "", this.value}) {
     hasValue = value != null;
   }
 
@@ -17,7 +17,7 @@ class JsonState {
 }
 
 class JsonReadState extends JsonState {
-  JsonReadState({isError = false, message, value})
+  JsonReadState({isError = false, message = "", value = ""})
       : super(isError: isError, message: message, value: value);
 }
 

@@ -67,8 +67,10 @@ class _TransactionForm extends StatelessWidget {
   final Map<String, TextEditingController> _controllers = {
     "amount": TextEditingController(),
     "tag": TextEditingController(),
-    "date": TextEditingController(),
-    "time": TextEditingController(),
+    "date": TextEditingController(
+        text: DateFormat("dd/MM/yyyy").format(DateTime.now())),
+    "time":
+        TextEditingController(text: DateFormat("HH:mm").format(DateTime.now())),
     "emoji": TextEditingController()
   };
 
@@ -97,7 +99,9 @@ class _TransactionForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _selectedCategory = "";
-    String _selectedCurrency = "";
+
+    // TODO: User preferences
+    String _selectedCurrency = "EUR";
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Form(
@@ -163,6 +167,7 @@ class _TransactionForm extends StatelessWidget {
                   child: LabelledFormField(
                     "Currency",
                     child: DropdownButtonFormField(
+                      value: _selectedCurrency,
                       validator: (str) =>
                           str == null ? "Please insert a currency" : null,
                       decoration: _decoration,
@@ -396,8 +401,7 @@ class _TransactionForm extends StatelessWidget {
                         ));
 
                         debugPrint("Data:\n$map");
-                        Navigator.maybePop(context)
-                            .then((value) => value ? print("Ciao") : false);
+                        Navigator.maybePop(context);
                       }
                     },
                   ),

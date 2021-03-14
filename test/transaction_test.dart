@@ -15,16 +15,20 @@ main() {
   Transaction dNegative = Transaction(amount: -10000, date: now, category: cat);
 
   Transaction e = Transaction(amount: 100000, date: now, category: cat);
-  Transaction eNegative = Transaction(amount: -100000, date: now, category: cat);
+  Transaction eNegative =
+      Transaction(amount: -100000, date: now, category: cat);
 
   Transaction f = Transaction(amount: 1000000, date: now, category: cat);
-  Transaction fNegative = Transaction(amount: -1000000, date: now, category: cat);
+  Transaction fNegative =
+      Transaction(amount: -1000000, date: now, category: cat);
 
   Transaction g = Transaction(amount: 10000000, date: now, category: cat);
-  Transaction gNegative = Transaction(amount: -10000000, date: now, category: cat);
+  Transaction gNegative =
+      Transaction(amount: -10000000, date: now, category: cat);
 
   Transaction h = Transaction(amount: 100000000, date: now, category: cat);
-  Transaction hNegative = Transaction(amount: -100000000, date: now, category: cat);
+  Transaction hNegative =
+      Transaction(amount: -100000000, date: now, category: cat);
   group('Transaction getSeparatedAmountString', () {
     group('positive getSeparatedAmountString', () {
       test('Positive: Single digit - 1', () {

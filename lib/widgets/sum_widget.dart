@@ -80,7 +80,11 @@ class SumWidgetState extends State<SumWidget> {
     // debugPrint("maxKey: $maxKey, maxSum: $amount");
 
     // TODO: User preference for humanReadable
-    amountString = Transaction(amount: amount, currency: maxKey, date: DateTime.now(), category: TransactionCategory("NONE"))
+    amountString = Transaction(
+            amount: amount,
+            currency: maxKey,
+            date: DateTime.now(),
+            category: TransactionCategory("NONE"))
         .getSeparatedAmountString(
             currency: true, sign: false, humanReadable: true);
 

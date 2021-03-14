@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class TransactionCategory extends Comparable {
   String _key;
   String _name;

@@ -111,7 +111,7 @@ class _TransactionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime date = _current.date!;
+    final DateTime date = _current.date;
     final int amount = _current.amount;
 
     // TODO: compute MAX_AMOUNT_LENGTH based on device width?!
@@ -131,14 +131,14 @@ class _TransactionTile extends StatelessWidget {
     }
 
     return ListTile(
-      onLongPress: () => print("TODO: Long press"),
+      onLongPress: () => print("TODO: Long press with transaction $_current"),
       leading: Text(
-        // TODO: Null safety
-        _current.category == null ? "" : _current.category!.emoji,
+        _current.category.emoji,
       ),
       // This only applies to flutter-dev apparently
       // minLeadingWidth: 3,
-      onTap: () => print("TODO: Short press"),
+      // TODO: Page navigation to a TransactionView(transaction)
+      onTap: () => print("TODO: Short press with transaction $_current"),
       title: DefaultTextStyle(
         style: TextStyle(
           fontFamily: "Poppins",

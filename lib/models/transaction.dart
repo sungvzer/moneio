@@ -3,24 +3,23 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {
-  TransactionCategory? category; // TODO: Null safety
+  TransactionCategory category;
 
   // TODO: Is ID really necessary??
   int id;
   String tag;
 
-  // TODO: Should we switch to BigInt instead?
-  int amount;
-  String currency; // TODO: Null safety
-  DateTime? date; // TODO: Null safety
+  int amount; // TODO: Should we switch to BigInt instead?
+  String currency;
+  DateTime date;
 
   Transaction({
     this.id = -1,
     this.tag = "",
-    this.category,
+    required this.category,
     this.amount = 0,
     this.currency = "",
-    this.date,
+    required this.date,
   });
 
   factory Transaction.fromMap(Map<String, dynamic> json) {
@@ -46,14 +45,14 @@ class Transaction extends Comparable {
     return <String, dynamic>{
       "id": this.id,
       "tag": this.tag,
-      "category": this.category?.toMap(), // TODO: Null safety
+      "category": this.category.toMap(),
       "amount": this.amount,
       "currency": this.currency,
-      "date": date?.toIso8601String(), // TODO: Null safety
+      "date": date.toIso8601String(),
     };
   }
 
-  String? getCurrencySymbol() => currencyToSymbol[this.currency];
+  String getCurrencySymbol() => currencyToSymbol[this.currency]!;
 
   String getSeparatedAmountString({
     bool sign = false,
@@ -98,9 +97,8 @@ class Transaction extends Comparable {
       result += '.' + fractional.toString().padRight(2, '0');
     }
     if (currency) {
-      // TODO: Null safety
-      String? currencySymbol = this.getCurrencySymbol();
-      if (currencySymbol != null) result = currencySymbol + result;
+      String currencySymbol = this.getCurrencySymbol();
+      result = currencySymbol + result;
     }
 
     // Add sign back if needed
@@ -115,11 +113,9 @@ class Transaction extends Comparable {
   int compareTo(other) {
     if (other is! Transaction) throw TypeError();
 
-    // TODO: Null safety
     int dateCompare = 0;
-    DateTime? thisDate = this.date, otherDate = other.date;
-    if (thisDate != null && otherDate != null)
-      dateCompare = thisDate.compareTo(otherDate);
+    DateTime thisDate = this.date, otherDate = other.date;
+    dateCompare = thisDate.compareTo(otherDate);
     bool equal = true;
     equal &= (this.tag == other.tag);
     equal &= (this.amount == other.amount);

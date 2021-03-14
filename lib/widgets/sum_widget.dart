@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/models/transaction.dart';
+import 'package:moneio/models/transaction_category.dart';
 import 'package:moneio/screen.dart';
 
 class SumWidget extends StatefulWidget {
@@ -79,7 +80,7 @@ class SumWidgetState extends State<SumWidget> {
     // debugPrint("maxKey: $maxKey, maxSum: $amount");
 
     // TODO: User preference for humanReadable
-    amountString = Transaction(amount: amount, currency: maxKey)
+    amountString = Transaction(amount: amount, currency: maxKey, date: DateTime.now(), category: TransactionCategory("NONE"))
         .getSeparatedAmountString(
             currency: true, sign: false, humanReadable: true);
 

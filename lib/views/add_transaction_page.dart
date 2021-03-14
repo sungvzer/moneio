@@ -479,10 +479,9 @@ class _TransactionForm extends StatelessWidget {
 
 class LabelledFormField extends StatelessWidget {
   final String _label;
-  // TODO: Null safety
-  final Widget? child;
+  final Widget child;
   final TextStyle? style;
-  const LabelledFormField(this._label, {this.child, this.style});
+  const LabelledFormField(this._label, {required this.child, this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -494,9 +493,8 @@ class LabelledFormField extends StatelessWidget {
         SizedBox(
           height: 5,
         ),
-        // TODO: Null safety
 
-        child!,
+        child,
       ],
     );
   }

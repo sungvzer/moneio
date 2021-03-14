@@ -3,26 +3,28 @@ import 'package:test/test.dart';
 import 'package:moneio/models/transaction.dart';
 
 main() {
-  Transaction a = Transaction(amount: 100);
-  Transaction aNegative = Transaction(amount: -100);
+  var cat = TransactionCategory("NONE");
+  var now = DateTime.now();
+  Transaction a = Transaction(amount: 100, date: now, category: cat);
+  Transaction aNegative = Transaction(amount: -100, date: now, category: cat);
 
-  Transaction c = Transaction(amount: 1000);
-  Transaction cNegative = Transaction(amount: -1000);
+  Transaction c = Transaction(amount: 1000, date: now, category: cat);
+  Transaction cNegative = Transaction(amount: -1000, date: now, category: cat);
 
-  Transaction d = Transaction(amount: 10000);
-  Transaction dNegative = Transaction(amount: -10000);
+  Transaction d = Transaction(amount: 10000, date: now, category: cat);
+  Transaction dNegative = Transaction(amount: -10000, date: now, category: cat);
 
-  Transaction e = Transaction(amount: 100000);
-  Transaction eNegative = Transaction(amount: -100000);
+  Transaction e = Transaction(amount: 100000, date: now, category: cat);
+  Transaction eNegative = Transaction(amount: -100000, date: now, category: cat);
 
-  Transaction f = Transaction(amount: 1000000);
-  Transaction fNegative = Transaction(amount: -1000000);
+  Transaction f = Transaction(amount: 1000000, date: now, category: cat);
+  Transaction fNegative = Transaction(amount: -1000000, date: now, category: cat);
 
-  Transaction g = Transaction(amount: 10000000);
-  Transaction gNegative = Transaction(amount: -10000000);
+  Transaction g = Transaction(amount: 10000000, date: now, category: cat);
+  Transaction gNegative = Transaction(amount: -10000000, date: now, category: cat);
 
-  Transaction h = Transaction(amount: 100000000);
-  Transaction hNegative = Transaction(amount: -100000000);
+  Transaction h = Transaction(amount: 100000000, date: now, category: cat);
+  Transaction hNegative = Transaction(amount: -100000000, date: now, category: cat);
   group('Transaction getSeparatedAmountString', () {
     group('positive getSeparatedAmountString', () {
       test('Positive: Single digit - 1', () {

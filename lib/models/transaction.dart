@@ -126,4 +126,9 @@ class Transaction extends Comparable {
     else
       return dateCompare;
   }
+
+  @override
+  String toString() {
+    return toMap().toString();
+  }
 }

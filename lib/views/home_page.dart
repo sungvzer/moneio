@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/add_transaction_page.dart';
+import 'package:moneio/views/settings_page.dart';
 import 'package:moneio/views/suggestions_page.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
@@ -18,6 +19,17 @@ class HomePage extends StatelessWidget {
         child: ListView(
           // TODO: Other actions
           children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.settings),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SettingsPage(),
+                    ));
+              },
+              title: Text("Settings"),
+            ),
             ListTile(
               leading: Icon(Icons.insert_chart_outlined_rounded),
               onTap: () {

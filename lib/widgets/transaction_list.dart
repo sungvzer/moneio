@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
@@ -39,35 +40,63 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
-    return BlocBuilder<JsonBloc, JsonState>(
-      builder: (context, state) {
-        if (morePrinting)
-          debugPrint(
-              "State{type: ${state.runtimeType}, error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
-        if (state.isError) {
-          String errMsg = "Something went wrong...\n${state.message}";
-          return Container(child: Text(errMsg));
-        }
 
-        // TODO: Do a file watcher kind of stuff instead of manually checking when building
-        // We've written the file and now we update.
-        if (state is JsonWriteState)
-          BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
+    BlocProvider.of<PreferenceBloc>(context)
+        .add(PreferenceRead("", defaultSettings));
+    return BlocBuilder<PreferenceBloc, PreferenceState>(
+        builder: (context, state) {
+      debugPrint(
+          "_TransactionListBuilderState.build: got state with type ${state.runtimeType}");
+      if (state is PreferenceInitial) {
+        return Container();
+      }
 
-        if (state.hasValue) {
-          List<Transaction> l = readState(state as JsonReadState);
-          return _TransactionList(l);
-        }
-        return Center(child: CircularProgressIndicator());
-      },
-    );
+      var settings;
+      if (state is PreferenceWriteState) {
+        settings = state.updatedPreferences;
+        debugPrint(
+            "_TransactionListBuilderState.build: got write state with settings $settings");
+      } else if (state is PreferenceReadState) {
+        settings = state.readValue;
+        if (settings is! Map<String, dynamic>)
+          return CircularProgressIndicator();
+        debugPrint(
+            "_TransactionListBuilderState.build: got read state with settings $settings");
+      }
+
+      assert(settings is Map<String, dynamic>);
+      return BlocBuilder<JsonBloc, JsonState>(
+        builder: (context, state) {
+          if (morePrinting)
+            debugPrint(
+                "State{type: ${state.runtimeType}, error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
+          if (state.isError) {
+            String errMsg = "Something went wrong...\n${state.message}";
+            return Container(child: Text(errMsg));
+          }
+
+          // TODO: Do a file watcher kind of stuff instead of manually checking when building
+          // We've written the file and now we update.
+          if (state is JsonWriteState)
+            BlocProvider.of<JsonBloc>(context)
+                .add(JsonRead("transactions.json"));
+
+          if (state.hasValue) {
+            List<Transaction> l = readState(state as JsonReadState);
+            return _TransactionList(l, settings["human_readable"]);
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      );
+    });
   }
 }
 
 class _TransactionList extends StatelessWidget {
   final List<Transaction> _elements;
+  final bool _humanReadable;
 
-  _TransactionList(this._elements);
+  _TransactionList(this._elements, this._humanReadable);
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +128,8 @@ class _TransactionList extends StatelessWidget {
         thickness: 1,
         height: 0,
       ),
-      itemBuilder: (context, index) => _TransactionTile(_elements[index]),
+      itemBuilder: (context, index) =>
+          _TransactionTile(_elements[index], _humanReadable),
       itemCount: _elements.length,
     );
   }
@@ -107,7 +137,9 @@ class _TransactionList extends StatelessWidget {
 
 class _TransactionTile extends StatelessWidget {
   final Transaction _current;
-  _TransactionTile(this._current);
+  final bool _humanReadable;
+
+  _TransactionTile(this._current, this._humanReadable);
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +148,8 @@ class _TransactionTile extends StatelessWidget {
 
     // TODO: compute MAX_AMOUNT_LENGTH based on device width?!
     const int MAX_AMOUNT_LENGTH = 10;
-    // TODO: User preference humanReadable
     String amountString = _current.getSeparatedAmountString(
-        sign: true, currency: true, humanReadable: true);
+        sign: true, currency: true, humanReadable: _humanReadable);
 
     // This is a little hack to make TextOverflow work
     // on a single word string.
@@ -131,6 +162,7 @@ class _TransactionTile extends StatelessWidget {
     }
 
     return ListTile(
+      // TODO: Transaction deletion and edit
       onLongPress: () => print("TODO: Long press with transaction $_current"),
       leading: Text(
         _current.category.emoji,

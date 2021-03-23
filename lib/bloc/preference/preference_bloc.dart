@@ -61,6 +61,15 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
 
         if (value is bool) result = await preferences.setBool(key, value);
 
+        if (value is Color) {
+          String computed = "0x";
+          computed += value.alpha.toRadixString(16).padLeft(2, '0');
+          computed += value.red.toRadixString(16).padLeft(2, '0');
+          computed += value.green.toRadixString(16).padLeft(2, '0');
+          computed += value.blue.toRadixString(16).padLeft(2, '0');
+          result = await preferences.setString(key, computed);
+        }
+
         if (value is int) result = await preferences.setInt(key, value);
 
         if (value is double) result = await preferences.setDouble(key, value);

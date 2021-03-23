@@ -6,7 +6,7 @@ const bool debug = false;
 const bool morePrinting = false;
 
 // TODO: Favourite user color!
-const Color accentColor = ColorPalette.CasandoraYellow;
+Color accentColor = ColorPalette.CasandoraYellow;
 
 List<TransactionCategory> categories = [
   TransactionCategory("CLOTHING", "Clothing and Accessories", "👚"),
@@ -49,4 +49,10 @@ const Map<String, String> currencyToSymbol = {
   "CAD": "\$",
   "CHN": "¥",
   "NZD": "\$"
+};
+
+const Map<String, dynamic> defaultSettings = {
+  "dark_mode": false,
+  "human_readable": true,
+  "accent_color": "0xfffeca57",
 };

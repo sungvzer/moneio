@@ -66,7 +66,6 @@ class SumWidgetState extends State<SumWidget> {
     String maxKey = "";
     int currentSum;
 
-    // FIXME: SUM IS BROKEN
     for (var key in sumsByCurrency.keys) {
       currentSum = sumsByCurrency[key]!;
       // debugPrint("Key: $key, value: $currentSum");

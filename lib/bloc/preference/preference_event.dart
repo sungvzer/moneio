@@ -4,10 +4,16 @@ part of 'preference_bloc.dart';
 abstract class PreferenceEvent {}
 
 class PreferenceRead extends PreferenceEvent {
-  late String key;
-  PreferenceRead([String? key]) {
+  late final String key;
+  late final defaultValue;
+
+  PreferenceRead([String? key, var defaultValue]) {
+    this.defaultValue = defaultValue;
+
     if (key == null) {
       this.key = "";
+    } else {
+      this.key = key;
     }
   }
 }
@@ -15,5 +21,6 @@ class PreferenceRead extends PreferenceEvent {
 class PreferenceWrite<T> extends PreferenceEvent {
   final String key;
   final T value;
+
   PreferenceWrite(this.key, this.value);
 }

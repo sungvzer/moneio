@@ -23,4 +23,35 @@ class ColorPalette {
   static const Color LightBlueBallerina = Color(0xFFC8D6E5);
   static const Color StormPetrel = Color(0xFF8395A7);
   static const Color FuelTown = Color(0xFF576574);
+
+  static List<Color> getAllColors(List<Color> toRemove) {
+    List<Color> colors = <Color>[
+      ImperialPrimer,
+      PastelGreen,
+      WildCaribbeanGreen,
+      DarkMountainMeadow,
+      JungleGreen,
+      AquaVelvet,
+      JadeDust,
+      Jigglypuff,
+      LotusPink,
+      CasandoraYellow,
+      DoubleDragonSkin,
+      PastelRed,
+      Amour,
+      Megaman,
+      Cyanite,
+      JoustBlue,
+      BleuDeFrance,
+      NasuPurple,
+      Bluebell,
+      LightBlueBallerina,
+      StormPetrel,
+      FuelTown,
+    ];
+    for (Color c in toRemove) {
+      colors.remove(c);
+    }
+    return colors;
+  }
 }

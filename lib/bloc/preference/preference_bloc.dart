@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:moneio/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'preference_event.dart';
+
 part 'preference_state.dart';
 
 class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
@@ -23,17 +25,32 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
         if (key == "") {
           debugPrint("PreferenceBloc.mapEventToState: reading... everything");
           value = <String, dynamic>{};
+          for (var x in defaultSettings.keys) {
+            value[x] = defaultSettings[x];
+          }
+
           for (var x in preferences.getKeys()) {
             value[x] = preferences.get(x);
           }
         } else {
+          debugPrint("PreferenceBloc.mapEventToState: reading... $key");
           value = preferences.get(key);
         }
       });
 
+      debugPrint(
+          "PreferenceBloc.mapEventToState: type of value is ${value.runtimeType}, type of default is ${event.defaultValue.runtimeType}");
+
+      debugPrint(
+          "PreferenceBloc.mapEventToState: value as map is ${value as Map}");
       if (value == null) {
         debugPrint(
-            "PreferenceBloc.mapEventToState: hey, we haven't got this kind of key!");
+            "PreferenceBloc.mapEventToState: hey, we haven't got this kind of key!\nSetting value to ${event.defaultValue}");
+      } else if ((value as Map).isEmpty) {
+        // TODO: Individual settings lookup
+        debugPrint(
+            "PreferenceBloc.mapEventToState: Got an empty map defaulting to default settings\nSetting value to ${event.defaultValue}");
+        value = event.defaultValue;
       } else {
         debugPrint("PreferenceBloc.mapEventToState: we've got $value");
       }
@@ -44,13 +61,14 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
       String key = event.key;
       var value = event.value;
       bool result = false;
-      Map<String, dynamic> newValues = {};
+      Map<String, dynamic> newValues = Map.from(defaultSettings);
 
       await SharedPreferences.getInstance().then((preferences) async {
         debugPrint(
             "PreferenceBloc.mapEventToState: trying to write $value, of type ${value.runtimeType} into key $key...");
         const List<String> listOfStrings = [""];
         final List<Type> valid = [
+          Color,
           bool,
           int,
           double,

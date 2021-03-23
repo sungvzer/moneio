@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/add_transaction_page.dart';
+import 'package:moneio/views/suggestions_page.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
 
@@ -14,6 +15,30 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(
         elevation: 1,
+        child: ListView(
+          // TODO: Other actions
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.insert_chart_outlined_rounded),
+              onTap: () {
+                debugPrint("TODO: Stats");
+              },
+              title: Text("Stats"),
+            ),
+            ListTile(
+              leading: Icon(Icons.lightbulb_outline_rounded),
+              onTap: () {
+                debugPrint("TODO: Suggestions");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SuggestionPage(),
+                    ));
+              },
+              title: Text("Suggestions"),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: accentColor,

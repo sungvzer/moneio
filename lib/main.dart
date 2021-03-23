@@ -22,19 +22,22 @@ class Application extends StatelessWidget {
   static String _supportPath = "";
 
   static String get localPath => _localPath;
+
   static String get tempPath => _tempPath;
+
   static String get supportPath => _supportPath;
 
-  static void loadPaths() {
-    getApplicationDocumentsDirectory().then((value) {
-      _localPath = value.path;
-    });
-    getTemporaryDirectory().then((value) {
-      _tempPath = value.path;
-    });
-    getApplicationSupportDirectory().then((value) {
-      _supportPath = value.path;
-    });
+  static void loadPaths() async {
+    Directory documents, temporary, support;
+    documents = await getApplicationDocumentsDirectory();
+    _localPath = documents.path;
+
+    temporary = await getTemporaryDirectory();
+    _tempPath = temporary.path;
+
+    support = await getApplicationSupportDirectory();
+    _supportPath = support.path;
+    // debugPrint("Paths loaded: $_localPath, $_tempPath, $_supportPath");
   }
 
   @override

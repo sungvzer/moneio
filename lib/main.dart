@@ -1,21 +1,35 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/views/home_page.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(BlocProvider<JsonBloc>(
-    create: (context) => JsonBloc(),
-    child: Application(),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<JsonBloc>(
+          create: (context) => JsonBloc(),
+        ),
+        BlocProvider<PreferenceBloc>(
+          create: (context) => PreferenceBloc(),
+        )
+      ],
+      child: Application(),
+    ),
+  );
 }
 
+// TODO: Implement dark mode
 class Application extends StatelessWidget {
   static String _localPath = "";
   static String _tempPath = "";
@@ -45,8 +59,13 @@ class Application extends StatelessWidget {
     loadPaths();
     // ignore: close_sinks
     JsonBloc b = BlocProvider.of<JsonBloc>(context);
-    if (kDebugMode) b.add(JsonClear("transactions.json"));
-    for (var i = 0; i < 30; i++) {
+
+    if (kDebugMode) {
+      SharedPreferences.getInstance().then((prefs) => prefs.clear());
+
+      b.add(JsonClear("transactions.json", createFileIfNeeded: true));
+    }
+    for (var i = 0; i < 10; i++) {
       var keys = categories.toList();
       keys.shuffle();
 
@@ -62,7 +81,9 @@ class Application extends StatelessWidget {
       );
 
       b.add(JsonWrite("transactions.json",
-          append: true, value: newTransaction.toMap()));
+          append: true,
+          value: newTransaction.toMap(),
+          createFileIfNeeded: true));
     }
 
     return MaterialApp(

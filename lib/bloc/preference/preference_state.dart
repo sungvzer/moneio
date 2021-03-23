@@ -6,13 +6,15 @@ abstract class PreferenceState {}
 class PreferenceInitial extends PreferenceState {}
 
 class PreferenceReadState extends PreferenceState {
-  var readValue;
+  final readValue;
+
   PreferenceReadState(this.readValue);
 }
 
 class PreferenceWriteState extends PreferenceState {
-  bool success;
-  Map<String, dynamic> updatedPreferences;
+  final bool success;
+  final Map<String, dynamic> updatedPreferences;
+
   PreferenceWriteState(
       {required this.success, required this.updatedPreferences});
 }

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/views/home_page.dart';

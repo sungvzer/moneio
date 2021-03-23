@@ -1,14 +1,8 @@
 import 'dart:ui';
 
-import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart' show DateFormat;
-import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
-import 'package:moneio/models/transaction_category.dart';
 
 class SuggestionPage extends StatefulWidget {
   SuggestionPage();
@@ -31,8 +25,8 @@ class SuggestionPageState extends State<SuggestionPage> {
         child: Container(
           alignment: Alignment.center,
           child: SingleChildScrollView(
-            child: Text(
-                "TODO: This needs to be implemented."), // TODO: Implement suggestions
+            child: Text("TODO: This needs to be implemented."),
+            // TODO: Implement suggestions
             physics: BouncingScrollPhysics(),
             clipBehavior: Clip.none,
           ),

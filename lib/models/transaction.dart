@@ -110,6 +110,9 @@ class Transaction extends Comparable {
   }
 
   @override
+  int get hashCode => super.hashCode;
+
+  @override
   int compareTo(other) {
     if (other is! Transaction) throw TypeError();
 
@@ -130,5 +133,16 @@ class Transaction extends Comparable {
   @override
   String toString() {
     return toMap().toString();
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! Transaction) throw TypeError();
+    return this.amount == other.amount &&
+        this.category == other.category &&
+        this.currency == other.currency &&
+        this.amount == other.amount &&
+        this.tag == other.tag &&
+        this.date == other.date;
   }
 }

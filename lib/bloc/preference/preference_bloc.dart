@@ -41,11 +41,10 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
       debugPrint(
           "PreferenceBloc.mapEventToState: type of value is ${value.runtimeType}, type of default is ${event.defaultValue.runtimeType}");
 
-      debugPrint(
-          "PreferenceBloc.mapEventToState: value as map is ${value as Map}");
       if (value == null) {
         debugPrint(
             "PreferenceBloc.mapEventToState: hey, we haven't got this kind of key!\nSetting value to ${event.defaultValue}");
+        value = {key: event.defaultValue};
       } else if ((value as Map).isEmpty) {
         // TODO: Individual settings lookup
         debugPrint(

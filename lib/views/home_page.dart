@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/add_transaction_page.dart';
 import 'package:moneio/views/settings_page.dart';

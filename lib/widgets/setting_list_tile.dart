@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
+import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class SettingListTile<T> extends StatefulWidget {
   final String title;
@@ -78,9 +79,9 @@ class _SettingListTileState<T> extends State<SettingListTile> {
           },
         ),
       );
-    } else if (_value is String && _isColorString(_value as String)) {
+    } else if (_value is String && isColorString(_value as String)) {
       debugPrint("Got string $_value, this is a color");
-      Color value = _parseColorString(_value as String);
+      Color value = parseColorString(_value as String);
       return ListTile(
         title: Text(
           _title,
@@ -135,8 +136,8 @@ class _SettingListTileState<T> extends State<SettingListTile> {
                         setState(() {
                           BlocProvider.of<PreferenceBloc>(context).add(
                               PreferenceWrite("accent_color",
-                                  _colorToString(temporaryValue)));
-                          _value = _colorToString(temporaryValue) as T;
+                                  colorToString(temporaryValue)));
+                          _value = colorToString(temporaryValue) as T;
                           accentColor = temporaryValue;
                         });
                       Navigator.of(context).pop();
@@ -149,7 +150,7 @@ class _SettingListTileState<T> extends State<SettingListTile> {
         },
         trailing: CircleAvatar(
           child: Container(),
-          backgroundColor: _parseColorString(_value as String),
+          backgroundColor: parseColorString(_value as String),
         ),
       );
     }
@@ -164,27 +165,4 @@ class _SettingListTileState<T> extends State<SettingListTile> {
     // if (T is bool) debugPrint("Boolean!");
     return Container(child: getWidgetByType(context));
   }
-}
-
-bool _isColorString(String str) {
-  // 0xAARRGGBB
-  return str.length == 10 &&
-      str.startsWith('0x') &&
-      str.substring(2).contains(RegExp(r'^([a-fA-F0-9]{8}|[a-fA-F0-9]{4})$'));
-}
-
-Color _parseColorString(String str) {
-  assert(_isColorString(str));
-
-  str = str.substring(2);
-  return Color(int.parse(str, radix: 16));
-}
-
-String _colorToString(Color c) {
-  String result = "0x";
-  result += c.alpha.toRadixString(16);
-  result += c.red.toRadixString(16);
-  result += c.green.toRadixString(16);
-  result += c.blue.toRadixString(16);
-  return result;
 }

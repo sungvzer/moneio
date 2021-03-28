@@ -114,6 +114,8 @@ class _SettingListTileState<T> extends State<SettingListTile> {
                   child: BlockPicker(
                     availableColors: ColorPalette.getAllColors([
                       ColorPalette.ImperialPrimer,
+                      ColorPalette.Bluebell,
+                      ColorPalette.NasuPurple,
                     ]),
                     pickerColor: value,
                     onColorChanged: (color) => temporaryValue = color,

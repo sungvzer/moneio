@@ -92,6 +92,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       SettingListTile<bool>(
                         values["dark_mode"] ? values["dark_mode"] : false,
                         title: "Dark mode",
+                        subtitle: "This feature doesn't currently work",
                         settingKey: "dark_mode",
                       ),
                       SettingListTile<String>(

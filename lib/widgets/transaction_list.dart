@@ -41,8 +41,6 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
   Widget build(BuildContext context) {
     BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
 
-    BlocProvider.of<PreferenceBloc>(context)
-        .add(PreferenceRead("", defaultSettings));
     return BlocBuilder<PreferenceBloc, PreferenceState>(
         builder: (context, state) {
       debugPrint(

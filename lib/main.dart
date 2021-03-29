@@ -3,9 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:moneio/bloc/preference/preference_bloc.dart';
-import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/views/home_page.dart';
@@ -58,6 +59,11 @@ class Application extends StatelessWidget {
     loadPaths();
     // ignore: close_sinks
     JsonBloc b = BlocProvider.of<JsonBloc>(context);
+
+    if (morePrinting) debugPrint("Application.build(): Colors are");
+    ColorPalette.getAllColors([]).forEach((element) {
+      debugPrint(element.toString());
+    });
 
     if (kDebugMode) {
       SharedPreferences.getInstance().then((prefs) => prefs.clear());

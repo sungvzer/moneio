@@ -4,9 +4,10 @@ import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {
   TransactionCategory category;
+  static int sId = 0;
 
   // TODO: Is ID really necessary??
-  int id;
+  late int id;
   String tag;
 
   int amount; // TODO: Should we switch to BigInt instead?
@@ -14,13 +15,21 @@ class Transaction extends Comparable {
   DateTime date;
 
   Transaction({
-    this.id = -1,
+    int? id,
     this.tag = "",
     required this.category,
     this.amount = 0,
     this.currency = "",
     required this.date,
-  });
+  }) {
+    if (id != null) {
+      if (morePrinting) debugPrint("Transaction: Getting existing id $id");
+      this.id = id;
+    } else {
+      if (morePrinting) debugPrint("Transaction: Getting new id $sId");
+      this.id = sId++;
+    }
+  }
 
   factory Transaction.fromMap(Map<String, dynamic> json) {
     DateTime parsed;
@@ -31,7 +40,7 @@ class Transaction extends Comparable {
       parsed = DateTime(0);
     }
     return Transaction(
-      id: json["id"] == null ? 0 : json["id"] as int,
+      id: json["id"] as int?,
       tag: json["tag"] as String,
       category:
           TransactionCategory.fromMap(json["category"] as Map<String, dynamic>),
@@ -72,7 +81,9 @@ class Transaction extends Comparable {
     if (humanReadable && amount.abs() >= thousandsLowerBound) {
       final bool isThousands = absoluteAmount >= thousandsLowerBound &&
           absoluteAmount <= thousandsUpperBound;
+
       final bool isMillionsOrMore = absoluteAmount >= millionsLowerBound;
+
       if (isThousands) {
         result = (absoluteAmount / thousandsDivider).floor().toString() + 'K';
       } else if (isMillionsOrMore) {

@@ -140,7 +140,7 @@ class _TransactionList extends StatelessWidget {
         height: 0,
       ),
       itemBuilder: (context, index) =>
-          _TransactionTile(_elements[index], _humanReadable),
+          _TransactionTile(_elements[index], _humanReadable, maxAmountLength),
       itemCount: _elements.length,
     );
   }
@@ -149,8 +149,9 @@ class _TransactionList extends StatelessWidget {
 class _TransactionTile extends StatelessWidget {
   final Transaction _current;
   final bool _humanReadable;
+  final int _maxAmountLength;
 
-  _TransactionTile(this._current, this._humanReadable);
+  _TransactionTile(this._current, this._humanReadable, this._maxAmountLength);
 
   @override
   Widget build(BuildContext context) {
@@ -165,10 +166,10 @@ class _TransactionTile extends StatelessWidget {
       // on a single word string.
       // Example:
       // '+$30,000,000.00' -> '+$30,000[space],000.00'
-      if (amountString.length > maxAmountLength) {
-        amountString = amountString.substring(0, maxAmountLength) +
+      if (amountString.length > _maxAmountLength) {
+        amountString = amountString.substring(0, _maxAmountLength) +
             ' ' +
-            amountString.substring(maxAmountLength);
+            amountString.substring(_maxAmountLength);
       }
     }
     return ListTile(

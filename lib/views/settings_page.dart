@@ -36,10 +36,11 @@ class _SettingsPageState extends State<SettingsPage> {
           } else {
             values = (state as PreferenceWriteState).updatedPreferences;
             if (values == {}) throw UnimplementedError();
-            debugPrint("_SettingsPageState.build: new preferences are $values");
           }
-          debugPrint(values.toString());
-          debugPrint(values["human_readable"].toString());
+          debugPrint(
+              "_SettingsPageState.build: preferences: ${values.toString()}");
+          debugPrint(
+              "_SettingsPageState.build: human readable is ${values["human_readable"].toString()}");
           return Scaffold(
             appBar: AppBar(
               backgroundColor: accentColor,

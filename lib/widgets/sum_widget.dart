@@ -96,12 +96,20 @@ class SumWidgetState extends State<SumWidget> {
         .getSeparatedAmountString(
             currency: true, sign: false, humanReadable: _humanReadable);
 
-    // Trick to split at my desired length.
-    const int MAX_AMOUNT_LENGTH = 10;
-    if (amountString.length > MAX_AMOUNT_LENGTH) {
-      amountString = amountString.substring(0, MAX_AMOUNT_LENGTH) +
+    if (morePrinting)
+      debugPrint(
+          "SumWidget.getInnerWidget: device width is ${screenWidth(context).round()}");
+
+    int maxAmountLength = screenWidth(context).round();
+    maxAmountLength = (maxAmountLength / 40).floor();
+    if (morePrinting)
+      debugPrint(
+          "SumWidget.getInnerWidget: so the new length is $maxAmountLength");
+
+    if (amountString.length > maxAmountLength) {
+      amountString = amountString.substring(0, maxAmountLength) +
           ' ' +
-          amountString.substring(MAX_AMOUNT_LENGTH);
+          amountString.substring(maxAmountLength);
     }
     return Center(
       child: Text(

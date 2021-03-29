@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                SumWidget(),
+                SumWidget(settings["human_readable"]),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 100 * 4,
                 ),

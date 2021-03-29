@@ -2,22 +2,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/models/transaction_category.dart';
 import 'package:moneio/screen.dart';
 
 class SumWidget extends StatefulWidget {
-  SumWidget();
+  final bool _humanReadable;
+
+  SumWidget(this._humanReadable) {
+    debugPrint("SumWidget: human readable: $_humanReadable");
+  }
 
   @override
-  SumWidgetState createState() => SumWidgetState();
+  SumWidgetState createState() => SumWidgetState(_humanReadable);
 }
 
 class SumWidgetState extends State<SumWidget> {
   // TODO: Remove this?!
   int amount = 0;
   String amountString = "";
+  bool _humanReadable;
+
+  SumWidgetState(this._humanReadable);
 
   BoxDecoration _decoration = BoxDecoration(
     shape: BoxShape.rectangle,
@@ -76,16 +85,16 @@ class SumWidgetState extends State<SumWidget> {
       }
     }
 
-    // debugPrint("maxKey: $maxKey, maxSum: $amount");
+    debugPrint(
+        "SumWidget.getInnerWidget: human readable format is ${_humanReadable ? "on" : "off"}");
 
-    // TODO: User preference for humanReadable
     amountString = Transaction(
             amount: amount,
             currency: maxKey,
             date: DateTime.now(),
             category: TransactionCategory("NONE"))
         .getSeparatedAmountString(
-            currency: true, sign: false, humanReadable: true);
+            currency: true, sign: false, humanReadable: _humanReadable);
 
     // Trick to split at my desired length.
     const int MAX_AMOUNT_LENGTH = 10;
@@ -120,28 +129,38 @@ class SumWidgetState extends State<SumWidget> {
               fontWeight: FontWeight.w600,
               fontSize: 20),
         ),
-        BlocBuilder<JsonBloc, JsonState>(
-          builder: (context, state) {
-            var innerWidget = getInnerWidget(context, state);
+        BlocBuilder<PreferenceBloc, PreferenceState>(
+          builder: (context, preferenceState) =>
+              BlocBuilder<JsonBloc, JsonState>(
+            builder: (context, state) {
+              if (preferenceState is PreferenceWriteState) {
+                _humanReadable =
+                    preferenceState.updatedPreferences["human_readable"];
+              } else if (preferenceState is PreferenceReadState &&
+                  preferenceState.readValue is Map) {
+                _humanReadable = preferenceState.readValue["human_readable"];
+              }
+              var innerWidget = getInnerWidget(context, state);
 
-            var outerWidget = GestureDetector(
-              onTap: () => setState(() => debugPrint("It works now!")),
-              child: SizedBox(
-                height: percentHeight(_) * 15,
-                width: percentWidth(_) * 50,
-                child: DecoratedBox(
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: innerWidget,
-                      )),
-                  decoration: _decoration,
+              var outerWidget = GestureDetector(
+                onTap: () => setState(() => debugPrint("It works now!")),
+                child: SizedBox(
+                  height: percentHeight(_) * 15,
+                  width: percentWidth(_) * 50,
+                  child: DecoratedBox(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: innerWidget,
+                        )),
+                    decoration: _decoration,
+                  ),
                 ),
-              ),
-            );
-            return outerWidget;
-          },
+              );
+              return outerWidget;
+            },
+          ),
         ),
       ],
     );

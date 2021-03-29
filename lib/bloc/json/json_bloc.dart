@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
 
 part 'json_event.dart';
+
 part 'json_state.dart';
 
 class JsonBloc extends Bloc<JsonEvent, JsonState> {
@@ -16,7 +17,7 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
 
   @override
   Stream<JsonState> mapEventToState(JsonEvent event) async* {
-    // Code that's used in both codepaths
+    // Code that's used in both code paths
     String path = (await getApplicationDocumentsDirectory()).path;
     File activeFile;
     String fileName = event.fileName, fullPath = path + "/$fileName";
@@ -36,7 +37,7 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
 
     assert(activeFile.existsSync());
 
-    // Codepaths
+    // Code paths
     switch (event.runtimeType) {
       case JsonRead:
         yield _read(activeFile);

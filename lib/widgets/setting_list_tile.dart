@@ -80,7 +80,9 @@ class _SettingListTileState<T> extends State<SettingListTile> {
         ),
       );
     } else if (_value is String && isColorString(_value as String)) {
-      debugPrint("Got string $_value, this is a color");
+      if (morePrinting)
+        debugPrint(
+            "SettingListTileState.getWidgetByType(): Got string $_value, this is a color");
       Color value = parseColorString(_value as String);
       return ListTile(
         title: Text(

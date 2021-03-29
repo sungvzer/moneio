@@ -53,14 +53,16 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
       var settings;
       if (state is PreferenceWriteState) {
         settings = state.updatedPreferences;
-        debugPrint(
-            "_TransactionListBuilderState.build: got write state with settings $settings");
+        if (morePrinting)
+          debugPrint(
+              "_TransactionListBuilderState.build: got write state with settings $settings");
       } else if (state is PreferenceReadState) {
         settings = state.readValue;
         if (settings is! Map<String, dynamic>)
           return CircularProgressIndicator();
-        debugPrint(
-            "_TransactionListBuilderState.build: got read state with settings $settings");
+        if (morePrinting)
+          debugPrint(
+              "_TransactionListBuilderState.build: got read state with settings $settings");
       }
 
       assert(settings is Map<String, dynamic>);
@@ -119,6 +121,16 @@ class _TransactionList extends StatelessWidget {
       );
     }
 
+    if (morePrinting)
+      debugPrint(
+          "_TransactionList.build(): device width is ${screenWidth(context).round()}");
+
+    int maxAmountLength = screenWidth(context).round();
+    maxAmountLength = (maxAmountLength / 56).floor();
+    if (morePrinting)
+      debugPrint(
+          "_TransactionList.build(): so the new length is $maxAmountLength");
+
     return ListView.separated(
       physics: AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       separatorBuilder: (context, index) => Divider(
@@ -144,14 +156,6 @@ class _TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateTime date = _current.date;
     final int amount = _current.amount;
-
-    debugPrint(
-        "_TransactionTile.build(): device width is ${screenWidth(context).round()}");
-
-    int maxAmountLength = screenWidth(context).round();
-    maxAmountLength = (maxAmountLength / 56).floor();
-    debugPrint(
-        "_TransactionTile.build(): so the new length is $maxAmountLength");
 
     String amountString = _current.getSeparatedAmountString(
         sign: true, currency: true, humanReadable: _humanReadable);

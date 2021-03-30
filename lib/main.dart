@@ -31,32 +31,8 @@ void main() {
 
 // TODO: Implement dark mode
 class Application extends StatelessWidget {
-  static String _localPath = "";
-  static String _tempPath = "";
-  static String _supportPath = "";
-
-  static String get localPath => _localPath;
-
-  static String get tempPath => _tempPath;
-
-  static String get supportPath => _supportPath;
-
-  static void loadPaths() async {
-    Directory documents, temporary, support;
-    documents = await getApplicationDocumentsDirectory();
-    _localPath = documents.path;
-
-    temporary = await getTemporaryDirectory();
-    _tempPath = temporary.path;
-
-    support = await getApplicationSupportDirectory();
-    _supportPath = support.path;
-    // debugPrint("Paths loaded: $_localPath, $_tempPath, $_supportPath");
-  }
-
   @override
   Widget build(BuildContext context) {
-    loadPaths();
     // ignore: close_sinks
     JsonBloc b = BlocProvider.of<JsonBloc>(context);
 

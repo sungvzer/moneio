@@ -96,7 +96,9 @@ class HomePage extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: accentColor,
+            backgroundColor: settings["accent_color"] != null
+                ? parseColorString(settings["accent_color"])
+                : parseColorString(defaultSettings["accent_color"]),
             foregroundColor: ColorPalette.ImperialPrimer,
             onPressed: () {
               Navigator.push(

@@ -156,6 +156,8 @@ class _TransactionForm extends StatelessWidget {
                       validator: (value) {
                         if (value == null) return null;
                         if (value.isEmpty) return "Please enter an amount.";
+                        if (double.parse(value) == 0.0)
+                          return "Please enter an amount";
                         return null;
                       },
                     ),
@@ -485,6 +487,7 @@ class LabelledFormField extends StatelessWidget {
   final String _label;
   final Widget child;
   final TextStyle? style;
+
   const LabelledFormField(this._label, {required this.child, this.style});
 
   @override

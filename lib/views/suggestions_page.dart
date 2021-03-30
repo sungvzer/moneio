@@ -33,7 +33,8 @@ class SuggestionPageState extends State<SuggestionPage> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: accentColor,
+        // TODO: Settings BlocBuilder
+        backgroundColor: ColorPalette.PastelRed,
         elevation: 0,
         leading: Container(),
         centerTitle: true,

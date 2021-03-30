@@ -140,7 +140,6 @@ class _SettingListTileState<T> extends State<SettingListTile> {
                               PreferenceWrite("accent_color",
                                   colorToString(temporaryValue)));
                           _value = colorToString(temporaryValue) as T;
-                          accentColor = temporaryValue;
                         });
                       Navigator.of(context).pop();
                     },

@@ -5,9 +5,6 @@ import 'package:moneio/models/transaction_category.dart';
 const bool debug = false;
 const bool morePrinting = false;
 
-// TODO: Favourite user color!
-Color accentColor = ColorPalette.CasandoraYellow;
-
 List<TransactionCategory> categories = [
   TransactionCategory("CLOTHING", "Clothing and Accessories", "👚"),
   TransactionCategory("FOOD", "Food", "🍕"),

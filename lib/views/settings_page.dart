@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
+import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/screen.dart';
 import 'package:moneio/widgets/setting_list_tile.dart';
@@ -43,7 +44,9 @@ class _SettingsPageState extends State<SettingsPage> {
               "_SettingsPageState.build: human readable is ${values["human_readable"].toString()}");
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: accentColor,
+              backgroundColor: values["accent_color"] != null
+                  ? parseColorString(values["accent_color"]!)
+                  : parseColorString(defaultSettings["accent_color"]),
               elevation: 0,
               leading: Container(),
               centerTitle: true,

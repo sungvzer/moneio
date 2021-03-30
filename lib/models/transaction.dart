@@ -61,7 +61,9 @@ class Transaction extends Comparable {
     };
   }
 
-  String getCurrencySymbol() => currencyToSymbol[this.currency]!;
+  String getCurrencySymbol() => currencyToSymbol[this.currency] == null
+      ? ""
+      : currencyToSymbol[this.currency]!;
 
   String getSeparatedAmountString({
     bool sign = false,

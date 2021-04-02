@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
@@ -91,6 +92,13 @@ class HomePage extends StatelessWidget {
                         ));
                   },
                   title: Text("Suggestions"),
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  title: Text("Logout"),
                 ),
               ],
             ),

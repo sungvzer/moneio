@@ -14,23 +14,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(milliseconds: 300), () {
-      widget1Opacity = 1;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: AnimatedOpacity(
-            opacity: widget1Opacity,
-            duration: Duration(seconds: 1),
-            // TODO: Integrate with our "logo"
-            child: FlutterLogo(
-              size: 200,
-              style: FlutterLogoStyle.markOnly,
-            )),
+        child: FlutterLogo(
+          curve: Curves.easeInOutCirc,
+          size: 200,
+          style: FlutterLogoStyle.horizontal,
+        ),
       ),
     );
   }

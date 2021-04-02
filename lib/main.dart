@@ -1,12 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home_page.dart';
 import 'package:moneio/views/loading_screen.dart';
+import 'package:moneio/views/login_router.dart';
+import 'package:moneio/views/login_views/login_screen.dart';
+import 'package:moneio/views/login_views/sign_up_screen.dart';
+
+import 'package:moneio/color_palette.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +38,10 @@ class FirebaseApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "mone.io",
@@ -38,6 +49,8 @@ class FirebaseApplication extends StatelessWidget {
         LoadingScreen.id: (context) => LoadingScreen(),
         HomePage.id: (context) => HomePage(),
         FirebaseErrorPage.id: (context) => FirebaseErrorPage(),
+        LoginScreen.id: (context) => LoginScreen(),
+        SignUpScreen.id: (context) => SignUpScreen(),
       },
       home: FutureBuilder(
         // Initialize FlutterFire:
@@ -52,7 +65,7 @@ class FirebaseApplication extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             debugPrint(
                 "FirebaseApplication.build: Firebase initialized, getting application...");
-            return HomePage();
+            return LoginRouter();
           }
 
           return LoadingScreen();

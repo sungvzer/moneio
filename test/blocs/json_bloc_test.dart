@@ -21,7 +21,7 @@ main() async {
   };
   test('Valid JsonWrite', () {
     JsonBloc x = JsonBloc();
-    x.listen((state) {
+    x.stream.listen((state) {
       expect(state.isError, false);
     });
     x.add(JsonWrite(
@@ -34,7 +34,7 @@ main() async {
 
   test('Valid JsonRead', () {
     JsonBloc x = JsonBloc();
-    x.listen((state) {
+    x.stream.listen((state) {
       expect(state.isError, false);
       expect(state.hasValue, true);
       expect(state.value, [validJson]);

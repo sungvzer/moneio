@@ -11,6 +11,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction_category.dart';
+import 'package:moneio/widgets/labelled_form_field.dart';
 
 class AddTransactionPage extends StatefulWidget {
   AddTransactionPage();
@@ -191,6 +192,7 @@ class _TransactionForm extends StatelessWidget {
                       validator: (value) {
                         if (value == null) return null;
                         if (value.isEmpty) return "Please enter an amount.";
+                        value = value.replaceAll(',', "");
                         if (double.parse(value) == 0.0)
                           return "Please enter an amount";
                         return null;
@@ -209,8 +211,9 @@ class _TransactionForm extends StatelessWidget {
                           str == null ? "Please insert a currency" : null,
                       decoration: _decoration,
                       isExpanded: true,
-                      onChanged: (String? value) {
-                        if (value != null) _selectedCurrency = value.trim();
+                      onChanged: (value) {
+                        if (value is String?) if (value != null)
+                          _selectedCurrency = value.trim();
                       },
                       style: TextStyle(
                         fontFamily: "Poppins",
@@ -515,28 +518,5 @@ class _TransactionForm extends StatelessWidget {
     }
     parsedTime = TimeOfDay(hour: hour, minute: minute);
     return parsedTime;
-  }
-}
-
-class LabelledFormField extends StatelessWidget {
-  final String _label;
-  final Widget child;
-  final TextStyle? style;
-
-  const LabelledFormField(this._label, {required this.child, this.style});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_label),
-        SizedBox(
-          height: 5,
-        ),
-        child,
-      ],
-    );
   }
 }

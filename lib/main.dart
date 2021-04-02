@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -12,8 +11,6 @@ import 'package:moneio/views/loading_screen.dart';
 import 'package:moneio/views/login_router.dart';
 import 'package:moneio/views/login_views/login_screen.dart';
 import 'package:moneio/views/login_views/sign_up_screen.dart';
-
-import 'package:moneio/color_palette.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

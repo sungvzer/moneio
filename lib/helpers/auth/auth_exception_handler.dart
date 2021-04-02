@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/views/login_router.dart';
-import 'package:moneio/views/login_views/login_screen.dart';
 
 void firebaseAuthExceptionHandler(
   FirebaseAuthException authException,

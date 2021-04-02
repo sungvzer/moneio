@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:moneio/color_palette.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 const bool debug = false;

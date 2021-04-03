@@ -9,6 +9,8 @@ import 'package:moneio/widgets/setting_list_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
+  static final String id = '/home/settings';
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }

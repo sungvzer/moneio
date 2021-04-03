@@ -14,6 +14,7 @@ import 'package:moneio/models/transaction_category.dart';
 import 'package:moneio/widgets/labelled_form_field.dart';
 
 class AddTransactionPage extends StatefulWidget {
+  static final String id = '/home/add_transaction';
   AddTransactionPage();
 
   @override

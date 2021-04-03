@@ -7,7 +7,7 @@ import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
-import 'package:moneio/views/home_page.dart';
+import 'package:moneio/views/home/home_page.dart';
 import 'package:moneio/views/loading_screen.dart';
 import 'package:moneio/views/login_router.dart';
 import 'package:moneio/views/login/login_screen.dart';

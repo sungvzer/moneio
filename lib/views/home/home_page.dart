@@ -5,9 +5,9 @@ import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
-import 'package:moneio/views/add_transaction_page.dart';
-import 'package:moneio/views/settings_page.dart';
-import 'package:moneio/views/suggestions_page.dart';
+import 'package:moneio/views/home/add_transaction_page.dart';
+import 'package:moneio/views/home/settings_page.dart';
+import 'package:moneio/views/home/suggestions_page.dart';
 import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
 import 'package:moneio/widgets/transaction_list.dart';
 

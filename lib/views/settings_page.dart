@@ -18,6 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     // ignore: close_sinks
     PreferenceBloc bloc = BlocProvider.of<PreferenceBloc>(context);
+    debugPrint("_SettingsPageState.build: Adding PreferenceRead...");
 
     bloc.add(PreferenceRead("", defaultSettings));
     return BlocBuilder<PreferenceBloc, PreferenceState>(

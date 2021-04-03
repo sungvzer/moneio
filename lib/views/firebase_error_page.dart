@@ -56,6 +56,7 @@ class FirebaseErrorPageState extends State<FirebaseErrorPage> {
     //     ),
     //   ),
     // );
+    debugPrint("FirebaseErrorPageState.build: Adding PreferenceRead...");
 
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));

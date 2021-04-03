@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("HomePage.build: Adding PreferenceRead...");
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
     return BlocBuilder<PreferenceBloc, PreferenceState>(

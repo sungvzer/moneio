@@ -23,6 +23,8 @@ class AddTransactionPage extends StatefulWidget {
 class AddTransactionPageState extends State<AddTransactionPage> {
   @override
   Widget build(BuildContext context) {
+    debugPrint("AddTransactionPageState.build: Adding PreferenceRead...");
+
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
     return BlocBuilder<PreferenceBloc, PreferenceState>(

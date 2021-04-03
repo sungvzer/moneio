@@ -10,7 +10,7 @@ import 'package:moneio/views/suggestions_page.dart';
 import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
 import 'package:moneio/widgets/transaction_list.dart';
 
-import '../color_palette.dart';
+import 'package:moneio/color_palette.dart';
 
 class HomePage extends StatelessWidget {
   static const String id = "/home";

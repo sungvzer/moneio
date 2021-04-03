@@ -13,7 +13,9 @@ class SumWidget extends StatefulWidget {
   final bool _humanReadable;
 
   SumWidget(this._humanReadable) {
-    debugPrint("SumWidget: human readable: $_humanReadable");
+    if (morePrinting) {
+      debugPrint("SumWidget: human readable: $_humanReadable");
+    }
   }
 
   @override
@@ -85,8 +87,10 @@ class SumWidgetState extends State<SumWidget> {
       }
     }
 
-    debugPrint(
-        "SumWidget.getInnerWidget: human readable format is ${_humanReadable ? "on" : "off"}");
+    if (morePrinting) {
+      debugPrint(
+          "SumWidget.getInnerWidget: human readable format is ${_humanReadable ? "on" : "off"}");
+    }
 
     amountString = Transaction(
             amount: amount,

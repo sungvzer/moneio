@@ -23,7 +23,9 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
 
       await SharedPreferences.getInstance().then((preferences) async {
         if (key == "") {
-          debugPrint("PreferenceBloc.mapEventToState: reading... everything");
+          if (morePrinting) {
+            debugPrint("PreferenceBloc.mapEventToState: reading... everything");
+          }
           value = <String, dynamic>{};
           for (var x in defaultSettings.keys) {
             value[x] = defaultSettings[x];
@@ -33,25 +35,35 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
             value[x] = preferences.get(x);
           }
         } else {
-          debugPrint("PreferenceBloc.mapEventToState: reading... $key");
+          if (morePrinting) {
+            debugPrint("PreferenceBloc.mapEventToState: reading... $key");
+          }
           value = preferences.get(key);
         }
       });
 
-      debugPrint(
-          "PreferenceBloc.mapEventToState: type of value is ${value.runtimeType}, type of default is ${event.defaultValue.runtimeType}");
+      if (morePrinting) {
+        debugPrint(
+            "PreferenceBloc.mapEventToState: type of value is ${value.runtimeType}, type of default is ${event.defaultValue.runtimeType}");
+      }
 
       if (value == null) {
-        debugPrint(
-            "PreferenceBloc.mapEventToState: hey, we haven't got this kind of key!\nSetting value to ${event.defaultValue}");
+        if (morePrinting) {
+          debugPrint(
+              "PreferenceBloc.mapEventToState: hey, we haven't got this kind of key!\nSetting value to ${event.defaultValue}");
+        }
         value = {key: event.defaultValue};
       } else if ((value as Map).isEmpty) {
         // TODO: Individual settings lookup
-        debugPrint(
-            "PreferenceBloc.mapEventToState: Got an empty map defaulting to default settings\nSetting value to ${event.defaultValue}");
+        if (morePrinting) {
+          debugPrint(
+              "PreferenceBloc.mapEventToState: Got an empty map defaulting to default settings\nSetting value to ${event.defaultValue}");
+        }
         value = event.defaultValue;
       } else {
-        debugPrint("PreferenceBloc.mapEventToState: we've got $value");
+        if (morePrinting) {
+          debugPrint("PreferenceBloc.mapEventToState: we've got $value");
+        }
       }
       yield PreferenceReadState(value);
     }
@@ -63,8 +75,10 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
       Map<String, dynamic> newValues = Map.from(defaultSettings);
 
       await SharedPreferences.getInstance().then((preferences) async {
-        debugPrint(
-            "PreferenceBloc.mapEventToState: trying to write $value, of type ${value.runtimeType} into key $key...");
+        if (morePrinting) {
+          debugPrint(
+              "PreferenceBloc.mapEventToState: trying to write $value, of type ${value.runtimeType} into key $key...");
+        }
         const List<String> listOfStrings = [""];
         final List<Type> valid = [
           Color,
@@ -100,9 +114,12 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
           newValues[key] = preferences.get(key);
         }
       });
-      debugPrint(
-          "PreferenceBloc.mapEventToState: ${result ? "success!" : "failure!"}");
-      debugPrint("PreferenceBloc.mapEventToState: updated values: $newValues");
+      if (morePrinting) {
+        debugPrint(
+            "PreferenceBloc.mapEventToState: ${result ? "success!" : "failure!"}");
+        debugPrint(
+            "PreferenceBloc.mapEventToState: updated values: $newValues");
+      }
       yield PreferenceWriteState(
         success: result,
         updatedPreferences: newValues,

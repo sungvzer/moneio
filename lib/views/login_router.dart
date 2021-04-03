@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home_page.dart';
 import 'package:moneio/views/loading_screen.dart';
@@ -12,15 +13,21 @@ class LoginRouter extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) return FirebaseErrorPage();
-        debugPrint(
-            "LoginRouter.build: ConnectionState: ${snapshot.connectionState.toString()}");
+
+        if (morePrinting) {
+          debugPrint(
+              "LoginRouter.build: ConnectionState: ${snapshot.connectionState.toString()}");
+        }
+
         if (snapshot.connectionState != ConnectionState.active) {
           return LoadingScreen();
         }
         final user = snapshot.data;
         if (user != null) {
-          debugPrint("LoginRouter.build: user is logged in");
-          debugPrint((user as User?).toString());
+          if (morePrinting) {
+            debugPrint("LoginRouter.build: user is logged in");
+            debugPrint((user as User?).toString());
+          }
           if (false)
             Navigator.push(
               context,
@@ -28,7 +35,9 @@ class LoginRouter extends StatelessWidget {
             );
           return HomePage();
         } else {
-          debugPrint("LoginRouter.build: user is not logged in");
+          if (morePrinting) {
+            debugPrint("LoginRouter.build: user is not logged in");
+          }
 
           if (false)
             Navigator.push(

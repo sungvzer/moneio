@@ -22,7 +22,9 @@ class HomePage extends StatelessWidget {
     return BlocBuilder<PreferenceBloc, PreferenceState>(
       builder: (context, state) {
         Map<String, dynamic> settings = {};
-        debugPrint("HomePage.build(): getting state ${state.runtimeType}");
+        if (morePrinting) {
+          debugPrint("HomePage.build(): getting state ${state.runtimeType}");
+        }
         if (state is PreferenceReadState) {
           if (state.readValue is Map) {
             settings = state.readValue;
@@ -30,8 +32,10 @@ class HomePage extends StatelessWidget {
         } else if (state is PreferenceWriteState) {
           settings = state.updatedPreferences;
         }
-        debugPrint("HomePage.build(): value is a Map! How convenient!");
-        debugPrint("HomePage.build(): checking if it matches default...");
+        if (morePrinting) {
+          debugPrint("HomePage.build(): value is a Map! How convenient!");
+          debugPrint("HomePage.build(): checking if it matches default...");
+        }
 
         List<String> nonMatchingKeys = [];
         for (MapEntry defaultEntry in defaultSettings.entries) {
@@ -45,16 +49,20 @@ class HomePage extends StatelessWidget {
         }
 
         if (nonMatchingKeys.isNotEmpty) {
-          debugPrint(
-              "HomePage.build(): Shenanigans! It does not match default!");
-          debugPrint(
-              "HomePage.build(): Non matching keys are $nonMatchingKeys");
-          debugPrint("HomePage.build(): Let me set it back to normal");
+          if (morePrinting) {
+            debugPrint(
+                "HomePage.build(): Shenanigans! It does not match default!");
+            debugPrint(
+                "HomePage.build(): Non matching keys are $nonMatchingKeys");
+            debugPrint("HomePage.build(): Let me set it back to normal");
+          }
           for (var key in nonMatchingKeys) {
             settings[key] = defaultSettings[key];
           }
         } else {
-          debugPrint("HomePage.build(): It does! Settings are: $settings");
+          if (morePrinting) {
+            debugPrint("HomePage.build(): It does! Settings are: $settings");
+          }
         }
 
         return Scaffold(

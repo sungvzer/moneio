@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home_page.dart';
 import 'package:moneio/views/loading_screen.dart';
@@ -60,8 +61,10 @@ class FirebaseApplication extends StatelessWidget {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
-            debugPrint(
-                "FirebaseApplication.build: Firebase initialized, getting application...");
+            if (morePrinting) {
+              debugPrint(
+                  "FirebaseApplication.build: Firebase initialized, getting application...");
+            }
             return LoginRouter();
           }
 

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
@@ -20,6 +21,9 @@ class HomePage extends StatelessWidget {
     debugPrint("HomePage.build: Adding PreferenceRead...");
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
+
+    debugPrint("HomePage.build: Adding JsonRead...");
+    BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
     return BlocBuilder<PreferenceBloc, PreferenceState>(
       builder: (context, state) {
         Map<String, dynamic> settings = {};

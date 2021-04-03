@@ -40,8 +40,6 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
-
     return BlocBuilder<PreferenceBloc, PreferenceState>(
         builder: (context, state) {
       debugPrint(

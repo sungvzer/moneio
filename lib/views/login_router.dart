@@ -22,30 +22,20 @@ class LoginRouter extends StatelessWidget {
         if (snapshot.connectionState != ConnectionState.active) {
           return LoadingScreen();
         }
-        final user = snapshot.data;
-        if (user != null) {
-          if (morePrinting) {
-            debugPrint("LoginRouter.build: user is logged in");
-            debugPrint((user as User?).toString());
-          }
-          if (false)
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          return HomePage();
-        } else {
+        User? user = snapshot.data;
+
+        if (user == null) {
           if (morePrinting) {
             debugPrint("LoginRouter.build: user is not logged in");
           }
-
-          if (false)
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
-            );
           return LoginScreen();
         }
+
+        if (morePrinting) {
+          debugPrint("LoginRouter.build: user is logged in");
+          debugPrint(user.toString());
+        }
+        return HomePage();
       },
     );
   }

@@ -10,8 +10,8 @@ import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home_page.dart';
 import 'package:moneio/views/loading_screen.dart';
 import 'package:moneio/views/login_router.dart';
-import 'package:moneio/views/login_views/login_screen.dart';
-import 'package:moneio/views/login_views/sign_up_screen.dart';
+import 'package:moneio/views/login/login_screen.dart';
+import 'package:moneio/views/login/sign_up_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

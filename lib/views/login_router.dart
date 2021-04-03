@@ -4,7 +4,7 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home_page.dart';
 import 'package:moneio/views/loading_screen.dart';
-import 'package:moneio/views/login_views/login_screen.dart';
+import 'package:moneio/views/login/login_screen.dart';
 
 class LoginRouter extends StatelessWidget {
   @override

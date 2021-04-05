@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
@@ -18,6 +19,9 @@ void main() {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<FirestoreBloc>(
+          create: (context) => FirestoreBloc(),
+        ),
         BlocProvider<JsonBloc>(
           create: (context) => JsonBloc(),
         ),

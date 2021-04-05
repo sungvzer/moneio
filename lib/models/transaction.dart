@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction_category.dart';
@@ -34,16 +35,32 @@ class Transaction extends Comparable {
   factory Transaction.fromMap(Map<String, dynamic> json) {
     DateTime parsed;
     try {
-      parsed = DateTime.parse(json["date"]);
+      if (json["date"] is Timestamp) {
+        Timestamp timestamp = json["date"] as Timestamp;
+        parsed = timestamp.toDate();
+      } else {
+        parsed = DateTime.parse(json["date"]);
+      }
     } on FormatException catch (e) {
       debugPrint("Failed to parse date: ${e.message}");
       parsed = DateTime(0);
     }
+
+    TransactionCategory category;
+    if (json["category"] is Map) {
+      category = TransactionCategory.fromMap(json["category"]);
+    } else if (json["category"] is String) {
+      category = categories
+          .where((category) => category.uniqueID == json["category"] as String)
+          .first;
+    } else {
+      throw UnimplementedError();
+    }
+
     return Transaction(
       id: json["id"] as int?,
       tag: json["tag"] as String,
-      category:
-          TransactionCategory.fromMap(json["category"] as Map<String, dynamic>),
+      category: category,
       amount: json["amount"] as int,
       currency: json["currency"] as String,
       date: parsed,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction
     show Transaction;
 
@@ -72,51 +73,112 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     return (await _getUserDocument(uid))["settings"] as Map;
   }
 
+  Future<FirestoreReadState> _handleRead(
+    FirestoreReadType type,
+    String uid,
+    bool Function(UserTransaction.Transaction)? filter,
+  ) async {
+    var data;
+    bool success;
+    switch (type) {
+      case FirestoreReadType.UserDocument:
+        data = await _getUserDocument(uid);
+        success = true;
+        break;
+
+      case FirestoreReadType.UserSettings:
+        data = await _getUserSettings(uid);
+        success = true;
+        break;
+
+      case FirestoreReadType.UserTransactions:
+        data = await _getUserTransactions(uid, filter);
+        success = true;
+        break;
+
+      case FirestoreReadType.UserData:
+        data = await _getUserData(uid);
+        success = true;
+        break;
+
+      default:
+        success = false;
+        data = null;
+        break;
+    }
+    success = true;
+    return FirestoreReadState(success: success, type: type, data: data);
+  }
+
+  Future<FirestoreWriteState> _handleWrite(
+      FirestoreWriteType type, String uid, data) async {
+    CollectionReference users = _store.collection("/users");
+    DocumentReference userDocument = users.doc("/$uid");
+    DocumentSnapshot snapshot = await userDocument.get();
+    Map<String, dynamic>? userData = snapshot.data();
+    assert(userData != null);
+    userData = userData!;
+
+    debugPrint("FirestoreBloc._handleSet: Data is $userData");
+    switch (type) {
+      case FirestoreWriteType.AddSingleUserSetting:
+        // TODO: Handle this case.
+        break;
+      case FirestoreWriteType.ResetSingleUserSetting:
+        // TODO: Handle this case.
+        break;
+      case FirestoreWriteType.AddSingleUserTransaction:
+        assert(data is UserTransaction.Transaction);
+        UserTransaction.Transaction transaction =
+            data as UserTransaction.Transaction;
+        List transactions = [];
+        if (!userData.containsKey("transactions")) {
+          userData["transactions"] = transactions;
+        } else {
+          transactions = userData["transactions"];
+        }
+
+        transactions.forEach((element) {
+          assert(element is Map);
+        });
+        Timestamp timestamp = Timestamp.fromDate(transaction.date);
+
+        Map<String, dynamic> transactionToMap = transaction.toMap();
+        transactionToMap["date"] = timestamp;
+        transactions.add(transactionToMap);
+        await userDocument.set(userData, SetOptions(merge: true));
+        debugPrint("FirestoreBloc._handleSet: Transactions is $transactions");
+        break;
+      case FirestoreWriteType.RemoveSingleUserTransaction:
+        // TODO: Handle this case.
+        break;
+      case FirestoreWriteType.SingleUserDataEntry:
+        // TODO: Handle this case.
+        break;
+      case FirestoreWriteType.MultipleUserDataEntry:
+        // TODO: Handle this case.
+        break;
+    }
+
+    // userDocument.set(userData, SetOptions(merge: true));
+    return FirestoreWriteState(
+        success: false, type: type, updatedDocument: userData);
+  }
+
   @override
   Stream<FirestoreState> mapEventToState(FirestoreEvent event) async* {
     debugPrint("FirestoreBloc.mapEventToState: got ${event.runtimeType}");
 
-    if (event is FirestoreGet) {
-      FirestoreGetType type = event.type;
-      String uid = event.userUid;
+    if (event is FirestoreRead) {
+      FirestoreReadType type = event.type;
       debugPrint('FirestoreBloc.mapEventToState: Type is $type');
-      switch (type) {
-        case FirestoreGetType.UserTransactions:
-          // TODO: Success is always true, this is not always the case :^)
-          yield FirestoreReadState(
-            success: true,
-            type: type,
-            data: await _getUserTransactions(uid, event.transactionFilter),
-          );
-          break;
-
-        case FirestoreGetType.UserSettings:
-          // TODO: Success is always true, this is not always the case :^)
-          yield FirestoreReadState(
-            success: true,
-            type: type,
-            data: await _getUserSettings(uid),
-          );
-          break;
-        case FirestoreGetType.UserData:
-          // TODO: Success is always true, this is not always the case :^)
-          yield FirestoreReadState(
-            success: true,
-            type: type,
-            data: await _getUserData(uid),
-          );
-          break;
-        case FirestoreGetType.UserDocument:
-          // TODO: Success is always true, this is not always the case :^)
-          yield FirestoreReadState(
-            success: true,
-            type: type,
-            data: await _getUserDocument(uid),
-          );
-          break;
-        default:
-          throw UnimplementedError("This bloc is not done yet");
-      }
+      String uid = event.userId;
+      yield await _handleRead(type, uid, event.transactionFilter);
+    } else if (event is FirestoreWrite) {
+      FirestoreWriteType type = event.type;
+      debugPrint('FirestoreBloc.mapEventToState: Type is $type');
+      String uid = event.userId;
+      yield await _handleWrite(type, uid, event.data);
     }
   }
 }

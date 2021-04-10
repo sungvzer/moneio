@@ -106,7 +106,6 @@ class _SettingListTileState<T> extends State<SettingListTile> {
               )
             : null,
         onTap: () {
-          // TODO: Fucking do something about settings
           showDialog(
             context: context,
             builder: (context) {

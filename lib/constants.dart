@@ -39,7 +39,7 @@ Map<String, TransactionCategory> categories = {
     "Body care",
     "🧼",
   ),
-  "ELECTRONIC,": TransactionCategory(
+  "ELECTRONIC": TransactionCategory(
     "ELECTRONIC",
     "Electronics and Software",
     "🤖",
@@ -89,7 +89,7 @@ Map<String, TransactionCategory> categories = {
     "Refunds",
     "↩",
   ),
-  "RESTAURANTS,": TransactionCategory(
+  "RESTAURANTS": TransactionCategory(
     "RESTAURANTS",
     "Restaurants and Coffee Shops",
     "🍽️",
@@ -114,7 +114,7 @@ Map<String, TransactionCategory> categories = {
     "Taxes and commissions",
     "📝",
   ),
-  "TRANSPORT,": TransactionCategory(
+  "TRANSPORT": TransactionCategory(
     "TRANSPORT",
     "Means of transportation",
     "🚌",

@@ -15,6 +15,7 @@ import 'package:moneio/widgets/labelled_form_field.dart';
 
 class AddTransactionPage extends StatefulWidget {
   static final String id = '/home/add_transaction';
+
   AddTransactionPage();
 
   @override
@@ -349,22 +350,7 @@ class _TransactionForm extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
-                items: categories.map((final TransactionCategory cat) {
-                  return DropdownMenuItem(
-                    child: Text(cat.emoji + ' - ' + cat.name),
-                    value: cat.uniqueID,
-                  );
-                }).toList(),
-                // items: categoriesToText.values.map((final String value) {
-                //   const Map<String, String> map = categoriesToText;
-                //   String key;
-                //   key = map.keys.where((y) => map[y] == value).first;
-                //   final String emoji = categoriesToEmoji[key];
-                //   return DropdownMenuItem(
-                //     child: Text("$emoji - $value"),
-                //     value: key,
-                //   );
-                // }).toList(),
+                items: _getCategoriesMenuItems(),
                 hint: Center(child: Text("Please select a category")),
               ),
             ),
@@ -432,7 +418,7 @@ class _TransactionForm extends StatelessWidget {
                         map["amount"] = amountNumber;
                         map["tag"] = tag;
                         map["category"] =
-                            TransactionCategory(_selectedCategory).toMap();
+                            categories[_selectedCategory]!.toMap();
                         map["date"] = DateTime(dateList[2], dateList[1],
                                 dateList[0], parsedTime.hour, parsedTime.minute)
                             .toIso8601String();
@@ -521,5 +507,25 @@ class _TransactionForm extends StatelessWidget {
     }
     parsedTime = TimeOfDay(hour: hour, minute: minute);
     return parsedTime;
+  }
+
+  List<DropdownMenuItem> _getCategoriesMenuItems() {
+    final values = categories.values.toList();
+    var list = <DropdownMenuItem>[];
+
+    list.add(
+      DropdownMenuItem(
+        child: Text("None"),
+        value: "NONE",
+      ),
+    );
+
+    for (var value in values.where((c) => c.uniqueID != "NONE")) {
+      list.add(DropdownMenuItem(
+        child: Text("${value.emoji} - ${value.name}"),
+        value: value.uniqueID,
+      ));
+    }
+    return list;
   }
 }

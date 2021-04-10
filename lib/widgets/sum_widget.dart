@@ -93,12 +93,12 @@ class SumWidgetState extends State<SumWidget> {
     }
 
     amountString = Transaction(
-            amount: amount,
-            currency: maxKey,
-            date: DateTime.now(),
-            category: TransactionCategory("NONE"))
-        .getSeparatedAmountString(
-            currency: true, sign: false, humanReadable: _humanReadable);
+      amount: amount,
+      currency: maxKey,
+      date: DateTime.now(),
+      category: categories["NONE"]!,
+    ).getSeparatedAmountString(
+        currency: true, sign: false, humanReadable: _humanReadable);
 
     if (morePrinting)
       debugPrint(

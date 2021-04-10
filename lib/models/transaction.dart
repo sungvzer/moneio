@@ -50,9 +50,7 @@ class Transaction extends Comparable {
     if (json["category"] is Map) {
       category = TransactionCategory.fromMap(json["category"]);
     } else if (json["category"] is String) {
-      category = categories
-          .where((category) => category.uniqueID == json["category"] as String)
-          .first;
+      category = categories[json["category"]!]!;
     } else {
       throw UnimplementedError();
     }

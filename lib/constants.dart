@@ -3,37 +3,153 @@ import 'package:moneio/models/transaction_category.dart';
 const bool debug = false;
 const bool morePrinting = false;
 
-List<TransactionCategory> categories = [
-  TransactionCategory("CLOTHING", "Clothing and Accessories", "👚"),
-  TransactionCategory("FOOD", "Food", "🍕"),
-  TransactionCategory("ANIMAL", "Animals", "🐶"),
-  TransactionCategory("INSURANCE", "Insurance", "⛑"),
-  TransactionCategory("BILLS", "Bills and subscriptions", "🧾"),
-  TransactionCategory("HOME", "Home", "🏠"),
-  TransactionCategory("BODY_CARE", "Body care", "🧼"),
-  TransactionCategory("ELECTRONIC", "Electronics and Software", "🤖"),
-  TransactionCategory("FAMILY", "Family", "👪"),
-  TransactionCategory("FINANCING", "Financing and Loan", "📊"),
-  TransactionCategory("ENTERTAINMENT", "Entertainment", "🎥"),
-  TransactionCategory("INVESTMENT", "Investments", "📈"),
-  TransactionCategory("EDUCATION", "Education", "📚"),
-  TransactionCategory("WORK_SALARY", "Work and Salary", "⚒"),
-  TransactionCategory("GIFT", "Gifts and donations", "🎁"),
-  TransactionCategory("GENERIC", "Generic", "💰"),
-  TransactionCategory("REFUND", "Refunds", "↩"),
-  TransactionCategory("RESTAURANTS", "Restaurants and Coffee Shops", "🍽️"),
-  TransactionCategory("HEALTH", "Health", "🩺"),
-  TransactionCategory("SPORT", "Sports", "⚽"),
-  TransactionCategory("HOBBY", "Hobbies", "🔨"),
-  TransactionCategory("TAX", "Taxes and commissions", "📝"),
-  TransactionCategory("TRANSPORT", "Means of transportation", "🚌"),
-  TransactionCategory("SALE", "Sales", "💰"),
-  TransactionCategory("TOPUP", "Top ups", "🔃"),
-  TransactionCategory("ATM", "ATM", "🏧"),
-  TransactionCategory("CRYPTO", "Cryptocurrency", "💸"),
-  TransactionCategory("SHOPPING", "Shopping", "🛍️"),
-  TransactionCategory("NONE", "", "")
-].toList(); // This HACK enables us to cache initial values in TransactionCategory._cache if needed
+Map<String, TransactionCategory> categories = {
+  "CLOTHING": TransactionCategory(
+    "CLOTHING",
+    "Clothing and Accessories",
+    "👚",
+  ),
+  "FOOD": TransactionCategory(
+    "FOOD",
+    "Food",
+    "🍕",
+  ),
+  "ANIMAL": TransactionCategory(
+    "ANIMAL",
+    "Animals",
+    "🐶",
+  ),
+  "INSURANCE": TransactionCategory(
+    "INSURANCE",
+    "Insurance",
+    "⛑",
+  ),
+  "BILLS": TransactionCategory(
+    "BILLS",
+    "Bills and subscriptions",
+    "🧾",
+  ),
+  "HOME": TransactionCategory(
+    "HOME",
+    "Home",
+    "🏠",
+  ),
+  "BODY_CARE": TransactionCategory(
+    "BODY_CARE",
+    "Body care",
+    "🧼",
+  ),
+  "ELECTRONIC,": TransactionCategory(
+    "ELECTRONIC",
+    "Electronics and Software",
+    "🤖",
+  ),
+  "FAMILY": TransactionCategory(
+    "FAMILY",
+    "Family",
+    "👪",
+  ),
+  "FINANCING": TransactionCategory(
+    "FINANCING",
+    "Financing and Loan",
+    "📊",
+  ),
+  "ENTERTAINMENT": TransactionCategory(
+    "ENTERTAINMENT",
+    "Entertainment",
+    "🎥",
+  ),
+  "INVESTMENT": TransactionCategory(
+    "INVESTMENT",
+    "Investments",
+    "📈",
+  ),
+  "EDUCATION": TransactionCategory(
+    "EDUCATION",
+    "Education",
+    "📚",
+  ),
+  "WORK_SALARY": TransactionCategory(
+    "WORK_SALARY",
+    "Work and Salary",
+    "⚒",
+  ),
+  "GIFT": TransactionCategory(
+    "GIFT",
+    "Gifts and donations",
+    "🎁",
+  ),
+  "GENERIC": TransactionCategory(
+    "GENERIC",
+    "Generic",
+    "💰",
+  ),
+  "REFUND": TransactionCategory(
+    "REFUND",
+    "Refunds",
+    "↩",
+  ),
+  "RESTAURANTS,": TransactionCategory(
+    "RESTAURANTS",
+    "Restaurants and Coffee Shops",
+    "🍽️",
+  ),
+  "HEALTH": TransactionCategory(
+    "HEALTH",
+    "Health",
+    "🩺",
+  ),
+  "SPORT": TransactionCategory(
+    "SPORT",
+    "Sports",
+    "⚽",
+  ),
+  "HOBBY": TransactionCategory(
+    "HOBBY",
+    "Hobbies",
+    "🔨",
+  ),
+  "TAX": TransactionCategory(
+    "TAX",
+    "Taxes and commissions",
+    "📝",
+  ),
+  "TRANSPORT,": TransactionCategory(
+    "TRANSPORT",
+    "Means of transportation",
+    "🚌",
+  ),
+  "SALE": TransactionCategory(
+    "SALE",
+    "Sales",
+    "💰",
+  ),
+  "TOPUP": TransactionCategory(
+    "TOPUP",
+    "Top ups",
+    "🔃",
+  ),
+  "ATM": TransactionCategory(
+    "ATM",
+    "ATM",
+    "🏧",
+  ),
+  "CRYPTO": TransactionCategory(
+    "CRYPTO",
+    "Cryptocurrency",
+    "💸",
+  ),
+  "SHOPPING": TransactionCategory(
+    "SHOPPING",
+    "Shopping",
+    "🛍️",
+  ),
+  "NONE": TransactionCategory(
+    "NONE",
+    "",
+    "",
+  )
+};
 
 const Map<String, String> currencyToSymbol = {
   "EUR": "€",

@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
-
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
-import 'package:moneio/bloc/json/json_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home/home_page.dart';
 import 'package:moneio/views/loading_screen.dart';
-import 'package:moneio/views/login_router.dart';
 import 'package:moneio/views/login/login_screen.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
+import 'package:moneio/views/login_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,9 +19,6 @@ void main() {
       providers: [
         BlocProvider<FirestoreBloc>(
           create: (context) => FirestoreBloc(),
-        ),
-        BlocProvider<JsonBloc>(
-          create: (context) => JsonBloc(),
         ),
         BlocProvider<PreferenceBloc>(
           create: (context) => PreferenceBloc(),

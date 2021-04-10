@@ -1,15 +1,17 @@
 import 'dart:ui';
 
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/models/transaction.dart' as UserTransaction;
 import 'package:moneio/widgets/labelled_form_field.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -423,10 +425,12 @@ class _TransactionForm extends StatelessWidget {
                             .toIso8601String();
                         map["currency"] = currency;
 
-                        BlocProvider.of<JsonBloc>(context).add(JsonWrite(
-                          "transactions.json",
-                          value: map,
-                        ));
+                        BlocProvider.of<FirestoreBloc>(context).add(
+                          FirestoreWrite(
+                              type: FirestoreWriteType.AddSingleUserTransaction,
+                              data: UserTransaction.Transaction.fromMap(map),
+                              userId: FirebaseAuth.instance.currentUser!.uid),
+                        );
 
                         debugPrint("Data:\n$map");
                         Navigator.maybePop(context);

@@ -8,6 +8,7 @@ import 'package:moneio/views/login/login_screen.dart';
 
 class LoginRouter extends StatelessWidget {
   static final String id = '/login_router';
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
@@ -10,8 +11,6 @@ import 'package:moneio/views/home/settings_page.dart';
 import 'package:moneio/views/home/suggestions_page.dart';
 import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
 import 'package:moneio/widgets/transaction_list.dart';
-
-import 'package:moneio/color_palette.dart';
 
 class HomePage extends StatelessWidget {
   static const String id = "/home";
@@ -22,8 +21,11 @@ class HomePage extends StatelessWidget {
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
 
-    debugPrint("HomePage.build: Adding JsonRead...");
-    BlocProvider.of<JsonBloc>(context).add(JsonRead("transactions.json"));
+    debugPrint("HomePage.build: Adding FirestoreRead...");
+    BlocProvider.of<FirestoreBloc>(context).add(FirestoreRead(
+      type: FirestoreReadType.UserTransactions,
+      userId: FirebaseAuth.instance.currentUser!.uid,
+    ));
     return BlocBuilder<PreferenceBloc, PreferenceState>(
       builder: (context, state) {
         Map<String, dynamic> settings = {};

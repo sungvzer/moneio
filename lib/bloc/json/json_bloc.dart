@@ -9,9 +9,9 @@ import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
 
 part 'json_event.dart';
-
 part 'json_state.dart';
 
+@Deprecated("This bloc should not be used anymore. Instead, use FirestoreBloc")
 class JsonBloc extends Bloc<JsonEvent, JsonState> {
   JsonBloc() : super(JsonState(isError: false, message: "Initial state"));
 

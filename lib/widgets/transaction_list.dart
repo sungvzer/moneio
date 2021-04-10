@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
@@ -17,25 +17,6 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
   @override
   void initState() {
     super.initState();
-  }
-
-  List<Transaction> readState(JsonReadState state) {
-    List<Transaction> list = [];
-    if (!state.hasValue) return list;
-
-    if (state.value is List) {
-      List v = state.value as List;
-      if (v.isEmpty) return [];
-      for (var x in state.value) {
-        if (x is Map<String, dynamic>) list.add(Transaction.fromMap(x));
-      }
-    } else if (state.value is Map<String, dynamic>) {
-      list.add(Transaction.fromMap(state.value));
-    }
-
-    // TODO: Sort based on preferences
-    list.sort((a, b) => a.compareTo(b) * -1);
-    return list;
   }
 
   @override
@@ -64,25 +45,33 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
       }
 
       assert(settings is Map<String, dynamic>);
-      return BlocBuilder<JsonBloc, JsonState>(
+
+      return BlocBuilder<FirestoreBloc, FirestoreState>(
         builder: (context, state) {
-          if (morePrinting)
-            debugPrint(
-                "State{type: ${state.runtimeType}, error: ${state.isError}, hasValue: ${state.hasValue}, message: ${state.message}, value: ${state.hasValue ? state.value : ""}}");
-          if (state.isError) {
-            String errMsg = "Something went wrong...\n${state.message}";
-            return Container(child: Text(errMsg));
-          }
+          if (morePrinting) debugPrint("State{type: ${state.runtimeType}");
 
-          // TODO: Do a file watcher kind of stuff instead of manually checking when building
-          // We've written the file and now we update.
-          if (state is JsonWriteState)
-            BlocProvider.of<JsonBloc>(context)
-                .add(JsonRead("transactions.json"));
+          if (state is FirestoreWriteState) {
+            if (state.hasUpdatedDocument) {
+              Map<String, dynamic> updatedDocument =
+                  state.updatedDocument! as Map<String, dynamic>;
+              assert(updatedDocument["transactions"] != null);
+              assert(updatedDocument["transactions"] is List);
 
-          if (state.hasValue) {
-            List<Transaction> l = readState(state as JsonReadState);
-            return _TransactionList(l, settings["human_readable"]);
+              var maps = updatedDocument["transactions"] as List;
+              var trs = <Transaction>[];
+
+              maps.forEach((element) {
+                assert(element is Map);
+                trs.add(Transaction.fromMap(element));
+              });
+
+              return _TransactionList(trs, settings["human_readable"]!);
+            }
+          } else if (state is FirestoreReadState) {
+            if (state.type == FirestoreReadType.UserTransactions) {
+              assert(state.hasData);
+              return _TransactionList(state.data, settings["human_readable"]!);
+            }
           }
           return Center(child: CircularProgressIndicator());
         },

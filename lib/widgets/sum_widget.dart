@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
@@ -39,28 +39,26 @@ class SumWidgetState extends State<SumWidget> {
     ),
   );
 
-  List<Transaction> readState(JsonReadState state) {
-    List<Transaction> list = [];
-    if (!state.hasValue) return list;
-
-    if (state.value is List) {
-      List v = state.value as List;
-      if (v.isEmpty) return [];
-      for (var x in state.value) {
-        if (x is Map<String, dynamic>) list.add(Transaction.fromMap(x));
-      }
-    } else if (state.value is Map<String, dynamic>) {
-      list.add(Transaction.fromMap(state.value));
-    }
-    return list;
-  }
-
   Widget getInnerWidget(context, state) {
     // TODO: Displayed user currency.
-    if (state is! JsonReadState) return CircularProgressIndicator();
+    if (state is! FirestoreReadState && state is! FirestoreWriteState)
+      return CircularProgressIndicator();
     Map<String, int> sumsByCurrency = {};
     {
-      final List<Transaction> values = readState(state);
+      List<Transaction> values = [];
+      if (state is FirestoreWriteState && state.hasUpdatedDocument) {
+        var updatedDocument = state.updatedDocument as Map<String, dynamic>;
+        assert(updatedDocument["transactions"] != null);
+        var maps = updatedDocument["transactions"] as List<dynamic>;
+        maps.forEach((element) {
+          assert(element is Map);
+          values.add(Transaction.fromMap(element));
+        });
+      } else if (state is FirestoreReadState &&
+          state.type == FirestoreReadType.UserTransactions) {
+        assert(state.hasData);
+        values = state.data;
+      }
       values.forEach((tr) {
         String currency = tr.currency;
 
@@ -142,7 +140,7 @@ class SumWidgetState extends State<SumWidget> {
         ),
         BlocBuilder<PreferenceBloc, PreferenceState>(
           builder: (context, preferenceState) =>
-              BlocBuilder<JsonBloc, JsonState>(
+              BlocBuilder<FirestoreBloc, FirestoreState>(
             builder: (context, state) {
               if (preferenceState is PreferenceWriteState) {
                 _humanReadable =
@@ -160,11 +158,12 @@ class SumWidgetState extends State<SumWidget> {
                   width: percentWidth(_) * 50,
                   child: DecoratedBox(
                     child: Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: innerWidget,
-                        )),
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: innerWidget,
+                      ),
+                    ),
                     decoration: _decoration,
                   ),
                 ),

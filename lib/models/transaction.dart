@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/random_string.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {
   TransactionCategory category;
-  static int sId = 0;
 
-  // TODO: Is ID really necessary??
-  late int id;
+  late String id;
   String tag;
 
   int amount; // TODO: Should we switch to BigInt instead?
@@ -16,7 +15,7 @@ class Transaction extends Comparable {
   DateTime date;
 
   Transaction({
-    int? id,
+    String? id,
     this.tag = "",
     required this.category,
     this.amount = 0,
@@ -27,8 +26,9 @@ class Transaction extends Comparable {
       if (morePrinting) debugPrint("Transaction: Getting existing id $id");
       this.id = id;
     } else {
-      if (morePrinting) debugPrint("Transaction: Getting new id $sId");
-      this.id = sId++;
+      String newId = getRandomString();
+      if (morePrinting) debugPrint("Transaction: Getting new id $newId");
+      this.id = newId;
     }
   }
 
@@ -56,7 +56,7 @@ class Transaction extends Comparable {
     }
 
     return Transaction(
-      id: json["id"] as int?,
+      id: json["id"] as String?,
       tag: json["tag"] as String,
       category: category,
       amount: json["amount"] as int,

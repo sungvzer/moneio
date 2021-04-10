@@ -37,8 +37,9 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     }
     assert(userDocumentData != null);
 
-    debugPrint(
-        "FirestoreBloc._getUserDocument: got document!\n$userDocumentData");
+    if (morePrinting)
+      debugPrint(
+          "FirestoreBloc._getUserDocument: got document!\n$userDocumentData");
 
     if (userDocumentData is! Map) {
       throw UnimplementedError("Document is not a map.. what happened?");

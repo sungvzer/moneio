@@ -111,9 +111,26 @@ class HomePage extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.logout),
                   onTap: () {
-                    FirebaseAuth.instance.signOut();
+                    showDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Sign out"),
+                        content: Text("Are you sure you want to sign out?"),
+                        actions: [
+                          TextButton(
+                            child: Text("Cancel"),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          TextButton(
+                            child: Text("Sign out"),
+                            onPressed: FirebaseAuth.instance.signOut,
+                          )
+                        ],
+                      ),
+                    );
                   },
-                  title: Text("Logout"),
+                  title: Text("Sign out"),
                 ),
               ],
             ),

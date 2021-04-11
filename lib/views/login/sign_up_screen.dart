@@ -1,10 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUpScreen extends StatefulWidget {
   static final String id = "/login/sign_up";
@@ -69,6 +69,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
       debugPrint("New Credentials! ${credential.toString()}");
 
       await credential.user!.updateProfile(displayName: name);
+
+      // Copy schema to user, and set data.
+      FirebaseFirestore store = FirebaseFirestore.instance;
+      DocumentSnapshot schema =
+          await store.collection("/users/").doc("schema").get();
+      Map<String, dynamic> schemaData = schema.data()!;
+      schemaData["data"]["firstName"] = name;
+      schemaData["data"]["lastName"] = surname;
+      schemaData["transactions"] = [];
+      await store
+          .collection("/users/")
+          .doc(credential.user!.uid)
+          .set(schemaData);
 
       await credential.user!.reload();
       Navigator.of(context).pop();

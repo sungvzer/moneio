@@ -138,6 +138,47 @@ class _SettingListTileState<T> extends State<SettingListTile> {
           backgroundColor: parseColorString(_value as String),
         ),
       );
+    } else if (_value is List<String>) {
+      List<String> list = _value as List<String>;
+      assert(list.length > 0);
+      return Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: ListTile(
+              title: titleText,
+              subtitle: subtitleText,
+              isThreeLine: _subtitle != null ? _subtitle!.length > 40 : false,
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: DropdownButton(
+              isExpanded: true,
+              value: list[0],
+              onChanged: (String? value) {
+                int index = list.indexOf(value!);
+                BlocProvider.of<PreferenceBloc>(context)
+                    .add(PreferenceWrite(_settingKey, value));
+                String swap = list[0];
+                list[0] = value;
+                list[index] = swap;
+                _value = list as T;
+                debugPrint(
+                    "_SettingListTileState.getWidgetByType: Chosen $value");
+              },
+              items: list
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
+      );
     }
 
     debugPrint("Unsupported type ${_value.runtimeType}");

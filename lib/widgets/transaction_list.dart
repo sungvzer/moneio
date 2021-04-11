@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
@@ -160,8 +161,49 @@ class _TransactionTile extends StatelessWidget {
       }
     }
     return ListTile(
-      // TODO: Transaction deletion and edit
-      onLongPress: () => print("TODO: Long press with transaction $_current"),
+      // TODO: Transaction edit
+      onLongPress: () => showDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext dialogContext) {
+          return SimpleDialog(
+            title: Text(
+              'Select action',
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: "Poppins",
+                fontWeight: FontWeight.w600,
+                color: ColorPalette.ImperialPrimer,
+              ),
+            ),
+            children: [
+              SimpleDialogOption(
+                onPressed: () {
+                  debugPrint(
+                      "_TransactionTileState.build: Asked to delete transaction $_current");
+                  BlocProvider.of<FirestoreBloc>(context).add(
+                    FirestoreWrite(
+                      type: FirestoreWriteType.RemoveSingleUserTransaction,
+                      userId: FirebaseAuth.instance.currentUser!.uid,
+                      data: _current.id,
+                    ),
+                  );
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Delete",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: "Poppins",
+                    fontWeight: FontWeight.w500,
+                    color: ColorPalette.ImperialPrimer,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
       leading: Text(
         _current.category.emoji,
       ),

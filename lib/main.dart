@@ -6,7 +6,10 @@ import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
+import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/home/home_page.dart';
+import 'package:moneio/views/home/settings_page.dart';
+import 'package:moneio/views/home/suggestions_page.dart';
 import 'package:moneio/views/loading_screen.dart';
 import 'package:moneio/views/login/login_screen.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
@@ -48,6 +51,9 @@ class FirebaseApplication extends StatelessWidget {
         FirebaseErrorPage.id: (context) => FirebaseErrorPage(),
         LoginScreen.id: (context) => LoginScreen(),
         SignUpScreen.id: (context) => SignUpScreen(),
+        AddTransactionPage.id: (context) => AddTransactionPage(),
+        SettingsPage.id: (context) => SettingsPage(),
+        SuggestionPage.id: (context) => SuggestionPage(),
       },
       home: FutureBuilder(
         // Initialize FlutterFire:

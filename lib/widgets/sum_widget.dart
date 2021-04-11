@@ -40,36 +40,40 @@ class SumWidgetState extends State<SumWidget> {
   );
 
   Widget getInnerWidget(context, state) {
+    amount = 0;
     // TODO: Displayed user currency.
     if (state is! FirestoreReadState && state is! FirestoreWriteState)
       return CircularProgressIndicator();
     Map<String, int> sumsByCurrency = {};
-    {
-      List<Transaction> values = [];
-      if (state is FirestoreWriteState && state.hasUpdatedDocument) {
-        var updatedDocument = state.updatedDocument as Map<String, dynamic>;
-        assert(updatedDocument["transactions"] != null);
-        var maps = updatedDocument["transactions"] as List<dynamic>;
-        maps.forEach((element) {
-          assert(element is Map);
-          values.add(Transaction.fromMap(element));
-        });
-      } else if (state is FirestoreReadState &&
-          state.type == FirestoreReadType.UserTransactions) {
-        assert(state.hasData);
-        values = state.data;
-      }
-      values.forEach((tr) {
-        String currency = tr.currency;
 
-        if (!sumsByCurrency.containsKey(currency))
-          sumsByCurrency[currency] = tr.amount;
-        else {
-          // TODO: Null safety
-          sumsByCurrency[currency] = sumsByCurrency[currency]! + tr.amount;
-        }
+    List<Transaction> values = [];
+    if (state is FirestoreWriteState && state.hasUpdatedDocument) {
+      debugPrint(
+          "SumWidgetState.getInnerWidget: write state.. and it has an updated document!");
+      var updatedDocument = state.updatedDocument as Map<String, dynamic>;
+      assert(updatedDocument["transactions"] != null);
+      var maps = updatedDocument["transactions"] as List<dynamic>;
+      maps.forEach((element) {
+        assert(element is Map);
+        values.add(Transaction.fromMap(element));
       });
+      debugPrint(
+          "SumWidgetState.getInnerWidget: it even has transactions! $values");
+    } else if (state is FirestoreReadState &&
+        state.type == FirestoreReadType.UserTransactions) {
+      assert(state.hasData);
+      values = state.data;
     }
+    values.forEach((tr) {
+      String currency = tr.currency;
+
+      if (!sumsByCurrency.containsKey(currency))
+        sumsByCurrency[currency] = tr.amount;
+      else {
+        // TODO: Null safety
+        sumsByCurrency[currency] = sumsByCurrency[currency]! + tr.amount;
+      }
+    });
 
     String maxKey = "";
     int currentSum;

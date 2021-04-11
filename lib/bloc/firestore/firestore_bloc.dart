@@ -55,7 +55,7 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       return <UserTransaction.Transaction>[];
     List<UserTransaction.Transaction> transactions = [];
 
-    debugPrint("FirestoreBloc._getUserTransactions: $mapList");
+    if (false) debugPrint("FirestoreBloc._getUserTransactions: $mapList");
     for (var map in mapList) {
       assert(map is Map);
       transactions.add(UserTransaction.Transaction.fromMap(map));
@@ -119,8 +119,9 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     Map<String, dynamic>? userData = snapshot.data();
     assert(userData != null);
     userData = userData!;
+    bool success = false;
 
-    debugPrint("FirestoreBloc._handleSet: Data is $userData");
+    if (false) debugPrint("FirestoreBloc._handleSet: Data is $userData");
     switch (type) {
       case FirestoreWriteType.AddSingleUserSetting:
         // TODO: Handle this case.
@@ -147,11 +148,38 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         Map<String, dynamic> transactionToMap = transaction.toMap();
         transactionToMap["date"] = timestamp;
         transactions.add(transactionToMap);
+        userData["transactions"] = transactions;
+
         await userDocument.set(userData, SetOptions(merge: true));
-        debugPrint("FirestoreBloc._handleSet: Transactions is $transactions");
+        success = true;
+        debugPrint("FirestoreBloc._handleWrite: Transactions is $transactions");
         break;
       case FirestoreWriteType.RemoveSingleUserTransaction:
-        // TODO: Handle this case.
+        assert(data is String);
+        String transactionId = data as String;
+
+        List transactions = [];
+        if (!userData.containsKey("transactions")) {
+          userData["transactions"] = transactions;
+        } else {
+          transactions = userData["transactions"];
+        }
+
+        int lengthBeforeRemoving = transactions.length;
+        transactions
+            .removeWhere((element) => (element as Map)["id"] == transactionId);
+        int lengthAfterRemoving = transactions.length;
+
+        assert(lengthAfterRemoving <= lengthBeforeRemoving,
+            "Something horrible happened");
+        if (lengthAfterRemoving < lengthBeforeRemoving) {
+          userData["transactions"] = transactions;
+          await userDocument.set(userData, SetOptions(merge: true));
+        } else {
+          debugPrint(
+              "FirestoreBloc._handleWrite: We didn't really remove anything");
+        }
+        success = true;
         break;
       case FirestoreWriteType.SingleUserDataEntry:
         // TODO: Handle this case.
@@ -163,7 +191,7 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
     // userDocument.set(userData, SetOptions(merge: true));
     return FirestoreWriteState(
-        success: false, type: type, updatedDocument: userData);
+        success: success, type: type, updatedDocument: userData);
   }
 
   @override

@@ -34,30 +34,33 @@ class _SettingListTileState<T> extends State<SettingListTile> {
   );
 
   Widget getWidgetByType(context) {
+    Text titleText = Text(
+      _title,
+      style: TextStyle(
+        fontFamily: "Poppins",
+        color: ColorPalette.ImperialPrimer,
+        fontWeight: FontWeight.w500,
+        fontSize: 14,
+      ),
+    );
+
+    Text? subtitleText = _subtitle != null
+        ? Text(
+            _subtitle!,
+            style: TextStyle(
+              fontFamily: "Poppins",
+              color: ColorPalette.StormPetrel,
+              fontWeight: FontWeight.w400,
+              fontSize: 11,
+            ),
+          )
+        : null;
     // TODO: Implement other types as we need fit
     if (_value is bool) {
       bool value = _value as bool;
       return ListTile(
-        title: Text(
-          _title,
-          style: TextStyle(
-            fontFamily: "Poppins",
-            color: ColorPalette.ImperialPrimer,
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-          ),
-        ),
-        subtitle: _subtitle != null
-            ? Text(
-                _subtitle!,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  color: ColorPalette.StormPetrel,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 11,
-                ),
-              )
-            : null,
+        title: titleText,
+        subtitle: subtitleText,
         onTap: () {
           setState(() {
             value = !value;
@@ -85,26 +88,8 @@ class _SettingListTileState<T> extends State<SettingListTile> {
             "SettingListTileState.getWidgetByType(): Got string $_value, this is a color");
       Color value = parseColorString(_value as String);
       return ListTile(
-        title: Text(
-          _title,
-          style: TextStyle(
-            fontFamily: "Poppins",
-            color: ColorPalette.ImperialPrimer,
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-          ),
-        ),
-        subtitle: _subtitle != null
-            ? Text(
-                _subtitle!,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  color: ColorPalette.StormPetrel,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 11,
-                ),
-              )
-            : null,
+        title: titleText,
+        subtitle: subtitleText,
         onTap: () {
           showDialog(
             context: context,

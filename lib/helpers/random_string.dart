@@ -9,7 +9,7 @@ String getRandomString([int length = 32]) {
   String randomString = "";
   while (--length >= 0) {
     int index = random.nextInt(62);
-    randomString += characters.substring(index, index + 1);
+    randomString += characters[index];
   }
 
   return randomString;

@@ -9,7 +9,6 @@ import 'package:moneio/models/transaction.dart' as UserTransaction
     show Transaction;
 
 part 'firestore_event.dart';
-
 part 'firestore_state.dart';
 
 class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
@@ -147,8 +146,8 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
         // Try and avoid settings deletion.
         var mergedSettings = {
-          ...localSettings,
           ...remoteSettings,
+          ...localSettings,
         };
         userDocument["settings"] = mergedSettings;
         await userDocumentReference.set(

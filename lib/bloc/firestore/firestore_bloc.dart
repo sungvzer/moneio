@@ -13,12 +13,20 @@ part 'firestore_state.dart';
 
 class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
   late final FirebaseFirestore _store;
+  static Map<String, Map<String, dynamic>> _userCaches = {};
+  bool _isCacheValid = false;
 
   FirestoreBloc() : super(FirestoreInitial()) {
     _store = FirebaseFirestore.instance;
   }
 
   Future<Map> _getUserDocument(String uid) async {
+    if (_isCacheValid) {
+      debugPrint(
+          "FirestoreBloc._getUserDocument: Getting user document from cache.");
+      assert(_userCaches[uid] != null);
+      return _userCaches[uid]!;
+    }
     debugPrint(
         "FirestoreBloc._getUserDocument: Getting user document for user $uid");
     CollectionReference users = _store.collection("/users");
@@ -44,6 +52,9 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     if (userDocumentData is! Map) {
       throw UnimplementedError("Document is not a map.. what happened?");
     }
+
+    _isCacheValid = true;
+    _userCaches[uid] = userDocumentData as Map<String, dynamic>;
     return userDocumentData;
   }
 
@@ -113,6 +124,7 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
   Future<FirestoreWriteState> _handleWrite(
       FirestoreWriteType type, String uid, data) async {
+    _isCacheValid = false;
     CollectionReference users = _store.collection("/users");
     DocumentReference userDocument = users.doc("/$uid");
     DocumentSnapshot snapshot = await userDocument.get();

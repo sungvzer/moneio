@@ -15,6 +15,8 @@ class TransactionListBuilder extends StatefulWidget {
 }
 
 class _TransactionListBuilderState extends State<TransactionListBuilder> {
+  List<Transaction> _cachedTransactions = [];
+
   @override
   void initState() {
     super.initState();
@@ -65,16 +67,33 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
                 assert(element is Map);
                 trs.add(Transaction.fromMap(element));
               });
+              _cachedTransactions = trs;
 
               return _TransactionList(trs, settings["human_readable"]!);
             }
           } else if (state is FirestoreReadState) {
             if (state.type == FirestoreReadType.UserTransactions) {
               assert(state.hasData);
+              _cachedTransactions = state.data;
+
               return _TransactionList(state.data, settings["human_readable"]!);
+            } else if (state.type == FirestoreReadType.UserDocument) {
+              assert(state.hasData);
+              var maps = state.data["transactions"] as List;
+              var trs = <Transaction>[];
+
+              maps.forEach((element) {
+                assert(element is Map);
+                trs.add(Transaction.fromMap(element));
+              });
+              _cachedTransactions = trs;
+
+              return _TransactionList(
+                  _cachedTransactions, settings["human_readable"]!);
             }
           }
-          return Center(child: CircularProgressIndicator());
+          return _TransactionList(
+              _cachedTransactions, settings["human_readable"]!);
         },
       );
     });

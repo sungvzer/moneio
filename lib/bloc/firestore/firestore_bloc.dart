@@ -58,7 +58,6 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     return userDocumentData;
   }
 
-  // TODO: Parse this list to a list of transactions
   Future<List<UserTransaction.Transaction>> _getUserTransactions(
       String uid, bool Function(UserTransaction.Transaction)? filter) async {
     List? mapList = (await _getUserDocument(uid))["transactions"];

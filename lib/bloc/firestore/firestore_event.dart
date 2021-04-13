@@ -12,8 +12,7 @@ enum FirestoreWriteType {
   ResetSingleUserSetting,
   AddSingleUserTransaction,
   RemoveSingleUserTransaction,
-  SingleUserDataEntry,
-  MultipleUserDataEntry,
+  UpdateUserData,
 }
 
 @immutable

@@ -125,14 +125,14 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       FirestoreWriteType type, String uid, data) async {
     _isCacheValid = false;
     CollectionReference users = _store.collection("/users");
-    DocumentReference userDocument = users.doc("/$uid");
-    DocumentSnapshot snapshot = await userDocument.get();
-    Map<String, dynamic>? userData = snapshot.data();
-    assert(userData != null);
-    userData = userData!;
+    DocumentReference userDocumentReference = users.doc("/$uid");
+
+    Map<String, dynamic> userDocument =
+        await _getUserDocument(uid) as Map<String, dynamic>;
+
     bool success = false;
 
-    if (false) debugPrint("FirestoreBloc._handleSet: Data is $userData");
+    if (false) debugPrint("FirestoreBloc._handleSet: Data is $userDocument");
     switch (type) {
       case FirestoreWriteType.AddSingleUserSetting:
         // TODO: Handle this case.
@@ -145,10 +145,10 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         UserTransaction.Transaction transaction =
             data as UserTransaction.Transaction;
         List transactions = [];
-        if (!userData.containsKey("transactions")) {
-          userData["transactions"] = transactions;
+        if (!userDocument.containsKey("transactions")) {
+          userDocument["transactions"] = transactions;
         } else {
-          transactions = userData["transactions"];
+          transactions = userDocument["transactions"];
         }
 
         transactions.forEach((element) {
@@ -159,9 +159,9 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         Map<String, dynamic> transactionToMap = transaction.toMap();
         transactionToMap["date"] = timestamp;
         transactions.add(transactionToMap);
-        userData["transactions"] = transactions;
+        userDocument["transactions"] = transactions;
 
-        await userDocument.set(userData, SetOptions(merge: true));
+        await userDocumentReference.set(userDocument, SetOptions(merge: true));
         success = true;
         debugPrint("FirestoreBloc._handleWrite: Transactions is $transactions");
         break;
@@ -170,10 +170,10 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         String transactionId = data as String;
 
         List transactions = [];
-        if (!userData.containsKey("transactions")) {
-          userData["transactions"] = transactions;
+        if (!userDocument.containsKey("transactions")) {
+          userDocument["transactions"] = transactions;
         } else {
-          transactions = userData["transactions"];
+          transactions = userDocument["transactions"];
         }
 
         int lengthBeforeRemoving = transactions.length;
@@ -184,25 +184,31 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         assert(lengthAfterRemoving <= lengthBeforeRemoving,
             "Something horrible happened");
         if (lengthAfterRemoving < lengthBeforeRemoving) {
-          userData["transactions"] = transactions;
-          await userDocument.set(userData, SetOptions(merge: true));
+          userDocument["transactions"] = transactions;
+          await userDocumentReference.set(
+              userDocument, SetOptions(merge: true));
         } else {
           debugPrint(
               "FirestoreBloc._handleWrite: We didn't really remove anything");
         }
         success = true;
         break;
-      case FirestoreWriteType.SingleUserDataEntry:
-        // TODO: Handle this case.
-        break;
-      case FirestoreWriteType.MultipleUserDataEntry:
-        // TODO: Handle this case.
+      case FirestoreWriteType.UpdateUserData:
+        assert(data is Map);
+        var userData = await _getUserData(uid) as Map<String, dynamic>;
+        final mergedMap = {
+          ...userData,
+          ...data,
+        };
+        userDocument["data"] = mergedMap;
+        await userDocumentReference.set(userDocument, SetOptions(merge: true));
+        success = true;
         break;
     }
 
-    // userDocument.set(userData, SetOptions(merge: true));
+    // userDocument.set(userDocument, SetOptions(merge: true));
     return FirestoreWriteState(
-        success: success, type: type, updatedDocument: userData);
+        success: success, type: type, updatedDocument: userDocument);
   }
 
   @override

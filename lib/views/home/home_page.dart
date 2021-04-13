@@ -99,7 +99,10 @@ class HomePage extends StatelessWidget {
                           ),
                           TextButton(
                             child: Text("Sign out"),
-                            onPressed: FirebaseAuth.instance.signOut,
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pop(context);
+                            },
                           )
                         ],
                       ),

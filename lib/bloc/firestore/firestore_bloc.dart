@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/convert_case.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction
     show Transaction;
 
@@ -134,8 +135,27 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
     if (false) debugPrint("FirestoreBloc._handleSet: Data is $userDocument");
     switch (type) {
-      case FirestoreWriteType.AddSingleUserSetting:
-        // TODO: Handle this case.
+      case FirestoreWriteType.SyncUserSettings:
+        assert(data is Map);
+        var remoteSettings = userDocument["settings"]! as Map<String, dynamic>;
+        var localSettings = {};
+
+        // This addresses inconsistencies between local code and remote data.
+        data.keys.forEach((element) {
+          localSettings[snakeToCamelCase(element)] = data[element]!;
+        });
+
+        // Try and avoid settings deletion.
+        var mergedSettings = {
+          ...localSettings,
+          ...remoteSettings,
+        };
+        userDocument["settings"] = mergedSettings;
+        await userDocumentReference.set(
+          userDocument,
+          SetOptions(merge: true),
+        );
+        success = true;
         break;
       case FirestoreWriteType.ResetSingleUserSetting:
         // TODO: Handle this case.

@@ -8,7 +8,7 @@ enum FirestoreReadType {
 }
 
 enum FirestoreWriteType {
-  AddSingleUserSetting,
+  SyncUserSettings,
   ResetSingleUserSetting,
   AddSingleUserTransaction,
   RemoveSingleUserTransaction,

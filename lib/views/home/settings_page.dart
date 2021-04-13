@@ -124,7 +124,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void dispose() {
-    SharedPreferences.getInstance();
     super.dispose();
   }
 }

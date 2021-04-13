@@ -433,7 +433,7 @@ class _TransactionForm extends StatelessWidget {
                         );
 
                         debugPrint("Data:\n$map");
-                        Navigator.maybePop(context);
+                        Navigator.pop(context);
                       }
                     },
                   ),
@@ -469,7 +469,9 @@ class _TransactionForm extends StatelessWidget {
                       foregroundColor: MaterialStateProperty.all<Color>(
                           ColorPalette.ImperialPrimer),
                     ),
-                    onPressed: Navigator.of(context).pop,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   )
                 ],
               ),

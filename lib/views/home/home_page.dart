@@ -42,36 +42,9 @@ class HomePage extends StatelessWidget {
         }
         if (morePrinting) {
           debugPrint("HomePage.build(): value is a Map! How convenient!");
-          debugPrint("HomePage.build(): checking if it matches default...");
         }
 
-        List<String> nonMatchingKeys = [];
-        for (MapEntry defaultEntry in defaultSettings.entries) {
-          bool matched = false;
-          for (MapEntry valueEntry in settings.entries) {
-            if (defaultEntry.key == valueEntry.key) matched = true;
-          }
-          if (!matched) {
-            nonMatchingKeys.add(defaultEntry.key as String);
-          }
-        }
-
-        if (nonMatchingKeys.isNotEmpty) {
-          if (morePrinting) {
-            debugPrint(
-                "HomePage.build(): Shenanigans! It does not match default!");
-            debugPrint(
-                "HomePage.build(): Non matching keys are $nonMatchingKeys");
-            debugPrint("HomePage.build(): Let me set it back to normal");
-          }
-          for (var key in nonMatchingKeys) {
-            settings[key] = defaultSettings[key];
-          }
-        } else {
-          if (morePrinting) {
-            debugPrint("HomePage.build(): It does! Settings are: $settings");
-          }
-        }
+        settings = {...defaultSettings, ...settings};
 
         return Scaffold(
           drawer: Drawer(

@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
 import 'package:moneio/widgets/labelled_form_field.dart';
-import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = '/login';

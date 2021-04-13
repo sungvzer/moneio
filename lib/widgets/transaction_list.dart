@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/screen.dart';
 
@@ -184,7 +184,7 @@ class _TransactionTile extends StatelessWidget {
                   BlocProvider.of<FirestoreBloc>(context).add(
                     FirestoreWrite(
                       type: FirestoreWriteType.RemoveSingleUserTransaction,
-                      userId: FirebaseAuth.instance.currentUser!.uid,
+                      userId: loggedUID!,
                       data: _current.id,
                     ),
                   );

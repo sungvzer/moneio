@@ -6,6 +6,7 @@ import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/screen.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/home/settings_page.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
     debugPrint("HomePage.build: Adding FirestoreRead...");
     BlocProvider.of<FirestoreBloc>(context).add(FirestoreRead(
       type: FirestoreReadType.UserTransactions,
-      userId: FirebaseAuth.instance.currentUser!.uid,
+      userId: loggedUID!,
     ));
     return BlocBuilder<PreferenceBloc, PreferenceState>(
       builder: (context, state) {

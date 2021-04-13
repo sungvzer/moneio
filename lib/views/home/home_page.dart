@@ -110,9 +110,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: settings["accent_color"] != null
-                ? parseColorString(settings["accent_color"])
-                : parseColorString(defaultSettings["accent_color"]),
+            backgroundColor: parseColorString(settings["accent_color"]!),
             foregroundColor: ColorPalette.ImperialPrimer,
             onPressed: () {
               Navigator.push(
@@ -137,9 +135,7 @@ class HomePage extends StatelessWidget {
                 },
               );
             }),
-            backgroundColor: settings["accent_color"] != null
-                ? parseColorString(settings["accent_color"])
-                : parseColorString(defaultSettings["accent_color"]),
+            backgroundColor: parseColorString(settings["accent_color"]!),
             title: Title(
               title: "mone.io",
               color: Colors.black,

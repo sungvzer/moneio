@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/helpers/color_parser.dart';
 import 'package:moneio/constants.dart';
@@ -26,6 +27,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     "password": TextEditingController(),
     "name": TextEditingController(),
     "surname": TextEditingController(),
+    "birthday": TextEditingController(
+        // text: DateFormat("dd/MM/yyyy").format(DateTime.now()),
+        ),
   };
 
   void _next(List<Step> steps) {
@@ -57,6 +61,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String password = _controllers["password"]!.value.text;
     String name = _controllers["name"]!.value.text.trim();
     String surname = _controllers["surname"]!.value.text.trim();
+    Timestamp birthday = Timestamp.fromDate(
+      DateFormat("dd/MM/yyyy").parse(
+        _controllers["birthday"]!.value.text.trim(),
+      ),
+    );
+
     debugPrint(
         "We're complete, signing up with credentials $email - $password");
 
@@ -78,6 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       schemaData["data"]["firstName"] = name;
       schemaData["data"]["lastName"] = surname;
       schemaData["transactions"] = [];
+      schemaData["data"]["birthday"] = birthday;
       await store
           .collection("/users/")
           .doc(credential.user!.uid)
@@ -163,6 +174,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
               decoration: InputDecoration(labelText: 'Surname'),
               controller: _controllers["surname"]!,
             ),
+            TextFormField(
+              decoration: InputDecoration(labelText: "Birthday"),
+              controller: _controllers["birthday"]!,
+              readOnly: true,
+              onTap: () => showDatePicker(
+                context: context,
+                firstDate: DateTime(1900, 1, 1),
+                lastDate: DateTime.now(),
+                initialDate: DateTime.now(),
+              ).then((value) {
+                final DateFormat f = DateFormat("dd/MM/yyyy");
+                var controller = _controllers["birthday"];
+                if (controller == null) return;
+                if (value == null) {
+                  controller.text = "";
+                  return;
+                }
+                controller.text = f.format(value);
+              }),
+            )
           ],
         ),
         title: const Text("Account information (optional)"),

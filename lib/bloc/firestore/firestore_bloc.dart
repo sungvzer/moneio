@@ -136,6 +136,12 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
     if (morePrinting)
       debugPrint("FirestoreBloc._handleSet: Data is $userDocument");
     switch (type) {
+      case FirestoreWriteType.InvalidateCache:
+        assert(data == null);
+        _isCacheValid = false;
+        _userCaches = {};
+        success = true;
+        break;
       case FirestoreWriteType.SyncUserSettings:
         assert(data is Map);
         var remoteSettings = userDocument["settings"]! as Map<String, dynamic>;

@@ -13,6 +13,7 @@ enum FirestoreWriteType {
   AddSingleUserTransaction,
   RemoveSingleUserTransaction,
   UpdateUserData,
+  InvalidateCache
 }
 
 @immutable
@@ -41,8 +42,5 @@ class FirestoreWrite extends FirestoreEvent {
   final data;
 
   FirestoreWrite(
-      {required this.type, required this.userId, required this.data}) {
-    // For now, assert data is not null.
-    assert(data != null);
-  }
+      {required this.type, required this.userId, required this.data});
 }

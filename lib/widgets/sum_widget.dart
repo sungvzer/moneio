@@ -25,6 +25,7 @@ class SumWidgetState extends State<SumWidget> {
   int amount = 0;
   String amountString = "";
   bool _humanReadable;
+  String _userCurrency = "";
 
   SumWidgetState(this._humanReadable);
 
@@ -93,7 +94,7 @@ class SumWidgetState extends State<SumWidget> {
 
     amountString = Transaction(
       amount: amount,
-      currency: maxKey,
+      currency: maxKey == "" ? _userCurrency : maxKey,
       date: DateTime.now(),
       category: categories["NONE"]!,
     ).getSeparatedAmountString(
@@ -141,38 +142,42 @@ class SumWidgetState extends State<SumWidget> {
               fontSize: 20),
         ),
         BlocBuilder<PreferenceBloc, PreferenceState>(
-          builder: (context, preferenceState) =>
-              BlocBuilder<FirestoreBloc, FirestoreState>(
-            builder: (context, state) {
-              if (preferenceState is PreferenceWriteState) {
-                _humanReadable =
-                    preferenceState.updatedPreferences["human_readable"];
-              } else if (preferenceState is PreferenceReadState &&
-                  preferenceState.readValue is Map) {
-                _humanReadable = preferenceState.readValue["human_readable"];
-              }
-              var innerWidget = getInnerWidget(context, state);
+          builder: (context, preferenceState) {
+            if (preferenceState is PreferenceWriteState) {
+              _humanReadable =
+                  preferenceState.updatedPreferences["human_readable"];
+              _userCurrency =
+                  preferenceState.updatedPreferences["favorite_currency"];
+            } else if (preferenceState is PreferenceReadState &&
+                preferenceState.readValue is Map) {
+              _humanReadable = preferenceState.readValue["human_readable"];
+              _userCurrency = preferenceState.readValue["favorite_currency"];
+            }
+            return BlocBuilder<FirestoreBloc, FirestoreState>(
+              builder: (context, state) {
+                var innerWidget = getInnerWidget(context, state);
 
-              var outerWidget = GestureDetector(
-                onTap: () => setState(() => debugPrint("It works now!")),
-                child: SizedBox(
-                  height: percentHeight(_) * 15,
-                  width: percentWidth(_) * 50,
-                  child: DecoratedBox(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: innerWidget,
+                var outerWidget = GestureDetector(
+                  onTap: () => setState(() => debugPrint("It works now!")),
+                  child: SizedBox(
+                    height: percentHeight(_) * 15,
+                    width: percentWidth(_) * 50,
+                    child: DecoratedBox(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: innerWidget,
+                        ),
                       ),
+                      decoration: _decoration,
                     ),
-                    decoration: _decoration,
                   ),
-                ),
-              );
-              return outerWidget;
-            },
-          ),
+                );
+                return outerWidget;
+              },
+            );
+          },
         ),
       ],
     );

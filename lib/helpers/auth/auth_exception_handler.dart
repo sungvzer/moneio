@@ -13,6 +13,16 @@ void firebaseAuthExceptionHandler(
   // TODO: Handle changes in login and sign up mechanics
   assert(authException.code != "operation-not-allowed");
 
+  if (authException.message != null &&
+      authException.message!.contains("resolve host")) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Please check your internet connectivity and retry"),
+      ),
+    );
+    debugPrint("No connection!");
+  }
+
   switch (authException.code) {
     case 'weak-password':
       ScaffoldMessenger.of(context).showSnackBar(
@@ -77,10 +87,6 @@ void firebaseAuthExceptionHandler(
       ScaffoldMessenger.of(context).showSnackBar(userNotFound);
       break;
     default:
-      if (authException.message != null &&
-          authException.message!.contains("resolve host")) {
-        debugPrint("No connection!");
-        break;
-      }
+      break;
   }
 }

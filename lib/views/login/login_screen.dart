@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/helpers/color_parser.dart';
 import 'package:moneio/constants.dart';
@@ -89,19 +91,31 @@ class _LoginFormState extends State<LoginForm> {
     String email, password;
     email = _controllers["email"]!.value.text;
     password = _controllers["password"]!.value.text;
-
     FirebaseAuth auth = FirebaseAuth.instance;
+    UserCredential credential;
     debugPrint("LoginScreen.build._login: trying to login!");
     try {
       debugPrint("LoginForm: login with $email - $password");
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      credential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       debugPrint("LoginForm: logged in $email - $password");
     } on FirebaseAuthException catch (e) {
       debugPrint("LoginScreen.build._login: got an exception.\n${e.message}");
 
       firebaseAuthExceptionHandler(e, context);
+      return;
     }
+
+    debugPrint(
+        "LoginScreen.build._login: credential.uid -> ${credential.user!.uid}");
+    // Update user document at login
+    BlocProvider.of<FirestoreBloc>(context).add(
+      FirestoreWrite(
+        type: FirestoreWriteType.InvalidateCache,
+        userId: credential.user!.uid,
+        data: null,
+      ),
+    );
     debugPrint("LoginScreen.build._login: after the login!");
   }
 

@@ -120,6 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             settingKey: "accent_color",
                           ),
                           SettingListTile<List<String>>(
+                            // FIXME: This doesn't show the current setting
                             currencyToSymbol.keys.toList(),
                             title: "Favorite currency",
                             settingKey: "favorite_currency",

@@ -157,7 +157,19 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         success = true;
         break;
       case FirestoreWriteType.ResetSingleUserSetting:
-        // TODO: Handle this case.
+        assert(data == null);
+        var defaultSettingsToCamelCase = {};
+
+        defaultSettings.keys.forEach((element) {
+          defaultSettingsToCamelCase[snakeToCamelCase(element)] =
+              defaultSettings[element]!;
+        });
+        userDocument["settings"] = defaultSettingsToCamelCase;
+
+        await userDocumentReference.set(
+          userDocument,
+          SetOptions(merge: true),
+        );
         break;
       case FirestoreWriteType.AddSingleUserTransaction:
         assert(data is UserTransaction.Transaction);

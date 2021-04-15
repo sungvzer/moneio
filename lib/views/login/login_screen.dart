@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moneio/color_palette.dart';
-import 'package:moneio/color_parser.dart';
+import 'package:moneio/helpers/color_parser.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';

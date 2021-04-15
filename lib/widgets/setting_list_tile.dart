@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
-import 'package:moneio/color_parser.dart';
+import 'package:moneio/helpers/color_parser.dart';
 import 'package:moneio/constants.dart';
 
 class SettingListTile<T> extends StatefulWidget {

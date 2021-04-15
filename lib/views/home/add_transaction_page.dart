@@ -62,9 +62,9 @@ class AddTransactionPageState extends State<AddTransactionPage> {
             child: Container(
               alignment: Alignment.center,
               child: SingleChildScrollView(
-                child: _TransactionForm(settings["accent_color"] != null
-                    ? parseColorString(settings["accent_color"])
-                    : parseColorString(defaultSettings["accent_color"])),
+                child: _TransactionForm(
+                    parseColorString(settings["accent_color"]!),
+                    settings["favorite_currency"]!),
                 physics: BouncingScrollPhysics(),
                 clipBehavior: Clip.none,
               ),
@@ -100,8 +100,9 @@ class AddTransactionPageState extends State<AddTransactionPage> {
 
 class _TransactionForm extends StatelessWidget {
   final Color _accentColor;
+  final String _userFavoriteCurrency;
 
-  _TransactionForm(this._accentColor);
+  _TransactionForm(this._accentColor, this._userFavoriteCurrency);
 
   final GlobalKey<FormState> transactionFormKey =
       GlobalKey<FormState>(debugLabel: "TransactionForm");
@@ -141,8 +142,7 @@ class _TransactionForm extends StatelessWidget {
   Widget build(BuildContext context) {
     String _selectedCategory = "";
 
-    // TODO: User preferences for selectedCurrency
-    String _selectedCurrency = "EUR";
+    String _selectedCurrency = _userFavoriteCurrency;
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Form(

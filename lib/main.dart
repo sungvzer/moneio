@@ -1,20 +1,27 @@
-import 'package:flutter/material.dart';
-
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
-import 'package:moneio/views/home_page.dart';
+import 'package:moneio/views/home/add_transaction_page.dart';
+import 'package:moneio/views/home/home_page.dart';
+import 'package:moneio/views/home/settings_page.dart';
+import 'package:moneio/views/home/suggestions_page.dart';
 import 'package:moneio/views/loading_screen.dart';
+import 'package:moneio/views/login/login_screen.dart';
+import 'package:moneio/views/login/sign_up_screen.dart';
+import 'package:moneio/views/login_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<JsonBloc>(
-          create: (context) => JsonBloc(),
+        BlocProvider<FirestoreBloc>(
+          create: (context) => FirestoreBloc(),
         ),
         BlocProvider<PreferenceBloc>(
           create: (context) => PreferenceBloc(),
@@ -31,6 +38,10 @@ class FirebaseApplication extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "mone.io",
@@ -38,6 +49,11 @@ class FirebaseApplication extends StatelessWidget {
         LoadingScreen.id: (context) => LoadingScreen(),
         HomePage.id: (context) => HomePage(),
         FirebaseErrorPage.id: (context) => FirebaseErrorPage(),
+        LoginScreen.id: (context) => LoginScreen(),
+        SignUpScreen.id: (context) => SignUpScreen(),
+        AddTransactionPage.id: (context) => AddTransactionPage(),
+        SettingsPage.id: (context) => SettingsPage(),
+        SuggestionPage.id: (context) => SuggestionPage(),
       },
       home: FutureBuilder(
         // Initialize FlutterFire:
@@ -50,9 +66,11 @@ class FirebaseApplication extends StatelessWidget {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
-            debugPrint(
-                "FirebaseApplication.build: Firebase initialized, getting application...");
-            return HomePage();
+            if (morePrinting) {
+              debugPrint(
+                  "FirebaseApplication.build: Firebase initialized, getting application...");
+            }
+            return LoginRouter();
           }
 
           return LoadingScreen();

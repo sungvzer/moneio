@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:moneio/color_palette.dart';
-import 'package:moneio/constants.dart';
 
 class SuggestionPage extends StatefulWidget {
+  static final String id = '/home/suggestions';
   SuggestionPage();
 
   @override

@@ -1,13 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/random_string.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {
   TransactionCategory category;
-  static int sId = 0;
 
-  // TODO: Is ID really necessary??
-  late int id;
+  late String id;
   String tag;
 
   int amount; // TODO: Should we switch to BigInt instead?
@@ -15,7 +15,7 @@ class Transaction extends Comparable {
   DateTime date;
 
   Transaction({
-    int? id,
+    String? id,
     this.tag = "",
     required this.category,
     this.amount = 0,
@@ -26,24 +26,39 @@ class Transaction extends Comparable {
       if (morePrinting) debugPrint("Transaction: Getting existing id $id");
       this.id = id;
     } else {
-      if (morePrinting) debugPrint("Transaction: Getting new id $sId");
-      this.id = sId++;
+      String newId = getRandomString();
+      if (morePrinting) debugPrint("Transaction: Getting new id $newId");
+      this.id = newId;
     }
   }
 
   factory Transaction.fromMap(Map<String, dynamic> json) {
     DateTime parsed;
     try {
-      parsed = DateTime.parse(json["date"]);
+      if (json["date"] is Timestamp) {
+        Timestamp timestamp = json["date"] as Timestamp;
+        parsed = timestamp.toDate();
+      } else {
+        parsed = DateTime.parse(json["date"]);
+      }
     } on FormatException catch (e) {
       debugPrint("Failed to parse date: ${e.message}");
       parsed = DateTime(0);
     }
+
+    TransactionCategory category;
+    if (json["category"] is Map) {
+      category = TransactionCategory.fromMap(json["category"]);
+    } else if (json["category"] is String) {
+      category = categories[json["category"]!]!;
+    } else {
+      throw UnimplementedError();
+    }
+
     return Transaction(
-      id: json["id"] as int?,
+      id: json["id"] as String?,
       tag: json["tag"] as String,
-      category:
-          TransactionCategory.fromMap(json["category"] as Map<String, dynamic>),
+      category: category,
       amount: json["amount"] as int,
       currency: json["currency"] as String,
       date: parsed,

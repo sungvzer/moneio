@@ -34,30 +34,33 @@ class _SettingListTileState<T> extends State<SettingListTile> {
   );
 
   Widget getWidgetByType(context) {
+    Text titleText = Text(
+      _title,
+      style: TextStyle(
+        fontFamily: "Poppins",
+        color: ColorPalette.ImperialPrimer,
+        fontWeight: FontWeight.w500,
+        fontSize: 14,
+      ),
+    );
+
+    Text? subtitleText = _subtitle != null
+        ? Text(
+            _subtitle!,
+            style: TextStyle(
+              fontFamily: "Poppins",
+              color: ColorPalette.StormPetrel,
+              fontWeight: FontWeight.w400,
+              fontSize: 11,
+            ),
+          )
+        : null;
     // TODO: Implement other types as we need fit
     if (_value is bool) {
       bool value = _value as bool;
       return ListTile(
-        title: Text(
-          _title,
-          style: TextStyle(
-            fontFamily: "Poppins",
-            color: ColorPalette.ImperialPrimer,
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-          ),
-        ),
-        subtitle: _subtitle != null
-            ? Text(
-                _subtitle!,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  color: ColorPalette.StormPetrel,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 11,
-                ),
-              )
-            : null,
+        title: titleText,
+        subtitle: subtitleText,
         onTap: () {
           setState(() {
             value = !value;
@@ -85,28 +88,9 @@ class _SettingListTileState<T> extends State<SettingListTile> {
             "SettingListTileState.getWidgetByType(): Got string $_value, this is a color");
       Color value = parseColorString(_value as String);
       return ListTile(
-        title: Text(
-          _title,
-          style: TextStyle(
-            fontFamily: "Poppins",
-            color: ColorPalette.ImperialPrimer,
-            fontWeight: FontWeight.w500,
-            fontSize: 14,
-          ),
-        ),
-        subtitle: _subtitle != null
-            ? Text(
-                _subtitle!,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  color: ColorPalette.StormPetrel,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 11,
-                ),
-              )
-            : null,
+        title: titleText,
+        subtitle: subtitleText,
         onTap: () {
-          // TODO: Fucking do something about settings
           showDialog(
             context: context,
             builder: (context) {
@@ -153,6 +137,47 @@ class _SettingListTileState<T> extends State<SettingListTile> {
           child: Container(),
           backgroundColor: parseColorString(_value as String),
         ),
+      );
+    } else if (_value is List<String>) {
+      List<String> list = _value as List<String>;
+      assert(list.length > 0);
+      return Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: ListTile(
+              title: titleText,
+              subtitle: subtitleText,
+              isThreeLine: _subtitle != null ? _subtitle!.length > 40 : false,
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: DropdownButton(
+              isExpanded: true,
+              value: list[0],
+              onChanged: (String? value) {
+                int index = list.indexOf(value!);
+                BlocProvider.of<PreferenceBloc>(context)
+                    .add(PreferenceWrite(_settingKey, value));
+                String swap = list[0];
+                list[0] = value;
+                list[index] = swap;
+                _value = list as T;
+                debugPrint(
+                    "_SettingListTileState.getWidgetByType: Chosen $value");
+              },
+              items: list
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
       );
     }
 

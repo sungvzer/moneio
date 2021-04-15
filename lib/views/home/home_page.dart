@@ -1,27 +1,39 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
-import 'package:moneio/views/add_transaction_page.dart';
-import 'package:moneio/views/settings_page.dart';
-import 'package:moneio/views/suggestions_page.dart';
+import 'package:moneio/helpers/auth/auth_helpers.dart';
+import 'package:moneio/screen.dart';
+import 'package:moneio/views/home/add_transaction_page.dart';
+import 'package:moneio/views/home/settings_page.dart';
+import 'package:moneio/views/home/suggestions_page.dart';
 import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
 import 'package:moneio/widgets/transaction_list.dart';
-
-import '../color_palette.dart';
 
 class HomePage extends StatelessWidget {
   static const String id = "/home";
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("HomePage.build: Adding PreferenceRead...");
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
+
+    debugPrint("HomePage.build: Adding FirestoreRead...");
+    BlocProvider.of<FirestoreBloc>(context).add(FirestoreRead(
+      type: FirestoreReadType.UserTransactions,
+      userId: loggedUID!,
+    ));
     return BlocBuilder<PreferenceBloc, PreferenceState>(
       builder: (context, state) {
         Map<String, dynamic> settings = {};
-        debugPrint("HomePage.build(): getting state ${state.runtimeType}");
+        if (morePrinting) {
+          debugPrint("HomePage.build(): getting state ${state.runtimeType}");
+        }
         if (state is PreferenceReadState) {
           if (state.readValue is Map) {
             settings = state.readValue;
@@ -29,32 +41,11 @@ class HomePage extends StatelessWidget {
         } else if (state is PreferenceWriteState) {
           settings = state.updatedPreferences;
         }
-        debugPrint("HomePage.build(): value is a Map! How convenient!");
-        debugPrint("HomePage.build(): checking if it matches default...");
-
-        List<String> nonMatchingKeys = [];
-        for (MapEntry defaultEntry in defaultSettings.entries) {
-          bool matched = false;
-          for (MapEntry valueEntry in settings.entries) {
-            if (defaultEntry.key == valueEntry.key) matched = true;
-          }
-          if (!matched) {
-            nonMatchingKeys.add(defaultEntry.key as String);
-          }
+        if (morePrinting) {
+          debugPrint("HomePage.build(): value is a Map! How convenient!");
         }
 
-        if (nonMatchingKeys.isNotEmpty) {
-          debugPrint(
-              "HomePage.build(): Shenanigans! It does not match default!");
-          debugPrint(
-              "HomePage.build(): Non matching keys are $nonMatchingKeys");
-          debugPrint("HomePage.build(): Let me set it back to normal");
-          for (var key in nonMatchingKeys) {
-            settings[key] = defaultSettings[key];
-          }
-        } else {
-          debugPrint("HomePage.build(): It does! Settings are: $settings");
-        }
+        settings = {...defaultSettings, ...settings};
 
         return Scaffold(
           drawer: Drawer(
@@ -92,13 +83,38 @@ class HomePage extends StatelessWidget {
                   },
                   title: Text("Suggestions"),
                 ),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  onTap: () {
+                    showDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Sign out"),
+                        content: Text("Are you sure you want to sign out?"),
+                        actions: [
+                          TextButton(
+                            child: Text("Cancel"),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          TextButton(
+                            child: Text("Sign out"),
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                  title: Text("Sign out"),
+                ),
               ],
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: settings["accent_color"] != null
-                ? parseColorString(settings["accent_color"])
-                : parseColorString(defaultSettings["accent_color"]),
+            backgroundColor: parseColorString(settings["accent_color"]!),
             foregroundColor: ColorPalette.ImperialPrimer,
             onPressed: () {
               Navigator.push(
@@ -123,9 +139,7 @@ class HomePage extends StatelessWidget {
                 },
               );
             }),
-            backgroundColor: settings["accent_color"] != null
-                ? parseColorString(settings["accent_color"])
-                : parseColorString(defaultSettings["accent_color"]),
+            backgroundColor: parseColorString(settings["accent_color"]!),
             title: Title(
               title: "mone.io",
               color: Colors.black,
@@ -146,7 +160,7 @@ class HomePage extends StatelessWidget {
               children: [
                 SumWidget(settings["human_readable"]),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 100 * 4,
+                  height: percentHeight(context) * 4,
                 ),
                 Expanded(
                   child: Column(

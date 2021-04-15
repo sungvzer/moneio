@@ -5,14 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:moneio/bloc/json/json_bloc.dart';
+import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/color_parser.dart';
 import 'package:moneio/constants.dart';
-import 'package:moneio/models/transaction_category.dart';
+import 'package:moneio/helpers/auth/auth_helpers.dart';
+import 'package:moneio/models/transaction.dart' as UserTransaction;
+import 'package:moneio/widgets/labelled_form_field.dart';
 
 class AddTransactionPage extends StatefulWidget {
+  static final String id = '/home/add_transaction';
+
   AddTransactionPage();
 
   @override
@@ -22,6 +26,8 @@ class AddTransactionPage extends StatefulWidget {
 class AddTransactionPageState extends State<AddTransactionPage> {
   @override
   Widget build(BuildContext context) {
+    debugPrint("AddTransactionPageState.build: Adding PreferenceRead...");
+
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
     return BlocBuilder<PreferenceBloc, PreferenceState>(
@@ -56,9 +62,9 @@ class AddTransactionPageState extends State<AddTransactionPage> {
             child: Container(
               alignment: Alignment.center,
               child: SingleChildScrollView(
-                child: _TransactionForm(settings["accent_color"] != null
-                    ? parseColorString(settings["accent_color"])
-                    : parseColorString(defaultSettings["accent_color"])),
+                child: _TransactionForm(
+                    parseColorString(settings["accent_color"]!),
+                    settings["favorite_currency"]!),
                 physics: BouncingScrollPhysics(),
                 clipBehavior: Clip.none,
               ),
@@ -94,8 +100,9 @@ class AddTransactionPageState extends State<AddTransactionPage> {
 
 class _TransactionForm extends StatelessWidget {
   final Color _accentColor;
+  final String _userFavoriteCurrency;
 
-  _TransactionForm(this._accentColor);
+  _TransactionForm(this._accentColor, this._userFavoriteCurrency);
 
   final GlobalKey<FormState> transactionFormKey =
       GlobalKey<FormState>(debugLabel: "TransactionForm");
@@ -135,8 +142,7 @@ class _TransactionForm extends StatelessWidget {
   Widget build(BuildContext context) {
     String _selectedCategory = "";
 
-    // TODO: User preferences
-    String _selectedCurrency = "EUR";
+    String _selectedCurrency = _userFavoriteCurrency;
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Form(
@@ -191,6 +197,7 @@ class _TransactionForm extends StatelessWidget {
                       validator: (value) {
                         if (value == null) return null;
                         if (value.isEmpty) return "Please enter an amount.";
+                        value = value.replaceAll(',', "");
                         if (double.parse(value) == 0.0)
                           return "Please enter an amount";
                         return null;
@@ -209,8 +216,9 @@ class _TransactionForm extends StatelessWidget {
                           str == null ? "Please insert a currency" : null,
                       decoration: _decoration,
                       isExpanded: true,
-                      onChanged: (String? value) {
-                        if (value != null) _selectedCurrency = value.trim();
+                      onChanged: (value) {
+                        if (value is String?) if (value != null)
+                          _selectedCurrency = value.trim();
                       },
                       style: TextStyle(
                         fontFamily: "Poppins",
@@ -343,22 +351,7 @@ class _TransactionForm extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
-                items: categories.map((final TransactionCategory cat) {
-                  return DropdownMenuItem(
-                    child: Text(cat.emoji + ' - ' + cat.name),
-                    value: cat.uniqueID,
-                  );
-                }).toList(),
-                // items: categoriesToText.values.map((final String value) {
-                //   const Map<String, String> map = categoriesToText;
-                //   String key;
-                //   key = map.keys.where((y) => map[y] == value).first;
-                //   final String emoji = categoriesToEmoji[key];
-                //   return DropdownMenuItem(
-                //     child: Text("$emoji - $value"),
-                //     value: key,
-                //   );
-                // }).toList(),
+                items: _getCategoriesMenuItems(),
                 hint: Center(child: Text("Please select a category")),
               ),
             ),
@@ -426,19 +419,22 @@ class _TransactionForm extends StatelessWidget {
                         map["amount"] = amountNumber;
                         map["tag"] = tag;
                         map["category"] =
-                            TransactionCategory(_selectedCategory).toMap();
+                            categories[_selectedCategory]!.toMap();
                         map["date"] = DateTime(dateList[2], dateList[1],
                                 dateList[0], parsedTime.hour, parsedTime.minute)
                             .toIso8601String();
                         map["currency"] = currency;
 
-                        BlocProvider.of<JsonBloc>(context).add(JsonWrite(
-                          "transactions.json",
-                          value: map,
-                        ));
+                        BlocProvider.of<FirestoreBloc>(context).add(
+                          FirestoreWrite(
+                            type: FirestoreWriteType.AddSingleUserTransaction,
+                            data: UserTransaction.Transaction.fromMap(map),
+                            userId: loggedUID!,
+                          ),
+                        );
 
                         debugPrint("Data:\n$map");
-                        Navigator.maybePop(context);
+                        Navigator.pop(context);
                       }
                     },
                   ),
@@ -474,7 +470,9 @@ class _TransactionForm extends StatelessWidget {
                       foregroundColor: MaterialStateProperty.all<Color>(
                           ColorPalette.ImperialPrimer),
                     ),
-                    onPressed: Navigator.of(context).pop,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   )
                 ],
               ),
@@ -516,27 +514,24 @@ class _TransactionForm extends StatelessWidget {
     parsedTime = TimeOfDay(hour: hour, minute: minute);
     return parsedTime;
   }
-}
 
-class LabelledFormField extends StatelessWidget {
-  final String _label;
-  final Widget child;
-  final TextStyle? style;
+  List<DropdownMenuItem> _getCategoriesMenuItems() {
+    final values = categories.values.toList();
+    var list = <DropdownMenuItem>[];
 
-  const LabelledFormField(this._label, {required this.child, this.style});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(_label),
-        SizedBox(
-          height: 5,
-        ),
-        child,
-      ],
+    list.add(
+      DropdownMenuItem(
+        child: Text("None"),
+        value: "NONE",
+      ),
     );
+
+    for (var value in values.where((c) => c.uniqueID != "NONE")) {
+      list.add(DropdownMenuItem(
+        child: Text("${value.emoji} - ${value.name}"),
+        value: value.uniqueID,
+      ));
+    }
+    return list;
   }
 }

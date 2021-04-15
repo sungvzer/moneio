@@ -4,6 +4,7 @@ part of 'json_bloc.dart';
 abstract class JsonEvent {
   final String _fileName;
   final bool createFileIfNeeded;
+
   JsonEvent(this._fileName, {this.createFileIfNeeded = false});
 
   get fileName => _fileName;
@@ -21,6 +22,7 @@ class JsonClear extends JsonEvent {
 class JsonWrite extends JsonEvent {
   final dynamic value;
   final bool append;
+
   JsonWrite(fileName,
       {this.value, this.append = true, createFileIfNeeded = false})
       : super(fileName, createFileIfNeeded: createFileIfNeeded);

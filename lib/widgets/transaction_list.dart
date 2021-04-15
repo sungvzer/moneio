@@ -6,7 +6,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/models/transaction.dart';
-import 'package:moneio/screen.dart';
+import 'package:moneio/helpers/screen.dart';
 
 class TransactionListBuilder extends StatefulWidget {
   const TransactionListBuilder();

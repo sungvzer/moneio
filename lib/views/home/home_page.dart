@@ -7,7 +7,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/helpers/color_parser.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
-import 'package:moneio/screen.dart';
+import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/home/settings_page.dart';
 import 'package:moneio/views/home/suggestions_page.dart';

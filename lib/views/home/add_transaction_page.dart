@@ -141,7 +141,7 @@ class _TransactionForm extends StatelessWidget {
   Widget build(BuildContext context) {
     String _selectedCategory = "";
 
-    // TODO: User preferences
+    // TODO: User preferences for selectedCurrency
     String _selectedCurrency = "EUR";
     return Padding(
       padding: const EdgeInsets.all(40.0),

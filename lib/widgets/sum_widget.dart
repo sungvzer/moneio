@@ -22,7 +22,6 @@ class SumWidget extends StatefulWidget {
 }
 
 class SumWidgetState extends State<SumWidget> {
-  // TODO: Remove this?!
   int amount = 0;
   String amountString = "";
   bool _humanReadable;
@@ -70,7 +69,6 @@ class SumWidgetState extends State<SumWidget> {
       if (!sumsByCurrency.containsKey(currency))
         sumsByCurrency[currency] = tr.amount;
       else {
-        // TODO: Null safety
         sumsByCurrency[currency] = sumsByCurrency[currency]! + tr.amount;
       }
     });

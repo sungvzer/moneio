@@ -1,5 +1,3 @@
-import 'dart:io';
-
 String snakeToCamelCase(String str) {
   String result = "";
 
@@ -21,7 +19,6 @@ String snakeToCamelCase(String str) {
 String camelToSnakeCase(String str) {
   String result = "";
 
-  bool shouldUnderscore = false;
   for (int index = 0; index < str.length; index++) {
     String char = str[index];
     if (char.toUpperCase() == char && index != 0) {

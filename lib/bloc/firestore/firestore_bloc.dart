@@ -65,7 +65,8 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       return <UserTransaction.Transaction>[];
     List<UserTransaction.Transaction> transactions = [];
 
-    if (false) debugPrint("FirestoreBloc._getUserTransactions: $mapList");
+    if (morePrinting)
+      debugPrint("FirestoreBloc._getUserTransactions: $mapList");
     for (var map in mapList) {
       assert(map is Map);
       transactions.add(UserTransaction.Transaction.fromMap(map));
@@ -132,7 +133,8 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
     bool success = false;
 
-    if (false) debugPrint("FirestoreBloc._handleSet: Data is $userDocument");
+    if (morePrinting)
+      debugPrint("FirestoreBloc._handleSet: Data is $userDocument");
     switch (type) {
       case FirestoreWriteType.SyncUserSettings:
         assert(data is Map);

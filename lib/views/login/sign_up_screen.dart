@@ -128,10 +128,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
               autocorrect: false,
               keyboardType: TextInputType.text,
               obscureText: !_passwordVisible,
+              // Password rules:
+              // 1. Should be at least 8 characters long
+              // 2. Should contain at least an uppercase letter
               validator: (value) {
-                if (value! == "") {
-                  return "A password is required to sign up";
+                if (value == null) return "A password is required to sign up";
+
+                if (value.isEmpty) return "A password is required to sign up";
+
+                if (value.length > 0 && value.length < 8) {
+                  return "Passwords should be at least 8 characters long";
                 }
+                if (!value.contains(RegExp("[A-Z]+"))) {
+                  return "Passwords should contain at least an uppercase letter";
+                }
+
                 return null;
               },
               controller: _controllers["password"]!,

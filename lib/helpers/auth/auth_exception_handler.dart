@@ -14,7 +14,6 @@ void firebaseAuthExceptionHandler(
   assert(authException.code != "operation-not-allowed");
 
   switch (authException.code) {
-    // TODO: password validation in form instead of here
     case 'weak-password':
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

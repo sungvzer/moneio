@@ -19,8 +19,9 @@ class ThemeNotifier with ChangeNotifier {
   );
 
   void _setCurrentTheme(bool isDarkMode) {
+    ThemeData oldTheme = _currentTheme;
     _currentTheme = isDarkMode ? _darkTheme : _lightTheme;
-    notifyListeners();
+    if (_currentTheme != oldTheme) notifyListeners();
   }
 
   void _handleListen(PreferenceState state) {

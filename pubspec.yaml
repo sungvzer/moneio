@@ -31,6 +31,7 @@ dependencies:
   path_provider: ^2.0.1
   shared_preferences: ^2.0.4
   flutter_colorpicker: ^0.4.0-nullsafety.0
+  provider: ^5.0.0
 
   # Firebase dependencies.
   firebase_core: ^1.0.2

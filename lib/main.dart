@@ -43,7 +43,7 @@ class FirebaseApplication extends StatelessWidget {
     );
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       title: "mone.io",
       routes: {
         LoadingScreen.id: (context) => LoadingScreen(),

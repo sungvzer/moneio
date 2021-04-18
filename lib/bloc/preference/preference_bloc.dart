@@ -53,7 +53,7 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
               "PreferenceBloc.mapEventToState: hey, we haven't got this kind of key!\nSetting value to ${event.defaultValue}");
         }
         value = {key: event.defaultValue};
-      } else if ((value as Map).isEmpty) {
+      } else if (value is Map && (value as Map).isEmpty) {
         // TODO: Individual settings lookup
         if (morePrinting) {
           debugPrint(

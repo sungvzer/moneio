@@ -65,7 +65,7 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
           debugPrint("PreferenceBloc.mapEventToState: we've got $value");
         }
       }
-      yield PreferenceReadState(value);
+      yield PreferenceReadState(value, key);
     }
 
     if (event is PreferenceWrite) {

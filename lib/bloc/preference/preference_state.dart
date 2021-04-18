@@ -7,8 +7,9 @@ class PreferenceInitial extends PreferenceState {}
 
 class PreferenceReadState extends PreferenceState {
   final readValue;
+  final key;
 
-  PreferenceReadState(this.readValue);
+  PreferenceReadState(this.readValue, this.key);
 }
 
 class PreferenceWriteState extends PreferenceState {

@@ -64,7 +64,31 @@ class ThemeNotifier with ChangeNotifier {
   };
 
   var _darkTheme = ThemeData(
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+    ),
     brightness: Brightness.dark,
+    primaryColor: ColorPalette.ImperialPrimer,
+    accentColor: ColorPalette.LightBlueBallerina,
+    textTheme: TextTheme(
+      bodyText2: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
+        color: ColorPalette.StormPetrel,
+      ),
+      button: textStylesWithoutColor[_fonts.poppinsRegular]!,
+      headline4: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
+        color: ColorPalette.LightBlueBallerina,
+      ),
+      headline5: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
+        color: ColorPalette.LightBlueBallerina,
+      ),
+      headline6: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
+        color: ColorPalette.LightBlueBallerina,
+      ),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorPalette.LightBlueBallerina,
+      foregroundColor: ColorPalette.ImperialPrimer,
+    ),
   );
 
   var _lightTheme = ThemeData(
@@ -100,12 +124,16 @@ class ThemeNotifier with ChangeNotifier {
     if (isDarkMode != null) {
       _currentTheme = isDarkMode ? _darkTheme : _lightTheme;
     }
+
     // If we got a color to change
     if (primaryColor != null) {
-      _currentTheme = _currentTheme.copyWith(
-        primaryColor: primaryColor,
-        accentColor: primaryColor,
-      );
+      _currentTheme = isDarkMode != null && isDarkMode
+          ? _currentTheme.copyWith(
+              accentColor: ColorPalette.LightBlueBallerina,
+            )
+          : _currentTheme.copyWith(
+              primaryColor: primaryColor,
+            );
     }
 
     if (_currentTheme != oldTheme) {

@@ -23,6 +23,8 @@ class ColorPalette {
   static const Color LightBlueBallerina = Color(0xFFC8D6E5);
   static const Color StormPetrel = Color(0xFF8395A7);
   static const Color FuelTown = Color(0xFF576574);
+  static const Color White = Color(0xFFFFFFFF);
+  static const Color Black = Color(0xFF000000);
 
   static List<Color> getAllColors(List<Color> toRemove) {
     List<Color> colors = <Color>[
@@ -48,6 +50,8 @@ class ColorPalette {
       LightBlueBallerina,
       StormPetrel,
       FuelTown,
+      White,
+      Black
     ];
     for (Color c in toRemove) {
       colors.remove(c);

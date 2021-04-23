@@ -15,47 +15,10 @@ class FirebaseErrorPage extends StatefulWidget {
 }
 
 class FirebaseErrorPageState extends State<FirebaseErrorPage> {
+  bool dark_mode = false;
+
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: DefaultTextStyle(
-    //     style: TextStyle(
-    //       fontFamily: "Poppins",
-    //       color: ColorPalette.ImperialPrimer,
-    //       fontWeight: FontWeight.w600,
-    //       fontSize: 16,
-    //     ),
-    //     child: Container(
-    //       alignment: Alignment.center,
-    //       child: Center(
-    //         child: Text(
-    //           "Something went wrong starting mone.io, try restarting the application.",
-    //           textAlign: TextAlign.center,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    //   appBar: AppBar(
-    //     backgroundColor: accentColor,
-    //     elevation: 0,
-    //     leading: Container(),
-    //     centerTitle: true,
-    //     title: Title(
-    //       title: "mone.io",
-    //       color: ColorPalette.ImperialPrimer,
-    //       child: Text(
-    //         "mone.io",
-    //         textAlign: TextAlign.center,
-    //         style: TextStyle(
-    //           fontSize: 26,
-    //           color: ColorPalette.ImperialPrimer,
-    //           fontFamily: "Poppins",
-    //           fontWeight: FontWeight.w900,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
     debugPrint("FirebaseErrorPageState.build: Adding PreferenceRead...");
 
     BlocProvider.of<PreferenceBloc>(context)
@@ -78,46 +41,42 @@ class FirebaseErrorPageState extends State<FirebaseErrorPage> {
             settings = (state as PreferenceWriteState).updatedPreferences;
             if (settings == {}) throw UnimplementedError();
           }
-          debugPrint(
-              "AddTransactionPageState.build: preferences: ${settings.toString()}");
+          // debugPrint(
+          //     "FirebaseErrorPage.build: preferences: ${settings.toString()}");
         }
         return Scaffold(
-          body: DefaultTextStyle(
-            style: TextStyle(
-              fontFamily: "Poppins",
-              color: ColorPalette.ImperialPrimer,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-            child: Container(
-              alignment: Alignment.center,
-              child: Center(
-                child: Text(
-                  "Something went wrong starting mone.io, try restarting the application.",
-                  textAlign: TextAlign.center,
-                ),
+          body: Container(
+            alignment: Alignment.center,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Something went wrong starting mone.io, try restarting the application.",
+                    textAlign: TextAlign.center,
+                  ),
+                  TextButton(
+                    child: Text(
+                      "Reload",
+                      // style: Theme.of(context).textTheme.button,
+                    ),
+                    onPressed: () => setState(() {}),
+                  )
+                ],
               ),
             ),
           ),
           appBar: AppBar(
-            backgroundColor: settings["accent_color"] != null
-                ? parseColorString(settings["accent_color"])
-                : parseColorString(defaultSettings["accent_color"]),
             elevation: 0,
             leading: Container(),
-            centerTitle: true,
             title: Title(
               title: "mone.io",
-              color: ColorPalette.ImperialPrimer,
+              color: Theme.of(context).textTheme.headline6!.color!,
               child: Text(
                 "mone.io",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 26,
-                  color: ColorPalette.ImperialPrimer,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w900,
-                ),
+                style: Theme.of(context).textTheme.headline6!,
               ),
             ),
           ),

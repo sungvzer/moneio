@@ -29,16 +29,6 @@ class SumWidgetState extends State<SumWidget> {
 
   SumWidgetState(this._humanReadable);
 
-  BoxDecoration _decoration = BoxDecoration(
-    shape: BoxShape.rectangle,
-    borderRadius: BorderRadius.all(Radius.circular(20)),
-    color: Colors.white,
-    border: Border.all(
-      color: ColorPalette.ImperialPrimer,
-      width: 4,
-    ),
-  );
-
   Widget getInnerWidget(context, state) {
     amount = 0;
     // TODO: Displayed user currency.
@@ -118,12 +108,9 @@ class SumWidgetState extends State<SumWidget> {
     return Center(
       child: Text(
         "${amount < 0 ? '-' : ''}$amountString",
-        style: TextStyle(
-          color: amount < 0 ? ColorPalette.Amour : ColorPalette.PastelGreen,
-          fontFamily: "Poppins",
-          fontWeight: FontWeight.w600,
-          fontSize: 30,
-        ),
+        style: Theme.of(context).textTheme.headline4!.copyWith(
+              color: amount < 0 ? ColorPalette.Amour : ColorPalette.PastelGreen,
+            ),
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -135,11 +122,7 @@ class SumWidgetState extends State<SumWidget> {
       children: [
         Text(
           "Total",
-          style: TextStyle(
-              color: ColorPalette.ImperialPrimer,
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w600,
-              fontSize: 20),
+          style: Theme.of(_).textTheme.headline5!,
         ),
         BlocBuilder<PreferenceBloc, PreferenceState>(
           builder: (context, preferenceState) {
@@ -160,8 +143,8 @@ class SumWidgetState extends State<SumWidget> {
                 var outerWidget = GestureDetector(
                   onTap: () => setState(() => debugPrint("It works now!")),
                   child: SizedBox(
-                    height: percentHeight(_) * 15,
-                    width: percentWidth(_) * 50,
+                    height: percentHeight(_) * 12,
+                    width: percentWidth(_) * 42,
                     child: DecoratedBox(
                       child: Align(
                         alignment: Alignment.center,
@@ -170,7 +153,14 @@ class SumWidgetState extends State<SumWidget> {
                           child: innerWidget,
                         ),
                       ),
-                      decoration: _decoration,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        border: Border.all(
+                          color: Theme.of(_).textTheme.subtitle2!.color!,
+                          width: 2,
+                        ),
+                      ),
                     ),
                   ),
                 );

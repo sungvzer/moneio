@@ -46,7 +46,7 @@ class LabelledFormField extends StatelessWidget {
       children: [
         Text(
           _label,
-          style: style,
+          style: Theme.of(context).textTheme.bodyText2!,
         ),
         SizedBox(
           height: 5,

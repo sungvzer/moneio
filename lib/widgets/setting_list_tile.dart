@@ -36,23 +36,13 @@ class _SettingListTileState<T> extends State<SettingListTile> {
   Widget getWidgetByType(context) {
     Text titleText = Text(
       _title,
-      style: TextStyle(
-        fontFamily: "Poppins",
-        color: ColorPalette.ImperialPrimer,
-        fontWeight: FontWeight.w500,
-        fontSize: 14,
-      ),
+      style: Theme.of(context).textTheme.bodyText2,
     );
 
     Text? subtitleText = _subtitle != null
         ? Text(
             _subtitle!,
-            style: TextStyle(
-              fontFamily: "Poppins",
-              color: ColorPalette.StormPetrel,
-              fontWeight: FontWeight.w400,
-              fontSize: 11,
-            ),
+            style: Theme.of(context).textTheme.subtitle2,
           )
         : null;
     // TODO: Implement other types as we need fit

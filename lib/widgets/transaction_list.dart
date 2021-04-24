@@ -118,8 +118,6 @@ class _TransactionList extends StatelessWidget {
               Icon(Icons.money_off),
               Text(
                 "No mone, try adding some.",
-                style: TextStyle(
-                    fontFamily: "Poppins", fontWeight: FontWeight.w500),
               )
             ],
             mainAxisAlignment: MainAxisAlignment.center,
@@ -143,7 +141,7 @@ class _TransactionList extends StatelessWidget {
       separatorBuilder: (context, index) => Divider(
         indent: 25,
         endIndent: 25,
-        thickness: 1,
+        thickness: 0,
         height: 0,
       ),
       itemBuilder: (context, index) =>
@@ -188,12 +186,7 @@ class _TransactionTile extends StatelessWidget {
           return SimpleDialog(
             title: Text(
               'Select action',
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w600,
-                color: ColorPalette.ImperialPrimer,
-              ),
+              style: Theme.of(dialogContext).textTheme.headline5!,
             ),
             children: [
               SimpleDialogOption(
@@ -211,12 +204,7 @@ class _TransactionTile extends StatelessWidget {
                 },
                 child: Text(
                   "Delete",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w500,
-                    color: ColorPalette.ImperialPrimer,
-                  ),
+                  style: Theme.of(dialogContext).textTheme.bodyText2!,
                 ),
               ),
             ],
@@ -230,50 +218,44 @@ class _TransactionTile extends StatelessWidget {
       // minLeadingWidth: 3,
       // TODO: Page navigation to a TransactionView(transaction)
       onTap: () => print("TODO: Short press with transaction $_current"),
-      title: DefaultTextStyle(
-        style: TextStyle(
-          fontFamily: "Poppins",
-          color: ColorPalette.ImperialPrimer,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Text(
-                _current.tag,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-              ),
+      title: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(
+              _current.tag,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              style: Theme.of(context).textTheme.bodyText2!,
             ),
-            Expanded(
-              flex: 0,
-              child: Text(date.day.toString().padLeft(2, '0') +
+          ),
+          Expanded(
+            flex: 0,
+            child: Text(
+              date.day.toString().padLeft(2, '0') +
                   '/' +
                   date.month.toString().padLeft(2, '0') +
                   '/' +
-                  date.year.toString().padLeft(4, '')),
+                  date.year.toString().padLeft(4, ''),
+              style: Theme.of(context).textTheme.bodyText2!,
             ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                amountString,
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  color: amount < 0
-                      ? ColorPalette.Amour
-                      : ColorPalette.PastelGreen,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w500,
-                ),
-                softWrap: false,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              amountString,
+              textAlign: TextAlign.right,
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    color: amount < 0
+                        ? ColorPalette.Amour
+                        : ColorPalette.PastelGreen,
+                  ),
+              softWrap: false,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

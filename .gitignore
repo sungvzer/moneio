@@ -44,3 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Ignore sql files
+# These are needed for admin purposes and should not be included in the git repository
+*.sql

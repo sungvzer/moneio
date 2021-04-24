@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/themes.dart';
 import 'package:moneio/views/firebase_error_page.dart';
@@ -68,26 +69,31 @@ class FirebaseApplication extends StatelessWidget {
           SettingsPage.id: (context) => SettingsPage(),
           SuggestionPage.id: (context) => SuggestionPage(),
         },
-        home: FutureBuilder(
-          // Initialize FlutterFire:
-          future: _initialization,
-          builder: (context, snapshot) {
-            // Check for errors
-            if (snapshot.hasError) {
-              return FirebaseErrorPage();
-            }
+        home: Container(
+          color: ColorPalette.DarkMountainMeadow,
+          child: SafeArea(
+            child: FutureBuilder(
+              // Initialize FlutterFire:
+              future: _initialization,
+              builder: (context, snapshot) {
+                // Check for errors
+                if (snapshot.hasError) {
+                  return FirebaseErrorPage();
+                }
 
-            // Once complete, show your application
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (morePrinting) {
-                debugPrint(
-                    "FirebaseApplication.build: Firebase initialized, getting application...");
-              }
-              return LoginRouter();
-            }
+                // Once complete, show your application
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (morePrinting) {
+                    debugPrint(
+                        "FirebaseApplication.build: Firebase initialized, getting application...");
+                  }
+                  return LoginRouter();
+                }
 
-            return LoadingScreen();
-          },
+                return LoadingScreen();
+              },
+            ),
+          ),
         ),
       ),
     );

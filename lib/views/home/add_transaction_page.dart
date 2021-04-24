@@ -52,43 +52,27 @@ class AddTransactionPageState extends State<AddTransactionPage> {
               "AddTransactionPageState.build: preferences: ${settings.toString()}");
         }
         return Scaffold(
-          body: DefaultTextStyle(
-            style: TextStyle(
-              fontFamily: "Poppins",
-              color: ColorPalette.ImperialPrimer,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-            ),
-            child: Container(
-              alignment: Alignment.center,
-              child: SingleChildScrollView(
-                child: _TransactionForm(
-                    parseColorString(settings["accent_color"]!),
-                    settings["favorite_currency"]!),
-                physics: BouncingScrollPhysics(),
-                clipBehavior: Clip.none,
-              ),
+          body: Container(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: _TransactionForm(
+                  parseColorString(settings["accent_color"]!),
+                  settings["favorite_currency"]!),
+              physics: BouncingScrollPhysics(),
+              clipBehavior: Clip.none,
             ),
           ),
           appBar: AppBar(
-            backgroundColor: settings["accent_color"] != null
-                ? parseColorString(settings["accent_color"])
-                : parseColorString(defaultSettings["accent_color"]),
+            backgroundColor: Theme.of(context).primaryColor,
             elevation: 0,
-            leading: Container(),
             centerTitle: true,
             title: Title(
               title: "mone.io",
-              color: ColorPalette.ImperialPrimer,
+              color: ColorPalette.Black,
               child: Text(
                 "mone.io",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 26,
-                  color: ColorPalette.ImperialPrimer,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w900,
-                ),
+                style: Theme.of(context).textTheme.headline6!,
               ),
             ),
           ),
@@ -116,31 +100,30 @@ class _TransactionForm extends StatelessWidget {
     "emoji": TextEditingController()
   };
 
-  static const InputDecoration _decoration = InputDecoration(
-    errorMaxLines: 3,
-    border: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: ColorPalette.ImperialPrimer,
-      ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(14.0),
-      ),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        color: ColorPalette.ImperialPrimer,
-        width: 2,
-      ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(14.0),
-      ),
-    ),
-    contentPadding: EdgeInsets.only(top: 1, bottom: 1, left: 20, right: 20),
-  );
-
   @override
   Widget build(BuildContext context) {
     String _selectedCategory = "";
+    InputDecoration _decoration = InputDecoration(
+      errorMaxLines: 3,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).accentColor,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(14.0),
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).accentColor,
+          width: 2,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(14.0),
+        ),
+      ),
+      contentPadding: EdgeInsets.only(top: 1, bottom: 1, left: 20, right: 20),
+    );
 
     String _selectedCurrency = _userFavoriteCurrency;
     return Padding(
@@ -157,14 +140,10 @@ class _TransactionForm extends StatelessWidget {
                   labelText: "Untitled",
                   alignLabelWithHint: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
+                  labelStyle: Theme.of(context).textTheme.bodyText2!,
                 ),
                 controller: _controllers["tag"],
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  color: ColorPalette.ImperialPrimer,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
+                style: Theme.of(context).textTheme.bodyText2!,
                 autocorrect: true,
                 textAlign: TextAlign.center,
               ),
@@ -183,12 +162,7 @@ class _TransactionForm extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       decoration: _decoration,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: ColorPalette.ImperialPrimer,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText2!,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         CurrencyTextInputFormatter(symbol: ""),
@@ -220,12 +194,7 @@ class _TransactionForm extends StatelessWidget {
                         if (value is String?) if (value != null)
                           _selectedCurrency = value.trim();
                       },
-                      style: TextStyle(
-                        fontFamily: "Poppins",
-                        color: ColorPalette.ImperialPrimer,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText2!,
                       items: currencyToSymbol.keys.map((final String key) {
                         const Map<String, String> map = currencyToSymbol;
                         String value = map[key] as String;
@@ -259,12 +228,7 @@ class _TransactionForm extends StatelessWidget {
                                 : null;
                           },
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            color: ColorPalette.ImperialPrimer,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2!,
                           readOnly: true,
                           controller: _controllers["date"],
                           onTap: () => showDatePicker(
@@ -298,12 +262,7 @@ class _TransactionForm extends StatelessWidget {
                         child: TextFormField(
                           decoration: _decoration,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Poppins",
-                            color: ColorPalette.ImperialPrimer,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
+                          style: Theme.of(context).textTheme.bodyText2!,
                           readOnly: true,
                           controller: _controllers["time"],
                           onTap: () {
@@ -345,14 +304,14 @@ class _TransactionForm extends StatelessWidget {
                 },
                 validator: (str) =>
                     str == null ? "Please enter a category" : null,
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  color: ColorPalette.ImperialPrimer,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
+                style: Theme.of(context).textTheme.bodyText2!,
                 items: _getCategoriesMenuItems(),
-                hint: Center(child: Text("Please select a category")),
+                hint: Center(
+                  child: Text(
+                    "Please select a category",
+                    style: Theme.of(context).textTheme.bodyText2!,
+                  ),
+                ),
               ),
             ),
             SizedBox(

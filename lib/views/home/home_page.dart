@@ -57,19 +57,26 @@ class HomePage extends StatelessWidget {
                   leading: Icon(Icons.settings),
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => SettingsPage(),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => SettingsPage(),
+                      ),
+                    );
                   },
-                  title: Text("Settings"),
+                  title: Text(
+                    "Settings",
+                    style: Theme.of(context).textTheme.bodyText2!,
+                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.insert_chart_outlined_rounded),
                   onTap: () {
                     debugPrint("TODO: Stats");
                   },
-                  title: Text("Stats"),
+                  title: Text(
+                    "Stats",
+                    style: Theme.of(context).textTheme.bodyText2!,
+                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.lightbulb_outline_rounded),
@@ -81,7 +88,10 @@ class HomePage extends StatelessWidget {
                           builder: (_) => SuggestionPage(),
                         ));
                   },
-                  title: Text("Suggestions"),
+                  title: Text(
+                    "Suggestions",
+                    style: Theme.of(context).textTheme.bodyText2!,
+                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.logout),
@@ -108,14 +118,15 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                  title: Text("Sign out"),
+                  title: Text(
+                    "Sign out",
+                    style: Theme.of(context).textTheme.bodyText2!,
+                  ),
                 ),
               ],
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            backgroundColor: parseColorString(settings["accent_color"]!),
-            foregroundColor: ColorPalette.ImperialPrimer,
             onPressed: () {
               Navigator.push(
                 context,
@@ -132,25 +143,19 @@ class HomePage extends StatelessWidget {
               return IconButton(
                 icon: Icon(
                   Icons.menu,
-                  color: ColorPalette.ImperialPrimer,
                 ),
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
               );
             }),
-            backgroundColor: parseColorString(settings["accent_color"]!),
+            backgroundColor: Theme.of(context).primaryColor,
             title: Title(
               title: "mone.io",
               color: Colors.black,
               child: Text(
                 "mone.io",
-                style: TextStyle(
-                  fontSize: 26,
-                  color: ColorPalette.ImperialPrimer,
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w900,
-                ),
+                style: Theme.of(context).textTheme.headline6!,
               ),
             ),
           ),
@@ -168,15 +173,9 @@ class HomePage extends StatelessWidget {
                     children: [
                       Text(
                         "History",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.bold,
-                          color: ColorPalette.ImperialPrimer,
-                        ),
+                        style: Theme.of(context).textTheme.headline5!,
                       ),
                       Divider(
-                        color: ColorPalette.ImperialPrimer,
                         thickness: 1,
                       ),
                       Expanded(

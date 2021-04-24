@@ -57,9 +57,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   "_SettingsPageState.build: human readable is ${values["human_readable"].toString()}");
               return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: values["accent_color"] != null
-                      ? parseColorString(values["accent_color"]!)
-                      : parseColorString(defaultSettings["accent_color"]),
                   elevation: 0,
                   leading: Container(),
                   centerTitle: true,
@@ -69,95 +66,77 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: Text(
                       "mone.io",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 26,
-                        color: ColorPalette.ImperialPrimer,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w900,
-                      ),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
                 ),
-                body: DefaultTextStyle(
-                  style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: ColorPalette.ImperialPrimer,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
-                      child: ListView(
-                        physics: BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        children: [
-                          Text("Common"),
-                          SizedBox(
-                            height: 1.5 * percentHeight(context),
+                body: Container(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
+                    child: ListView(
+                      physics: BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      children: [
+                        Text("Common"),
+                        SizedBox(
+                          height: 1.5 * percentHeight(context),
+                        ),
+                        SettingListTile<bool>(
+                          values["human_readable"]
+                              ? values["human_readable"]
+                              : false,
+                          title: "Human readable",
+                          subtitle:
+                              "Use readable format for amounts greater than 10'000",
+                          settingKey: "human_readable",
+                        ),
+                        SettingListTile<bool>(
+                          values["dark_mode"] ? values["dark_mode"] : false,
+                          title: "Dark mode",
+                          subtitle: "This feature doesn't currently work",
+                          settingKey: "dark_mode",
+                        ),
+                        SettingListTile<String>(
+                          values["accent_color"] != null
+                              ? values["accent_color"]
+                              : "",
+                          title: "Accent color",
+                          settingKey: "accent_color",
+                        ),
+                        SettingListTile<List<String>>(
+                          // FIXME: This doesn't show the current setting
+                          currencyToSymbol.keys.toList(),
+                          title: "Favorite currency",
+                          settingKey: "favorite_currency",
+                          subtitle:
+                              "This will be the default currency when you add a mone",
+                        ),
+                        ListTile(
+                          title: Text(
+                            "Sync settings to cloud",
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
-                          SettingListTile<bool>(
-                            values["human_readable"]
-                                ? values["human_readable"]
-                                : false,
-                            title: "Human readable",
-                            subtitle:
-                                "Use readable format for amounts greater than 10'000",
-                            settingKey: "human_readable",
-                          ),
-                          SettingListTile<bool>(
-                            values["dark_mode"] ? values["dark_mode"] : false,
-                            title: "Dark mode",
-                            subtitle: "This feature doesn't currently work",
-                            settingKey: "dark_mode",
-                          ),
-                          SettingListTile<String>(
-                            values["accent_color"] != null
-                                ? values["accent_color"]
-                                : "",
-                            title: "Accent color",
-                            settingKey: "accent_color",
-                          ),
-                          SettingListTile<List<String>>(
-                            // FIXME: This doesn't show the current setting
-                            currencyToSymbol.keys.toList(),
-                            title: "Favorite currency",
-                            settingKey: "favorite_currency",
-                            subtitle:
-                                "This will be the default currency when you add a mone",
-                          ),
-                          ListTile(
-                            title: Text(
-                              "Sync settings to cloud",
-                              style: TextStyle(
-                                fontFamily: "Poppins",
-                                color: ColorPalette.ImperialPrimer,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                              ),
-                            ),
-                            onTap: () {
-                              debugPrint(
-                                  "_SettingsPageState.build: Syncing $values");
+                          onTap: () {
+                            debugPrint(
+                                "_SettingsPageState.build: Syncing $values");
 
-                              setState(() {
-                                _syncSettingsIcon = CircularProgressIndicator();
-                              });
-                              var firestoreBloc =
-                                  BlocProvider.of<FirestoreBloc>(context);
-                              debugPrint(
-                                  "_SettingsPageState.build: SYNCING... $values");
-                              firestoreBloc.add(FirestoreWrite(
-                                type: FirestoreWriteType.SyncUserSettings,
-                                data: values,
-                                userId: loggedUID!,
-                              ));
-                            },
-                            trailing: _syncSettingsIcon,
-                          ),
-                        ],
-                      ),
+                            setState(() {
+                              _syncSettingsIcon = CircularProgressIndicator();
+                            });
+                            var firestoreBloc =
+                                BlocProvider.of<FirestoreBloc>(context);
+                            debugPrint(
+                                "_SettingsPageState.build: SYNCING... $values");
+                            firestoreBloc.add(FirestoreWrite(
+                              type: FirestoreWriteType.SyncUserSettings,
+                              data: values,
+                              userId: loggedUID!,
+                            ));
+                          },
+                          trailing: _syncSettingsIcon,
+                        ),
+                      ],
                     ),
                   ),
                 ),

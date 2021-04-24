@@ -74,6 +74,10 @@ class ThemeNotifier with ChangeNotifier {
       bodyText2: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
         color: ColorPalette.StormPetrel,
       ),
+      subtitle2: textStylesWithoutColor[_fonts.poppinsLight]!.copyWith(
+        color: ColorPalette.LightBlueBallerina,
+        fontSize: 11,
+      ),
       button: textStylesWithoutColor[_fonts.poppinsRegular]!,
       headline4: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
         color: ColorPalette.LightBlueBallerina,
@@ -94,10 +98,21 @@ class ThemeNotifier with ChangeNotifier {
   var _lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
       centerTitle: true,
+      iconTheme: IconThemeData(
+        color: ColorPalette.ImperialPrimer,
+      ),
+      foregroundColor: ColorPalette.ImperialPrimer,
     ),
+    // TODO: input decoration theme
     brightness: Brightness.light,
-    primaryColor: ColorPalette.ImperialPrimer,
-    accentColor: ColorPalette.CasandoraYellow,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorPalette.DarkMountainMeadow,
+      foregroundColor: ColorPalette.ImperialPrimer,
+    ),
+    dividerTheme: DividerThemeData(
+      color: ColorPalette.StormPetrel,
+    ),
+    primaryColor: ColorPalette.DarkMountainMeadow,
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         foregroundColor:
@@ -110,8 +125,18 @@ class ThemeNotifier with ChangeNotifier {
       bodyText2: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
         color: ColorPalette.FuelTown,
       ),
-      button: textStylesWithoutColor[_fonts.poppinsMedium]!,
-      headline6: textStylesWithoutColor[_fonts.poppinsBold]!.copyWith(
+      subtitle2: textStylesWithoutColor[_fonts.poppinsLight]!.copyWith(
+        color: ColorPalette.StormPetrel,
+        fontSize: 11,
+      ),
+      button: textStylesWithoutColor[_fonts.poppinsRegular]!,
+      headline4: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
+        color: ColorPalette.ImperialPrimer,
+      ),
+      headline5: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
+        color: ColorPalette.ImperialPrimer,
+      ),
+      headline6: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
         color: ColorPalette.ImperialPrimer,
       ),
     ),
@@ -126,15 +151,15 @@ class ThemeNotifier with ChangeNotifier {
     }
 
     // If we got a color to change
-    if (primaryColor != null) {
-      _currentTheme = isDarkMode != null && isDarkMode
-          ? _currentTheme.copyWith(
-              accentColor: ColorPalette.LightBlueBallerina,
-            )
-          : _currentTheme.copyWith(
-              primaryColor: primaryColor,
-            );
-    }
+    // if (primaryColor != null) {
+    //   _currentTheme = isDarkMode != null && isDarkMode
+    //       ? _currentTheme.copyWith(
+    //           accentColor: ColorPalette.LightBlueBallerina,
+    //         )
+    //       : _currentTheme.copyWith(
+    //           primaryColor: primaryColor,
+    //         );
+    // }
 
     if (_currentTheme != oldTheme) {
       debugPrint("ThemeNotifier._setCurrentTheme: new theme!");

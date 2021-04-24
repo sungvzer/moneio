@@ -15,8 +15,6 @@ class FirebaseErrorPage extends StatefulWidget {
 }
 
 class FirebaseErrorPageState extends State<FirebaseErrorPage> {
-  bool dark_mode = false;
-
   @override
   Widget build(BuildContext context) {
     debugPrint("FirebaseErrorPageState.build: Adding PreferenceRead...");

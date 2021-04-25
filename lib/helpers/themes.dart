@@ -113,6 +113,7 @@ class ThemeNotifier with ChangeNotifier {
       color: ColorPalette.StormPetrel,
     ),
     primaryColor: ColorPalette.DarkMountainMeadow,
+    accentColor: ColorPalette.DarkMountainMeadow,
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         foregroundColor:

@@ -136,10 +136,7 @@ class _SumCarouselState extends State<SumCarousel> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    // HACK: This shouldn't be this way.
-                    color: theme.brightness == Brightness.light
-                        ? theme.primaryColor
-                        : theme.accentColor,
+                    color: theme.accentColor,
                   ),
                   color: _currentIndex == index
                       ? theme.primaryColor

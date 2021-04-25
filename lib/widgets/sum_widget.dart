@@ -128,14 +128,21 @@ class _SumCarouselState extends State<SumCarousel> {
           children: map<Widget>(
             _cardList,
             (index, url) {
+              ThemeData theme = Theme.of(context);
               return Container(
                 width: percentWidth(context) * 1.5,
                 height: percentHeight(context) * 1.5,
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  border: Border.all(
+                    // HACK: This shouldn't be this way.
+                    color: theme.brightness == Brightness.light
+                        ? theme.primaryColor
+                        : theme.accentColor,
+                  ),
                   color: _currentIndex == index
-                      ? Theme.of(context).primaryColor
+                      ? theme.primaryColor
                       : ColorPalette.LightBlueBallerina,
                 ),
               );

@@ -11,7 +11,7 @@ import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/home/settings_page.dart';
 import 'package:moneio/views/home/suggestions_page.dart';
-import 'package:moneio/widgets/sum_widget.dart' show SumWidget;
+import 'package:moneio/widgets/sum_widget.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
 class HomePage extends StatelessWidget {
@@ -163,7 +163,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                SumWidget(settings["human_readable"]),
+                SumCarousel(settings["human_readable"]),
                 SizedBox(
                   height: percentHeight(context) * 4,
                 ),

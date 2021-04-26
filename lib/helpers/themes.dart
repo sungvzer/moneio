@@ -93,6 +93,7 @@ class ThemeNotifier with ChangeNotifier {
       backgroundColor: ColorPalette.LightBlueBallerina,
       foregroundColor: ColorPalette.ImperialPrimer,
     ),
+    backgroundColor: ColorPalette.ImperialPrimer,
   );
 
   var _lightTheme = ThemeData(
@@ -141,6 +142,7 @@ class ThemeNotifier with ChangeNotifier {
         color: ColorPalette.ImperialPrimer,
       ),
     ),
+    backgroundColor: ColorPalette.White,
   );
 
   void _setCurrentTheme({bool? isDarkMode, Color? primaryColor}) {

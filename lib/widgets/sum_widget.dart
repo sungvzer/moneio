@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/color_palette.dart';
+import 'package:moneio/constants.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/models/transaction_category.dart';
@@ -250,9 +251,12 @@ class _GenericSumCardState extends State<_GenericSumCard> {
     List<Transaction> list,
     bool Function(Transaction) filter,
   ) {
-    var newList = <Transaction>[];
-    for (var t in list) {
-      if (filter(t)) newList.add(t);
+    // Copy because otherwise list gets modified and that's a no-no
+    var newList = List<Transaction>.from(list);
+    newList.retainWhere(filter);
+    if (morePrinting) {
+      debugPrint(
+          "_GenericSumCardState._filterTransactions: newList is $newList");
     }
     return newList;
   }

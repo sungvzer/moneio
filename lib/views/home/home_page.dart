@@ -19,11 +19,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("HomePage.build: Adding PreferenceRead...");
+    if (morePrinting) {
+      debugPrint("HomePage.build: Adding PreferenceRead...");
+    }
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
-
-    debugPrint("HomePage.build: Adding FirestoreRead...");
+    if (morePrinting) {
+      debugPrint("HomePage.build: Adding FirestoreRead...");
+    }
     BlocProvider.of<FirestoreBloc>(context).add(FirestoreRead(
       type: FirestoreReadType.UserTransactions,
       userId: loggedUID!,

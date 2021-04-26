@@ -22,8 +22,10 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
   Future<Map> _getUserDocument(String uid) async {
     if (_isCacheValid) {
-      debugPrint(
-          "FirestoreBloc._getUserDocument: Getting user document from cache.");
+      if (morePrinting) {
+        debugPrint(
+            "FirestoreBloc._getUserDocument: Getting user document from cache");
+      }
       assert(_userCaches[uid] != null);
       return _userCaches[uid]!;
     }
@@ -252,16 +254,21 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
   @override
   Stream<FirestoreState> mapEventToState(FirestoreEvent event) async* {
-    debugPrint("FirestoreBloc.mapEventToState: got ${event.runtimeType}");
-
+    if (morePrinting) {
+      debugPrint("FirestoreBloc.mapEventToState: got ${event.runtimeType}");
+    }
     if (event is FirestoreRead) {
       FirestoreReadType type = event.type;
-      debugPrint('FirestoreBloc.mapEventToState: Type is $type');
+      if (morePrinting) {
+        debugPrint('FirestoreBloc.mapEventToState: Type is $type');
+      }
       String uid = event.userId;
       yield await _handleRead(type, uid, event.transactionFilter);
     } else if (event is FirestoreWrite) {
       FirestoreWriteType type = event.type;
-      debugPrint('FirestoreBloc.mapEventToState: Type is $type');
+      if (morePrinting) {
+        debugPrint('FirestoreBloc.mapEventToState: Type is $type');
+      }
       String uid = event.userId;
       yield await _handleWrite(type, uid, event.data);
     }

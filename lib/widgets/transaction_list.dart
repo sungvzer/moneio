@@ -26,8 +26,10 @@ class _TransactionListBuilderState extends State<TransactionListBuilder> {
   Widget build(BuildContext context) {
     return BlocBuilder<PreferenceBloc, PreferenceState>(
         builder: (context, state) {
-      debugPrint(
-          "_TransactionListBuilderState.build: got state with type ${state.runtimeType}");
+      if (morePrinting) {
+        debugPrint(
+            "_TransactionListBuilderState.build: got state with type ${state.runtimeType}");
+      }
       if (state is PreferenceInitial) {
         return Container();
       }

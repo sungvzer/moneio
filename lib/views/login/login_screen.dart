@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
-import 'package:moneio/color_palette.dart';
-import 'package:moneio/helpers/color_parser.dart';
-import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
 import 'package:moneio/widgets/labelled_form_field.dart';
@@ -26,35 +23,22 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      body: DefaultTextStyle(
-        style: TextStyle(
-          fontFamily: "Poppins",
-          color: ColorPalette.ImperialPrimer,
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
-        ),
-        child: Container(
-          alignment: Alignment.center,
-          child: LoginForm(),
-        ),
+      body: Container(
+        alignment: Alignment.center,
+        child: LoginForm(),
       ),
       appBar: AppBar(
-        backgroundColor: parseColorString(defaultSettings["accent_color"]),
+        // backgroundColor:
         elevation: 0,
         leading: Container(),
         centerTitle: true,
         title: Title(
           title: "mone.io",
-          color: ColorPalette.ImperialPrimer,
+          color: Theme.of(context).primaryColor,
           child: Text(
             "mone.io",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 26,
-              color: ColorPalette.ImperialPrimer,
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.w900,
-            ),
+            style: Theme.of(context).textTheme.headline6!,
           ),
         ),
       ),
@@ -71,13 +55,6 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool _passwordVisible = false;
-
-  static const TextStyle _defaultStyle = TextStyle(
-    fontFamily: "Poppins",
-    color: ColorPalette.ImperialPrimer,
-    fontWeight: FontWeight.w500,
-    fontSize: 16,
-  );
 
   final Map<String, TextEditingController> _controllers = {
     "email": TextEditingController(),
@@ -121,144 +98,144 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: _defaultStyle,
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Form(
-          key: loginFormKey,
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: AutofillGroup(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  LabelledFormField(
-                    "E-mail",
-                    child: TextFormField(
-                      controller: _controllers["email"],
-                      keyboardType: TextInputType.emailAddress,
-                      style: _defaultStyle,
-                      autofillHints: [AutofillHints.email],
-                      validator: (value) {
-                        if (value!.trim().toLowerCase() == "") {
-                          return "An e-mail is required to login";
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  LabelledFormField(
-                    "Password",
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                          icon: Icon(
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: ColorPalette.ImperialPrimer,
-                          ),
-                        ),
-                      ),
-                      controller: _controllers["password"],
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      keyboardType: TextInputType.text,
-                      obscureText: !_passwordVisible,
-                      autofillHints: [AutofillHints.password],
-                      style: _defaultStyle,
-                      validator: (value) {
-                        if (value! == "") {
-                          return "A password is required to login";
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  // Checkbox(
-                  //     value: false,
-                  //     onChanged: (value) {
-                  //       debugPrint("Remember me is $value");
-                  //     }),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Poppins"),
-                    ),
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(Size(100, 0)),
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                        EdgeInsets.only(
-                            left: 20, right: 20, top: 10, bottom: 10),
-                      ),
-                      side: MaterialStateProperty.all<BorderSide>(
-                        BorderSide(
-                            width: 2, color: ColorPalette.ImperialPrimer),
-                      ),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          parseColorString(defaultSettings["accent_color"])),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          ColorPalette.ImperialPrimer),
-                    ),
-                    onPressed: () => _login(context),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  ElevatedButton(
-                    child: Text(
-                      "Sign up",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Poppins"),
-                    ),
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(Size(100, 0)),
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                        EdgeInsets.only(
-                            left: 20, right: 20, top: 10, bottom: 10),
-                      ),
-                      side: MaterialStateProperty.all<BorderSide>(
-                        BorderSide(
-                            width: 2, color: ColorPalette.ImperialPrimer),
-                      ),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          ColorPalette.ImperialPrimer),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, SignUpScreen.id);
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Form(
+        key: loginFormKey,
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: AutofillGroup(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                LabelledFormField(
+                  "E-mail",
+                  child: TextFormField(
+                    controller: _controllers["email"],
+                    keyboardType: TextInputType.emailAddress,
+                    style: Theme.of(context).textTheme.bodyText2!,
+                    autofillHints: [AutofillHints.email],
+                    validator: (value) {
+                      if (value!.trim().toLowerCase() == "") {
+                        return "An e-mail is required to login";
+                      }
+                      return null;
                     },
                   ),
-                ],
-              ),
+                ),
+                SizedBox(height: 20),
+                LabelledFormField(
+                  "Password",
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                        icon: Icon(
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                      ),
+                    ),
+                    controller: _controllers["password"],
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.text,
+                    obscureText: !_passwordVisible,
+                    autofillHints: [AutofillHints.password],
+                    style: Theme.of(context).textTheme.bodyText2!,
+                    validator: (value) {
+                      if (value! == "") {
+                        return "A password is required to login";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                SizedBox(height: 20),
+                // Checkbox(
+                //     value: false,
+                //     onChanged: (value) {
+                //       debugPrint("Remember me is $value");
+                //     }),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Poppins"),
+                  ),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(Size(100, 0)),
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                    ),
+                    side: MaterialStateProperty.all<BorderSide>(
+                      BorderSide(
+                        width: 2,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).backgroundColor,
+                    ),
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).textTheme.bodyText2!.color!,
+                    ),
+                  ),
+                  onPressed: () => _login(context),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                ElevatedButton(
+                  child: Text(
+                    "Sign up",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Poppins"),
+                  ),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all<Size>(Size(100, 0)),
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                    ),
+                    side: MaterialStateProperty.all<BorderSide>(
+                      BorderSide(
+                        width: 2,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).backgroundColor,
+                    ),
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).textTheme.bodyText2!.color!,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, SignUpScreen.id);
+                  },
+                ),
+              ],
             ),
           ),
         ),

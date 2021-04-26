@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
-import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/themes.dart';
 import 'package:moneio/views/firebase_error_page.dart';
@@ -70,7 +69,7 @@ class FirebaseApplication extends StatelessWidget {
           SuggestionPage.id: (context) => SuggestionPage(),
         },
         home: Container(
-          color: ColorPalette.DarkMountainMeadow,
+          color: theme.currentTheme.primaryColor,
           child: SafeArea(
             child: FutureBuilder(
               // Initialize FlutterFire:

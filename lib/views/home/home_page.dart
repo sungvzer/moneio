@@ -171,9 +171,26 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "History",
-                        style: Theme.of(context).textTheme.headline5!,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "History",
+                            style: Theme.of(context).textTheme.headline5!,
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.refresh),
+                            onPressed: () {
+                              BlocProvider.of<FirestoreBloc>(context).add(
+                                FirestoreWrite(
+                                  type: FirestoreWriteType.InvalidateCache,
+                                  userId: loggedUID!,
+                                  data: null,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                       Divider(
                         thickness: 1,

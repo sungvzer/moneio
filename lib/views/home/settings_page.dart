@@ -97,13 +97,14 @@ class _SettingsPageState extends State<SettingsPage> {
                           subtitle: "This feature doesn't currently work",
                           settingKey: "dark_mode",
                         ),
-                        SettingListTile<String>(
-                          values["accent_color"] != null
-                              ? values["accent_color"]
-                              : "",
-                          title: "Accent color",
-                          settingKey: "accent_color",
-                        ),
+                        // Temporarily removed
+                        // SettingListTile<String>(
+                        //   values["accent_color"] != null
+                        //       ? values["accent_color"]
+                        //       : "",
+                        //   title: "Accent color",
+                        //   settingKey: "accent_color",
+                        // ),
                         SettingListTile<List<String>>(
                           // FIXME: This doesn't show the current setting
                           currencyToSymbol.keys.toList(),

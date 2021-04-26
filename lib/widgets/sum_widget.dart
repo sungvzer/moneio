@@ -246,12 +246,10 @@ class _GenericSumCard extends StatefulWidget {
 }
 
 class _GenericSumCardState extends State<_GenericSumCard> {
-  List<Transaction> _filterTransactions(List<Transaction> list,
-      [bool Function(Transaction)? filter]) {
-    if (filter == null) {
-      return list;
-    }
-
+  List<Transaction> _filterTransactions(
+    List<Transaction> list,
+    bool Function(Transaction) filter,
+  ) {
     var newList = <Transaction>[];
     for (var t in list) {
       if (filter(t)) newList.add(t);

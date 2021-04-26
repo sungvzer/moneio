@@ -164,9 +164,9 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 SumCarousel(settings["human_readable"]),
-                SizedBox(
-                  height: percentHeight(context) * 4,
-                ),
+                // SizedBox(
+                //   height: percentHeight(context) * 4,
+                // ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

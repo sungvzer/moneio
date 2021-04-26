@@ -292,6 +292,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
     Transaction sum = _sumTransactions(
       _filterTransactions(
         widget.transactions,
+        widget.filter,
       ),
     );
     return Column(

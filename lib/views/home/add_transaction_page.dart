@@ -326,10 +326,7 @@ class _TransactionForm extends StatelessWidget {
                   ElevatedButton(
                     child: Text(
                       "Add",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Poppins"),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                     style: ButtonStyle(
                       minimumSize:
@@ -340,17 +337,20 @@ class _TransactionForm extends StatelessWidget {
                       ),
                       side: MaterialStateProperty.all<BorderSide>(
                         BorderSide(
-                            width: 2, color: ColorPalette.ImperialPrimer),
+                          width: 2,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(_accentColor),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          ColorPalette.ImperialPrimer),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Theme.of(context).backgroundColor,
+                      ),
+                      // foregroundColor: MaterialStateProperty.all<Color>(
+                      //     ColorPalette.ImperialPrimer),
                     ),
                     onPressed: () {
                       if (transactionFormKey.currentState!.validate()) {
@@ -406,10 +406,7 @@ class _TransactionForm extends StatelessWidget {
                   ElevatedButton(
                     child: Text(
                       "Back",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Poppins"),
+                      style: Theme.of(context).textTheme.bodyText2,
                     ),
                     style: ButtonStyle(
                       minimumSize:
@@ -420,17 +417,22 @@ class _TransactionForm extends StatelessWidget {
                       ),
                       side: MaterialStateProperty.all<BorderSide>(
                         BorderSide(
-                            width: 2, color: ColorPalette.ImperialPrimer),
+                          width: 2,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          ColorPalette.ImperialPrimer),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Theme.of(context).backgroundColor,
+                      ),
+                      // backgroundColor:
+                      //     MaterialStateProperty.all<Color>(Colors.white),
+                      // foregroundColor: MaterialStateProperty.all<Color>(
+                      //     ColorPalette.ImperialPrimer),
                     ),
                     onPressed: () {
                       Navigator.pop(context);

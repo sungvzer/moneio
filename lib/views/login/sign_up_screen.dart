@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneio/color_palette.dart';
-import 'package:moneio/helpers/color_parser.dart';
-import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -213,7 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: parseColorString(defaultSettings["accent_color"]),
+          backgroundColor: Theme.of(context).primaryColor,
           elevation: 0,
           // leading: Container(),
           centerTitle: true,
@@ -223,12 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Text(
               "mone.io",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 26,
-                color: ColorPalette.ImperialPrimer,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w900,
-              ),
+              style: Theme.of(context).textTheme.headline6!,
             ),
           ),
         ),

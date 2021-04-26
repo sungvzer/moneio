@@ -7,7 +7,6 @@ import 'package:moneio/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'preference_event.dart';
-
 part 'preference_state.dart';
 
 class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {

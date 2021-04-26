@@ -119,6 +119,8 @@ class _SumCarouselState extends State<SumCarousel> {
               options: CarouselOptions(
                 onPageChanged: _onPageChanged,
                 height: percentHeight(context) * 20,
+                enlargeCenterPage: true,
+                enlargeStrategy: CenterPageEnlargeStrategy.height,
               ),
             );
           },

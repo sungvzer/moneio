@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
-import 'package:moneio/models/transaction.dart';
 import 'package:moneio/helpers/screen.dart';
+import 'package:moneio/models/transaction.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class SumCarousel extends StatefulWidget {
@@ -117,6 +117,8 @@ class _SumCarouselState extends State<SumCarousel> {
                 );
               }).toList(),
               options: CarouselOptions(
+                enableInfiniteScroll: false,
+                scrollPhysics: BouncingScrollPhysics(),
                 onPageChanged: _onPageChanged,
                 height: percentHeight(context) * 20,
                 enlargeCenterPage: true,

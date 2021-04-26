@@ -232,6 +232,7 @@ class _TransactionForm extends StatelessWidget {
                           readOnly: true,
                           controller: _controllers["date"],
                           onTap: () => showDatePicker(
+                            // TODO: Locale
                             context: context,
                             firstDate: DateTime(1900, 1, 1),
                             lastDate: DateTime.now(),

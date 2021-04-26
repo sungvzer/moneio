@@ -8,7 +8,7 @@ import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/home/settings_page.dart';
 import 'package:moneio/views/home/suggestions_page.dart';
-import 'package:moneio/widgets/sum_widget.dart';
+import 'package:moneio/widgets/sum_carousel.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
 class HomePage extends StatelessWidget {

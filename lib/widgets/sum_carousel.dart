@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/amount_color.dart';
 import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/models/transaction_category.dart';
@@ -315,9 +316,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
             humanReadable: widget.humanReadable,
           ),
           style: Theme.of(context).textTheme.headline4!.copyWith(
-                color: sum.amount < 0
-                    ? ColorPalette.Amour
-                    : ColorPalette.PastelGreen,
+                color: getAmountColor(sum.amount),
               ),
         ),
       ],

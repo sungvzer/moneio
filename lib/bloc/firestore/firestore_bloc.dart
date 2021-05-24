@@ -245,6 +245,64 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         await userDocumentReference.set(userDocument, SetOptions(merge: true));
         success = true;
         break;
+      case FirestoreWriteType.EditSingleUserTransaction:
+        assert(data is UserTransaction.Transaction);
+        data = data as UserTransaction.Transaction;
+        Map<String, dynamic> newTransaction = data.toMap();
+        newTransaction["date"] = Timestamp.fromDate(data.date);
+
+        String transactionUID = data.id;
+        Map<String, dynamic>? foundTransaction;
+        for (var transactionMap in userDocument["transactions"]) {
+          if (transactionMap["id"] == transactionUID) {
+            debugPrint("FirestoreBloc._handleWrite: found ID $transactionUID");
+            foundTransaction = Map.from(transactionMap);
+            if (foundTransaction["date"]! is DateTime) {
+              foundTransaction["date"] =
+                  Timestamp.fromDate(foundTransaction["date"]);
+            }
+          }
+        }
+        if (foundTransaction == null) {
+          success = false;
+          break;
+        }
+
+        debugPrint("FirestoreBloc._handleWrite: map was $foundTransaction");
+        // No-op detect
+        bool didChange = false;
+        for (var key in newTransaction.keys) {
+          if (key.toUpperCase() == "CATEGORY") {
+            if (foundTransaction[key]["key"] != newTransaction[key]["key"]) {
+              didChange = true;
+              debugPrint("FirestoreBloc._handleWrite: $key changes");
+            }
+            continue;
+          }
+          if (foundTransaction[key] != newTransaction[key]) {
+            didChange = true;
+            debugPrint("FirestoreBloc._handleWrite: $key changes");
+          }
+        }
+
+        if (!didChange) {
+          debugPrint("FirestoreBloc._handleWrite: no-op in edit");
+          success = true;
+          break;
+        }
+
+        List transactions = userDocument["transactions"];
+        transactions.removeWhere((element) {
+          if (element is! Map) return false;
+          if (!element.containsKey("id")) return false;
+          return element["id"] == transactionUID;
+        });
+        transactions.add(newTransaction);
+
+        userDocument["transactions"] = List.from(transactions);
+        await userDocumentReference.set(userDocument, SetOptions(merge: true));
+        success = true;
+        break;
     }
 
     // userDocument.set(userDocument, SetOptions(merge: true));

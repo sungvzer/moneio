@@ -5,8 +5,10 @@ import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/amount_color.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
-import 'package:moneio/models/transaction.dart';
 import 'package:moneio/helpers/screen.dart';
+import 'package:moneio/models/arguments/transaction_argument.dart';
+import 'package:moneio/models/transaction.dart';
+import 'package:moneio/views/home/transaction_view.dart';
 
 class TransactionListBuilder extends StatefulWidget {
   const TransactionListBuilder();
@@ -216,10 +218,12 @@ class _TransactionTile extends StatelessWidget {
       leading: Text(
         _current.category.emoji,
       ),
-      // This only applies to flutter-dev apparently
-      // minLeadingWidth: 3,
-      // TODO: Page navigation to a TransactionView(transaction)
-      onTap: () => print("TODO: Short press with transaction $_current"),
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          TransactionView.id,
+          arguments: TransactionArgument(_current),
+        );
+      },
       title: Row(
         children: [
           Expanded(

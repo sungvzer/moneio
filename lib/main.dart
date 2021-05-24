@@ -11,6 +11,7 @@ import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/home/home_page.dart';
 import 'package:moneio/views/home/settings_page.dart';
 import 'package:moneio/views/home/suggestions_page.dart';
+import 'package:moneio/views/home/transaction_view.dart';
 import 'package:moneio/views/loading_screen.dart';
 import 'package:moneio/views/login/login_screen.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
@@ -67,6 +68,7 @@ class FirebaseApplication extends StatelessWidget {
           AddTransactionPage.id: (context) => AddTransactionPage(),
           SettingsPage.id: (context) => SettingsPage(),
           SuggestionPage.id: (context) => SuggestionPage(),
+          TransactionView.id: (context) => TransactionView(),
         },
         home: Container(
           color: theme.currentTheme.primaryColor,

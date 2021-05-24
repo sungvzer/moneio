@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/helpers/color_parser.dart';
 
@@ -74,6 +74,10 @@ class ThemeNotifier with ChangeNotifier {
       bodyText2: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
         color: ColorPalette.StormPetrel,
       ),
+      bodyText1: textStylesWithoutColor[_fonts.poppinsSemiBold]!.copyWith(
+        color: ColorPalette.StormPetrel,
+        fontSize: 14,
+      ),
       subtitle2: textStylesWithoutColor[_fonts.poppinsLight]!.copyWith(
         color: ColorPalette.LightBlueBallerina,
         fontSize: 11,
@@ -124,6 +128,10 @@ class ThemeNotifier with ChangeNotifier {
       ),
     ),
     textTheme: TextTheme(
+      bodyText1: textStylesWithoutColor[_fonts.poppinsSemiBold]!.copyWith(
+        color: ColorPalette.ImperialPrimer,
+        fontSize: 14,
+      ),
       bodyText2: textStylesWithoutColor[_fonts.poppinsRegular]!.copyWith(
         color: ColorPalette.FuelTown,
       ),

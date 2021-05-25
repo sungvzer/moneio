@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
-import 'package:moneio/helpers/random_string.dart';
+import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {

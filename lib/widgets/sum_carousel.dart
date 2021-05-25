@@ -277,7 +277,8 @@ class _GenericSumCardState extends State<_GenericSumCard> {
       sumByCurrency[t.currency] += t.amount;
     }
     String highestCurrency = "";
-    int highestAmount = 0;
+
+    num highestAmount = double.negativeInfinity;
     for (var entry in sumByCurrency.entries) {
       if (entry.value > highestAmount) {
         highestCurrency = entry.key;
@@ -285,10 +286,14 @@ class _GenericSumCardState extends State<_GenericSumCard> {
       }
     }
 
+    if (highestAmount == double.negativeInfinity) {
+      highestAmount = 0;
+    }
+
     return Transaction(
       category: TransactionCategory("NONE"),
       date: DateTime.now(),
-      amount: highestAmount,
+      amount: highestAmount.toInt(),
       currency: highestCurrency,
     );
   }

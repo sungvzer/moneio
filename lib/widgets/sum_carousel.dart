@@ -104,7 +104,6 @@ class _SumCarouselState extends State<SumCarousel> {
         BlocBuilder<FirestoreBloc, FirestoreState>(
           builder: (context, state) {
             List<Transaction> list = _getTransactionsFromState(state);
-            if (state is FirestoreInitial) return Container();
 
             return CarouselSlider(
               items: _cardList

@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
+import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/arguments/transaction_argument.dart';
 import 'package:moneio/models/transaction.dart';
 
@@ -37,38 +38,6 @@ class _TransactionViewState extends State<TransactionView> {
   final controller = AnimateIconController();
   late Transaction _transaction;
   bool didReadTransaction = false;
-
-  TimeOfDay _parseTimeString(String time) {
-    // We consider time to never be null because of
-    // the form validator that doesn't allow this.
-    time = time.toUpperCase().trim();
-
-    final RegExp twelveHourRegEx = RegExp(r"AM|PM");
-    final List<String> splitTime =
-        time.replaceAll(twelveHourRegEx, "").split(':');
-
-    TimeOfDay parsedTime;
-    bool isAM = false, isPM = false, isTwelveHour = false;
-    int hour, minute;
-
-    if (morePrinting) debugPrint("Got string: $time");
-
-    isTwelveHour = time.contains(twelveHourRegEx);
-
-    hour = int.parse(splitTime[0]);
-    minute = int.parse(splitTime[1]);
-
-    if (isTwelveHour) {
-      isPM = time.contains(RegExp(r"PM"));
-      isAM = !isPM;
-
-      if (isAM && hour == 12) hour = 0;
-
-      if (isPM && hour != 12) hour += 12;
-    }
-    parsedTime = TimeOfDay(hour: hour, minute: minute);
-    return parsedTime;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +111,7 @@ class _TransactionViewState extends State<TransactionView> {
                         category = _formValues[_FieldName.Category]!.trim();
                     List<int> dateList = [];
 
-                    TimeOfDay parsedTime = _parseTimeString(time);
+                    TimeOfDay parsedTime = parseTimeString(time);
 
                     bool isNegative = amount.contains('-');
 

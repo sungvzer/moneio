@@ -11,6 +11,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/color_parser.dart';
+import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction;
 import 'package:moneio/widgets/labelled_form_field.dart';
 
@@ -363,7 +364,7 @@ class _TransactionForm extends StatelessWidget {
                             amount = _controllers["amount"]!.text.trim(),
                             currency = _selectedCurrency;
 
-                        TimeOfDay parsedTime = _parseTimeString(time);
+                        TimeOfDay parsedTime = parseTimeString(time);
                         bool isNegative = false;
                         List<int> dateList = [];
 
@@ -445,38 +446,6 @@ class _TransactionForm extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  TimeOfDay _parseTimeString(String time) {
-    // We consider time to never be null because of
-    // the form validator that doesn't allow this.
-    time = time.toUpperCase().trim();
-
-    final RegExp twelveHourRegEx = RegExp(r"AM|PM");
-    final List<String> splitTime =
-        time.replaceAll(twelveHourRegEx, "").split(':');
-
-    TimeOfDay parsedTime;
-    bool isAM = false, isPM = false, isTwelveHour = false;
-    int hour, minute;
-
-    if (morePrinting) debugPrint("Got string: $time");
-
-    isTwelveHour = time.contains(twelveHourRegEx);
-
-    hour = int.parse(splitTime[0]);
-    minute = int.parse(splitTime[1]);
-
-    if (isTwelveHour) {
-      isPM = time.contains(RegExp(r"PM"));
-      isAM = !isPM;
-
-      if (isAM && hour == 12) hour = 0;
-
-      if (isPM && hour != 12) hour += 12;
-    }
-    parsedTime = TimeOfDay(hour: hour, minute: minute);
-    return parsedTime;
   }
 
   List<DropdownMenuItem> _getCategoriesMenuItems() {

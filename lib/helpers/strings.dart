@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+import 'package:moneio/constants.dart';
+
 String getRandomString([int length = 32]) {
   assert(length > 0, "Length needs to be a positive integer");
   Random random;
@@ -19,4 +22,36 @@ String getRandomString([int length = 32]) {
   }
 
   return randomString;
+}
+
+TimeOfDay parseTimeString(String time) {
+  // We consider time to never be null because of
+  // the form validator that doesn't allow this.
+  time = time.toUpperCase().trim();
+
+  final RegExp twelveHourRegEx = RegExp(r"AM|PM");
+  final List<String> splitTime =
+      time.replaceAll(twelveHourRegEx, "").split(':');
+
+  TimeOfDay parsedTime;
+  bool isAM = false, isPM = false, isTwelveHour = false;
+  int hour, minute;
+
+  if (morePrinting) debugPrint("Got string: $time");
+
+  isTwelveHour = time.contains(twelveHourRegEx);
+
+  hour = int.parse(splitTime[0]);
+  minute = int.parse(splitTime[1]);
+
+  if (isTwelveHour) {
+    isPM = time.contains(RegExp(r"PM"));
+    isAM = !isPM;
+
+    if (isAM && hour == 12) hour = 0;
+
+    if (isPM && hour != 12) hour += 12;
+  }
+  parsedTime = TimeOfDay(hour: hour, minute: minute);
+  return parsedTime;
 }

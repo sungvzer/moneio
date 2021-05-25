@@ -10,6 +10,7 @@ import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
+import 'package:moneio/helpers/categories.dart';
 import 'package:moneio/helpers/color_parser.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction;
@@ -309,7 +310,7 @@ class _TransactionForm extends StatelessWidget {
                 validator: (str) =>
                     str == null ? "Please enter a category" : null,
                 style: Theme.of(context).textTheme.bodyText2!,
-                items: _getCategoriesMenuItems(),
+                items: getCategoriesMenuItems(),
                 hint: Center(
                   child: Text(
                     "Please select a category",
@@ -446,25 +447,5 @@ class _TransactionForm extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<DropdownMenuItem> _getCategoriesMenuItems() {
-    final values = categories.values.toList();
-    var list = <DropdownMenuItem>[];
-
-    list.add(
-      DropdownMenuItem(
-        child: Text("None"),
-        value: "NONE",
-      ),
-    );
-
-    for (var value in values.where((c) => c.uniqueID != "NONE")) {
-      list.add(DropdownMenuItem(
-        child: Text("${value.emoji} - ${value.name}"),
-        value: value.uniqueID,
-      ));
-    }
-    return list;
   }
 }

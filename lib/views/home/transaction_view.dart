@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
+import 'package:moneio/helpers/categories.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/arguments/transaction_argument.dart';
 import 'package:moneio/models/transaction.dart';
@@ -521,32 +522,12 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                 validator: (str) =>
                     str == null ? "Please enter a category" : null,
                 style: Theme.of(context).textTheme.bodyText2!,
-                items: _getCategoriesMenuItems(),
+                items: getCategoriesMenuItems(),
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  List<DropdownMenuItem<String>> _getCategoriesMenuItems() {
-    final values = categories.values.toList();
-    var list = <DropdownMenuItem<String>>[];
-
-    list.add(
-      DropdownMenuItem<String>(
-        child: Text("None"),
-        value: "NONE",
-      ),
-    );
-
-    for (var value in values.where((c) => c.uniqueID != "NONE")) {
-      list.add(DropdownMenuItem<String>(
-        child: Text("${value.emoji} - ${value.name}"),
-        value: value.uniqueID,
-      ));
-    }
-    return list;
   }
 }

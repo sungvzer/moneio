@@ -314,6 +314,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
           sum.getSeparatedAmountString(
             currency: true,
             humanReadable: widget.humanReadable,
+            sign: true,
           ),
           style: Theme.of(context).textTheme.headline4!.copyWith(
                 color: getAmountColor(sum.amount),

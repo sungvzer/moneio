@@ -7,6 +7,7 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/settings/settings_page.dart';
+import 'package:moneio/views/stats/stats_page.dart';
 import 'package:moneio/widgets/sum_carousel.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
@@ -70,7 +71,7 @@ class HomePage extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.insert_chart_outlined_rounded),
                   onTap: () {
-                    debugPrint("TODO: Stats");
+                    Navigator.pushNamed(context, StatsPage.id);
                   },
                   title: Text(
                     "Stats",

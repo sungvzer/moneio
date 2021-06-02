@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home/home_page.dart';
@@ -27,6 +29,10 @@ class LoginRouter extends StatelessWidget {
         User? user = snapshot.data;
 
         if (user == null) {
+          PreferenceBloc bloc = BlocProvider.of<PreferenceBloc>(context);
+          for (var preference in defaultSettings.entries) {
+            bloc.add(PreferenceWrite(preference.key, preference.value));
+          }
           if (morePrinting) {
             debugPrint("LoginRouter.build: user is not logged in");
           }

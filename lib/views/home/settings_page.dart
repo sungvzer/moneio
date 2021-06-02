@@ -57,7 +57,6 @@ class _SettingsPageState extends State<SettingsPage> {
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0,
-                  leading: Container(),
                   centerTitle: true,
                   title: Title(
                     title: "mone.io",

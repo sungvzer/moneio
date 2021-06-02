@@ -84,6 +84,7 @@ class Transaction extends Comparable {
     bool sign = false,
     bool currency = false,
     bool humanReadable = false,
+    bool getDecimalsIfZero = true,
   }) {
     String result = '';
     final int absoluteAmount = amount.abs();
@@ -122,7 +123,8 @@ class Transaction extends Comparable {
 
       // Reverse the result back and add the fractional part padded
       result = result.split('').reversed.join();
-      result += '.' + fractional.toString().padLeft(2, '0');
+      if (fractional != 0 || getDecimalsIfZero)
+        result += '.' + fractional.toString().padLeft(2, '0');
     }
     if (currency) {
       String currencySymbol = this.getCurrencySymbol();

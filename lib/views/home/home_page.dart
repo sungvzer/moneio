@@ -7,7 +7,6 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/settings/settings_page.dart';
-import 'package:moneio/views/home/suggestions_page.dart';
 import 'package:moneio/widgets/sum_carousel.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
@@ -75,21 +74,6 @@ class HomePage extends StatelessWidget {
                   },
                   title: Text(
                     "Stats",
-                    style: Theme.of(context).textTheme.bodyText2!,
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(Icons.lightbulb_outline_rounded),
-                  onTap: () {
-                    debugPrint("TODO: Suggestions");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => SuggestionPage(),
-                        ));
-                  },
-                  title: Text(
-                    "Suggestions",
                     style: Theme.of(context).textTheme.bodyText2!,
                   ),
                 ),

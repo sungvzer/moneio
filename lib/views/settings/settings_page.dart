@@ -9,7 +9,7 @@ import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/widgets/setting_list_tile.dart';
 
 class SettingsPage extends StatefulWidget {
-  static final String id = '/home/settings';
+  static final String id = '/settings';
 
   @override
   _SettingsPageState createState() => _SettingsPageState();

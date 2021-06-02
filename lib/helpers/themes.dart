@@ -115,6 +115,7 @@ class ThemeNotifier with ChangeNotifier {
       foregroundColor: ColorPalette.ImperialPrimer,
     ),
     dividerTheme: DividerThemeData(
+      thickness: 1,
       color: ColorPalette.StormPetrel,
     ),
     primaryColor: ColorPalette.DarkMountainMeadow,

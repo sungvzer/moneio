@@ -320,7 +320,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
             sign: true,
           ),
           style: Theme.of(context).textTheme.headline4!.copyWith(
-                color: getAmountColor(sum.amount),
+                color: getAmountColor(sum.amount, context),
               ),
         ),
       ],

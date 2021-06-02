@@ -267,7 +267,7 @@ class _TransactionTile extends StatelessWidget {
               amountString,
               textAlign: TextAlign.right,
               style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: getAmountColor(amount),
+                    color: getAmountColor(amount, context),
                   ),
               softWrap: false,
               maxLines: 1,

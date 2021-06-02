@@ -196,7 +196,6 @@ class _TransactionTile extends StatelessWidget {
       }
     }
     return ListTile(
-      // TODO: Transaction edit
       onLongPress: () => showDialog<void>(
         context: context,
         barrierDismissible: true,
@@ -207,6 +206,18 @@ class _TransactionTile extends StatelessWidget {
               style: Theme.of(dialogContext).textTheme.headline5!,
             ),
             children: [
+              SimpleDialogOption(
+                child: Text(
+                  "Edit",
+                  style: Theme.of(dialogContext).textTheme.bodyText2!,
+                ),
+                onPressed: () {
+                  NavigatorState nav = Navigator.of(context);
+                  nav.pop();
+                  Navigator.pushNamed(context, TransactionView.id,
+                      arguments: TransactionArgument(_current));
+                },
+              ),
               SimpleDialogOption(
                 onPressed: () {
                   debugPrint(

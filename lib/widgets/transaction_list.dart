@@ -135,7 +135,7 @@ class _TransactionList extends StatelessWidget {
           "_TransactionList.build(): device width is ${screenWidth(context).round()}");
 
     int maxAmountLength = screenWidth(context).round();
-    maxAmountLength = (maxAmountLength / 40).floor();
+    maxAmountLength = (maxAmountLength / 30).floor();
     if (morePrinting)
       debugPrint(
           "_TransactionList.build(): so the new length is $maxAmountLength");
@@ -242,7 +242,7 @@ class _TransactionTile extends StatelessWidget {
       title: Row(
         children: [
           Expanded(
-            flex: 3,
+            flex: 2,
             child: Text(
               _current.tag,
               overflow: TextOverflow.ellipsis,

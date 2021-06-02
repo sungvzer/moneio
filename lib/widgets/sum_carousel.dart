@@ -204,7 +204,16 @@ class _WeekSumCard extends StatelessWidget {
       title: "This week",
       filter: (Transaction tr) {
         DateTime date = DateTime(tr.date.year, tr.date.month, tr.date.day);
-        return date.difference(DateTime.now()).inDays.abs() < 7;
+        DateTime today = DateTime.now();
+
+        /**
+         * The difference from today can only be less than 0,
+         * given that we don't allow for transactions from the future.
+         * For example: if today's weekday is Thursday (= 4 in today.weekday)
+         * we only allow transactions that have occurred
+         * between 0 (today) and 3 days before (Wednesday, Tuesday and Monday).
+         **/
+        return date.difference(today).inDays.abs() < today.weekday;
       },
       humanReadable: this.humanReadable,
       transactions: transactions,

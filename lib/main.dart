@@ -15,6 +15,7 @@ import 'package:moneio/views/login/login_screen.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
 import 'package:moneio/views/login_router.dart';
 import 'package:moneio/views/settings/settings_page.dart';
+import 'package:moneio/views/stats/stats_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -67,6 +68,7 @@ class FirebaseApplication extends StatelessWidget {
           AddTransactionPage.id: (context) => AddTransactionPage(),
           SettingsPage.id: (context) => SettingsPage(),
           TransactionView.id: (context) => TransactionView(),
+          StatsPage.id: (context) => StatsPage(),
         },
         home: Container(
           color: theme.currentTheme.primaryColor,

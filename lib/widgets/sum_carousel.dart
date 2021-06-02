@@ -8,7 +8,6 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/amount_color.dart';
 import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/models/transaction.dart';
-import 'package:moneio/models/transaction_category.dart';
 
 class SumCarousel extends StatefulWidget {
   final bool humanReadable;
@@ -290,7 +289,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
     }
 
     return Transaction(
-      category: TransactionCategory("NONE"),
+      category: categories["NONE"]!,
       date: DateTime.now(),
       amount: highestAmount.toInt(),
       currency: highestCurrency,

@@ -129,7 +129,7 @@ class _TransactionList extends StatelessWidget {
         ),
       );
     }
-
+    _elements.sort((first, second) => second.date.compareTo(first.date));
     if (morePrinting)
       debugPrint(
           "_TransactionList.build(): device width is ${screenWidth(context).round()}");

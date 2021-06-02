@@ -40,6 +40,65 @@ class _TransactionViewState extends State<TransactionView> {
   late Transaction _transaction;
   bool didReadTransaction = false;
 
+  bool _readChanges() {
+    FormState? state = formKey.currentState;
+    if (state == null) {
+      debugPrint("_TransactionViewState.build: Form is no more.");
+      return false;
+    }
+    bool valid = state.validate();
+
+    if (!valid) {
+      return false;
+    }
+    setState(() {
+      state.save();
+      int amountNumber;
+      Map<String, dynamic> map = {};
+
+      String tag = _formValues[_FieldName.Tag]!.trim(),
+          date = _formValues[_FieldName.Date]!.trim(),
+          time = _formValues[_FieldName.Time]!.trim(),
+          amount = _formValues[_FieldName.Amount]!.trim(),
+          currency = _formValues[_FieldName.Currency]!.trim(),
+          category = _formValues[_FieldName.Category]!.trim();
+      List<int> dateList = [];
+
+      TimeOfDay parsedTime = parseTimeString(time);
+
+      bool isNegative = amount.contains('-');
+
+      for (var entry in date.split('/')) {
+        dateList.add(int.parse(entry));
+      }
+
+      tag = tag.isNotEmpty ? tag : "Untitled";
+
+      amount = amount.replaceAll(RegExp(r"\D"), "");
+      amountNumber = int.parse(amount);
+
+      if (isNegative) amountNumber *= -1;
+      // Initialize map
+      map["amount"] = amountNumber;
+      map["tag"] = tag;
+      map["category"] = categories[category]!.toMap();
+      map["date"] = DateTime(dateList[2], dateList[1], dateList[0],
+              parsedTime.hour, parsedTime.minute)
+          .toIso8601String();
+      map["currency"] = currency;
+
+      // Keep the id because it is indeed the same transaction for database concerns
+      map["id"] = _transaction.id;
+
+      final transaction = Transaction.fromMap(map);
+      _transaction = transaction;
+      didMakeChanges = false;
+      fadeState = CrossFadeState.showFirst;
+      debugPrint("_TransactionViewState.build: fadeState switching to view.");
+    });
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     NavigatorState nav = Navigator.of(context);
@@ -62,7 +121,56 @@ class _TransactionViewState extends State<TransactionView> {
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: () {
+              onPressed: () async {
+                if (didMakeChanges) {
+                  debugPrint(
+                      "_TransactionViewState: we did make changes indeed");
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Changes not applied"),
+                        content: SingleChildScrollView(
+                          child: Text(
+                            "The changes you made to this transaction will not be applied, are you sure about that?",
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text("Apply changes"),
+                            onPressed: () {
+                              debugPrint(
+                                "_TransactionViewState.build: applying changes",
+                              );
+                              if (!_readChanges()) {
+                                return;
+                              }
+                              BlocProvider.of<FirestoreBloc>(context).add(
+                                  FirestoreWrite(
+                                      type: FirestoreWriteType
+                                          .EditSingleUserTransaction,
+                                      userId: loggedUID!,
+                                      data: _transaction));
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: Text("Discard changes"),
+                            onPressed: () {
+                              debugPrint(
+                                "_TransactionViewState.build: discarding changes",
+                              );
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  return;
+                }
                 BlocProvider.of<FirestoreBloc>(context).add(FirestoreWrite(
                     type: FirestoreWriteType.EditSingleUserTransaction,
                     userId: loggedUID!,
@@ -84,68 +192,12 @@ class _TransactionViewState extends State<TransactionView> {
                 endIcon: Icons.done,
                 onStartIconPress: () {
                   setState(() {
+                    didMakeChanges = true;
                     fadeState = CrossFadeState.showSecond;
                   });
                   return true;
                 },
-                onEndIconPress: () {
-                  FormState? state = formKey.currentState;
-                  if (state == null) {
-                    debugPrint("_TransactionViewState.build: Form is no more.");
-                    return false;
-                  }
-                  bool valid = state.validate();
-
-                  if (!valid) {
-                    return false;
-                  }
-                  setState(() {
-                    state.save();
-                    int amountNumber;
-                    Map<String, dynamic> map = {};
-
-                    String tag = _formValues[_FieldName.Tag]!.trim(),
-                        date = _formValues[_FieldName.Date]!.trim(),
-                        time = _formValues[_FieldName.Time]!.trim(),
-                        amount = _formValues[_FieldName.Amount]!.trim(),
-                        currency = _formValues[_FieldName.Currency]!.trim(),
-                        category = _formValues[_FieldName.Category]!.trim();
-                    List<int> dateList = [];
-
-                    TimeOfDay parsedTime = parseTimeString(time);
-
-                    bool isNegative = amount.contains('-');
-
-                    for (var entry in date.split('/')) {
-                      dateList.add(int.parse(entry));
-                    }
-
-                    tag = tag.isNotEmpty ? tag : "Untitled";
-
-                    amount = amount.replaceAll(RegExp(r"\D"), "");
-                    amountNumber = int.parse(amount);
-
-                    if (isNegative) amountNumber *= -1;
-                    // Initialize map
-                    map["amount"] = amountNumber;
-                    map["tag"] = tag;
-                    map["category"] = categories[category]!.toMap();
-                    map["date"] = DateTime(dateList[2], dateList[1],
-                            dateList[0], parsedTime.hour, parsedTime.minute)
-                        .toIso8601String();
-                    map["currency"] = currency;
-
-                    // Keep the id because it is indeed the same transaction for database concerns
-                    map["id"] = _transaction.id;
-
-                    final transaction = Transaction.fromMap(map);
-                    _transaction = transaction;
-                    fadeState = CrossFadeState.showFirst;
-                    debugPrint(
-                        "_TransactionViewState.build: fadeState switching to view.");
-                  });
-                  return true;
-                },
+                onEndIconPress: _readChanges,
                 controller: controller,
                 // TODO: Use IconTheme instead
                 startIconColor: Theme.of(context).textTheme.headline6!.color,

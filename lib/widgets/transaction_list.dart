@@ -168,7 +168,11 @@ class _TransactionTile extends StatelessWidget {
     final int amount = _current.amount;
 
     String amountString = _current.getSeparatedAmountString(
-        sign: true, currency: true, humanReadable: _humanReadable);
+      sign: true,
+      currency: true,
+      humanReadable: _humanReadable,
+      getDecimalsIfZero: false,
+    );
 
     if (!_humanReadable) {
       // This is a little hack to make TextOverflow work

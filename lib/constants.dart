@@ -146,8 +146,8 @@ Map<String, TransactionCategory> categories = {
   ),
   "NONE": TransactionCategory(
     "NONE",
-    "",
-    "",
+    "No category",
+    "🚫",
   )
 };
 

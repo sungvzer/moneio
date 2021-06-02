@@ -9,7 +9,7 @@ import 'package:moneio/helpers/themes.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/home/home_page.dart';
-import 'package:moneio/views/home/settings_page.dart';
+import 'package:moneio/views/settings/settings_page.dart';
 import 'package:moneio/views/home/suggestions_page.dart';
 import 'package:moneio/views/home/transaction_view.dart';
 import 'package:moneio/views/loading_screen.dart';

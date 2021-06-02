@@ -135,7 +135,7 @@ class _TransactionList extends StatelessWidget {
           "_TransactionList.build(): device width is ${screenWidth(context).round()}");
 
     int maxAmountLength = screenWidth(context).round();
-    maxAmountLength = (maxAmountLength / 56).floor();
+    maxAmountLength = (maxAmountLength / 40).floor();
     if (morePrinting)
       debugPrint(
           "_TransactionList.build(): so the new length is $maxAmountLength");
@@ -183,6 +183,16 @@ class _TransactionTile extends StatelessWidget {
         amountString = amountString.substring(0, _maxAmountLength) +
             ' ' +
             amountString.substring(_maxAmountLength);
+      }
+    } else {
+      /* HACK: This solves an issue where amounts in
+       the thousands (1000.00-9999.99) were not displayed correctly in human readable scenario */
+      if (_current.amount >= 100000 && _current.amount <= 999999) {
+        if (amountString.length > _maxAmountLength) {
+          amountString = amountString.substring(0, _maxAmountLength) +
+              ' ' +
+              amountString.substring(_maxAmountLength);
+        }
       }
     }
     return ListTile(

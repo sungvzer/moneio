@@ -229,6 +229,7 @@ class _TransactionTile extends StatelessWidget {
           );
         },
       ),
+      minLeadingWidth: 25,
       leading: Text(
         _current.category.emoji,
       ),

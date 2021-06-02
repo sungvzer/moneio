@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/color_palette.dart';
-import 'package:moneio/helpers/color_parser.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/color_parser.dart';
 
 class SettingListTile<T> extends StatefulWidget {
   final String title;
@@ -146,6 +146,7 @@ class _SettingListTileState<T> extends State<SettingListTile> {
             child: DropdownButton(
               isExpanded: true,
               value: list[0],
+              style: Theme.of(context).textTheme.bodyText2,
               onChanged: (String? value) {
                 int index = list.indexOf(value!);
                 BlocProvider.of<PreferenceBloc>(context)

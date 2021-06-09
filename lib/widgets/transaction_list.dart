@@ -6,8 +6,10 @@ import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/amount_color.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/screen.dart';
+import 'package:moneio/helpers/sorting.dart';
 import 'package:moneio/models/arguments/transaction_argument.dart';
 import 'package:moneio/models/transaction.dart';
+import 'package:moneio/views/home/home_page.dart';
 import 'package:moneio/views/home/transaction_view.dart';
 
 class TransactionListBuilder extends StatefulWidget {
@@ -129,7 +131,27 @@ class _TransactionList extends StatelessWidget {
         ),
       );
     }
-    _elements.sort((first, second) => second.date.compareTo(first.date));
+    HomePageState? homePageState =
+        context.findAncestorStateOfType<HomePageState>();
+    if (homePageState == null) {
+      // This should never happen, if so, crash
+      assert(false);
+      return Container();
+    }
+
+    SortStrategy sortStrategy = homePageState.transactionSortStrategy;
+    SortType sortType = homePageState.transactionSortType;
+
+    debugPrint("TransactionList: sortStrategy: $sortStrategy");
+
+    int Function(Transaction first, Transaction second) sortingFunction;
+    if (sortStrategy == SortStrategy.Descending) {
+      sortingFunction = (first, second) => second.date.compareTo(first.date);
+    } else {
+      sortingFunction = (first, second) => first.date.compareTo(second.date);
+    }
+
+    _elements.sort(sortingFunction);
     if (morePrinting)
       debugPrint(
           "_TransactionList.build(): device width is ${screenWidth(context).round()}");

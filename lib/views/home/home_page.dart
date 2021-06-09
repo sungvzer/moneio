@@ -1,3 +1,4 @@
+import 'package:animate_icons/animate_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,14 +6,24 @@ import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
+import 'package:moneio/helpers/sorting.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
 import 'package:moneio/views/settings/settings_page.dart';
 import 'package:moneio/views/stats/stats_page.dart';
 import 'package:moneio/widgets/sum_carousel.dart';
 import 'package:moneio/widgets/transaction_list.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const String id = "/home";
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+  SortType transactionSortType = SortType.ByDate;
+  SortStrategy transactionSortStrategy = SortStrategy.Descending;
+  final AnimateIconController iconController = AnimateIconController();
 
   @override
   Widget build(BuildContext context) {
@@ -164,18 +175,49 @@ class HomePage extends StatelessWidget {
                             "History",
                             style: Theme.of(context).textTheme.headline5!,
                           ),
-                          IconButton(
-                            icon: Icon(Icons.refresh),
-                            tooltip: "Refresh transactions",
-                            onPressed: () {
-                              BlocProvider.of<FirestoreBloc>(context).add(
-                                FirestoreWrite(
-                                  type: FirestoreWriteType.InvalidateCache,
-                                  userId: loggedUID!,
-                                  data: null,
-                                ),
-                              );
-                            },
+                          Row(
+                            children: [
+                              AnimateIcons(
+                                startIcon: Icons.arrow_downward,
+                                endIcon: Icons.arrow_upward,
+                                onStartIconPress: () {
+                                  setState(() {
+                                    debugPrint("HomePage: start icon");
+                                    transactionSortStrategy =
+                                        SortStrategy.Ascending;
+                                  });
+                                  return true;
+                                },
+                                onEndIconPress: () {
+                                  setState(() {
+                                    debugPrint("HomePage: end icon");
+                                    transactionSortStrategy =
+                                        SortStrategy.Descending;
+                                  });
+                                  return true;
+                                },
+                                startTooltip: "Ascending sort",
+                                endTooltip: "Descending sort",
+                                startIconColor:
+                                    Theme.of(context).iconTheme.color,
+                                duration: Duration(milliseconds: 200),
+                                endIconColor: Theme.of(context).iconTheme.color,
+                                controller: iconController,
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.refresh),
+                                tooltip: "Refresh transactions",
+                                onPressed: () {
+                                  BlocProvider.of<FirestoreBloc>(context).add(
+                                    FirestoreWrite(
+                                      type: FirestoreWriteType.InvalidateCache,
+                                      userId: loggedUID!,
+                                      data: null,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),

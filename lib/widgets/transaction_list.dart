@@ -142,7 +142,9 @@ class _TransactionList extends StatelessWidget {
     SortStrategy sortStrategy = homePageState.transactionSortStrategy;
     SortType sortType = homePageState.transactionSortType;
 
-    debugPrint("TransactionList: sortStrategy: $sortStrategy");
+    if (morePrinting) {
+      debugPrint("TransactionList: sortStrategy: $sortStrategy");
+    }
 
     List<Transaction> transactions = _elements;
     transactions =

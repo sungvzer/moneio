@@ -29,8 +29,11 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       assert(_userCaches[uid] != null);
       return _userCaches[uid]!;
     }
-    debugPrint(
-        "FirestoreBloc._getUserDocument: Getting user document for user $uid");
+
+    if (morePrinting) {
+      debugPrint(
+          "FirestoreBloc._getUserDocument: Getting user document for user $uid");
+    }
     CollectionReference users = _store.collection("/users");
     DocumentReference userDocument = users.doc("/$uid");
 

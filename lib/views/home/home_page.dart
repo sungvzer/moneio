@@ -209,7 +209,9 @@ class HomePageState extends State<HomePage> {
                                 endIcon: Icons.arrow_upward,
                                 onStartIconPress: () {
                                   setState(() {
-                                    debugPrint("HomePage: start icon");
+                                    if (morePrinting) {
+                                      debugPrint("HomePage: start icon");
+                                    }
                                     transactionSortStrategy =
                                         SortStrategy.Ascending;
                                   });
@@ -217,7 +219,9 @@ class HomePageState extends State<HomePage> {
                                 },
                                 onEndIconPress: () {
                                   setState(() {
-                                    debugPrint("HomePage: end icon");
+                                    if (morePrinting) {
+                                      debugPrint("HomePage: end icon");
+                                    }
                                     transactionSortStrategy =
                                         SortStrategy.Descending;
                                   });

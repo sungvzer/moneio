@@ -22,7 +22,10 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     // ignore: close_sinks
     PreferenceBloc preferenceBloc = BlocProvider.of<PreferenceBloc>(context);
-    debugPrint("_SettingsPageState.build: Adding PreferenceRead...");
+
+    if (morePrinting) {
+      debugPrint("_SettingsPageState.build: Adding PreferenceRead...");
+    }
 
     return BlocBuilder<FirestoreBloc, FirestoreState>(
       builder: (context, state) {
@@ -42,18 +45,24 @@ class _SettingsPageState extends State<SettingsPage> {
                 try {
                   values = Map<String, dynamic>.from(state.readValue);
                 } catch (e) {
-                  debugPrint(
-                      "Call an ambulance call an ambulance, but not for me!");
+                  if (morePrinting) {
+                    debugPrint(
+                        "Call an ambulance call an ambulance, but not for me!");
+                  }
                   return CircularProgressIndicator();
                 }
               } else {
                 values = (state as PreferenceWriteState).updatedPreferences;
                 if (values == {}) throw UnimplementedError();
               }
-              debugPrint(
-                  "_SettingsPageState.build: preferences: ${values.toString()}");
-              debugPrint(
-                  "_SettingsPageState.build: human readable is ${values["human_readable"].toString()}");
+              if (morePrinting) {
+                debugPrint(
+                    "_SettingsPageState.build: preferences: ${values.toString()}");
+              }
+              if (morePrinting) {
+                debugPrint(
+                    "_SettingsPageState.build: human readable is ${values["human_readable"].toString()}");
+              }
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0,
@@ -117,16 +126,21 @@ class _SettingsPageState extends State<SettingsPage> {
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           onTap: () {
-                            debugPrint(
-                                "_SettingsPageState.build: Syncing $values");
+                            if (morePrinting) {
+                              debugPrint(
+                                  "_SettingsPageState.build: Syncing $values");
+                            }
 
                             setState(() {
                               _syncSettingsIcon = CircularProgressIndicator();
                             });
                             var firestoreBloc =
                                 BlocProvider.of<FirestoreBloc>(context);
-                            debugPrint(
-                                "_SettingsPageState.build: SYNCING... $values");
+
+                            if (morePrinting) {
+                              debugPrint(
+                                  "_SettingsPageState.build: SYNCING... $values");
+                            }
                             firestoreBloc.add(FirestoreWrite(
                               type: FirestoreWriteType.SyncUserSettings,
                               data: values,

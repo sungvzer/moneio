@@ -116,9 +116,18 @@ List<Transaction> _getTransactionsFromState(FirestoreState state) {
   return list;
 }
 
-class _CurrenciesStats extends StatelessWidget {
+class _CurrenciesStats extends StatefulWidget {
   final List<Transaction> _transactions;
   const _CurrenciesStats(this._transactions);
+
+  @override
+  _CurrenciesStatsState createState() => _CurrenciesStatsState(_transactions);
+}
+
+class _CurrenciesStatsState extends State<_CurrenciesStats> {
+  final List<Transaction> _transactions;
+
+  _CurrenciesStatsState(this._transactions);
 
   @override
   Widget build(BuildContext context) {

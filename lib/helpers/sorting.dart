@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-enum SortType { ByDate, ByName, ByAmount, ByCategory }
+enum SortType { ByDate, ByTag, ByAmount, ByCategory }
 enum SortStrategy { Ascending, Descending }
 
 String getSortTypeName(BuildContext context, SortType type) {
@@ -11,7 +11,7 @@ String getSortTypeName(BuildContext context, SortType type) {
       return "By amount";
     case SortType.ByDate:
       return "By date";
-    case SortType.ByName:
-      return "By name";
+    case SortType.ByTag:
+      return "By tag";
   }
 }

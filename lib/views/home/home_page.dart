@@ -178,6 +178,7 @@ class HomePageState extends State<HomePage> {
                           Row(
                             children: [
                               PopupMenuButton<SortType>(
+                                initialValue: transactionSortType,
                                 onSelected: (value) {
                                   setState(() {
                                     transactionSortType = value;

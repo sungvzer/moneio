@@ -318,7 +318,7 @@ List<Transaction> sortTransactions(
     case SortType.ByDate:
       transactions.sort((first, second) => second.date.compareTo(first.date));
       break;
-    case SortType.ByName:
+    case SortType.ByTag:
       transactions.sort((first, second) => second.tag.compareTo(first.tag));
       break;
     case SortType.ByAmount:

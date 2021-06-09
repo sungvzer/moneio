@@ -204,7 +204,11 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
 
         await userDocumentReference.set(userDocument, SetOptions(merge: true));
         success = true;
-        debugPrint("FirestoreBloc._handleWrite: Transactions is $transactions");
+
+        if (morePrinting) {
+          debugPrint(
+              "FirestoreBloc._handleWrite: Transactions is $transactions");
+        }
         break;
       case FirestoreWriteType.RemoveSingleUserTransaction:
         assert(data is String);
@@ -229,8 +233,10 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
           await userDocumentReference.set(
               userDocument, SetOptions(merge: true));
         } else {
-          debugPrint(
-              "FirestoreBloc._handleWrite: We didn't really remove anything");
+          if (morePrinting) {
+            debugPrint(
+                "FirestoreBloc._handleWrite: We didn't really remove anything");
+          }
         }
         success = true;
         break;
@@ -255,7 +261,10 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         Map<String, dynamic>? foundTransaction;
         for (var transactionMap in userDocument["transactions"]) {
           if (transactionMap["id"] == transactionUID) {
-            debugPrint("FirestoreBloc._handleWrite: found ID $transactionUID");
+            if (morePrinting) {
+              debugPrint(
+                  "FirestoreBloc._handleWrite: found ID $transactionUID");
+            }
             foundTransaction = Map.from(transactionMap);
             if (foundTransaction["date"]! is DateTime) {
               foundTransaction["date"] =
@@ -268,25 +277,33 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
           break;
         }
 
-        debugPrint("FirestoreBloc._handleWrite: map was $foundTransaction");
+        if (morePrinting) {
+          debugPrint("FirestoreBloc._handleWrite: map was $foundTransaction");
+        }
         // No-op detect
         bool didChange = false;
         for (var key in newTransaction.keys) {
           if (key.toUpperCase() == "CATEGORY") {
             if (foundTransaction[key]["key"] != newTransaction[key]["key"]) {
               didChange = true;
-              debugPrint("FirestoreBloc._handleWrite: $key changes");
+              if (morePrinting) {
+                debugPrint("FirestoreBloc._handleWrite: $key changes");
+              }
             }
             continue;
           }
           if (foundTransaction[key] != newTransaction[key]) {
             didChange = true;
-            debugPrint("FirestoreBloc._handleWrite: $key changes");
+            if (morePrinting) {
+              debugPrint("FirestoreBloc._handleWrite: $key changes");
+            }
           }
         }
 
         if (!didChange) {
-          debugPrint("FirestoreBloc._handleWrite: no-op in edit");
+          if (morePrinting) {
+            debugPrint("FirestoreBloc._handleWrite: no-op in edit");
+          }
           success = true;
           break;
         }

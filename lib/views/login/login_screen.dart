@@ -63,6 +63,9 @@ class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> loginFormKey =
       GlobalKey<FormState>(debugLabel: "LoginForm");
 
+  final GlobalKey<FormFieldState> emailKey =
+      GlobalKey<FormFieldState>(debugLabel: "LoginForm");
+
   void _login(context) async {
     if (!loginFormKey.currentState!.validate()) return;
     String email, password;
@@ -112,6 +115,7 @@ class _LoginFormState extends State<LoginForm> {
                 LabelledFormField(
                   "E-mail",
                   child: TextFormField(
+                    key: emailKey,
                     controller: _controllers["email"],
                     keyboardType: TextInputType.emailAddress,
                     style: Theme.of(context).textTheme.bodyText2!,
@@ -235,6 +239,36 @@ class _LoginFormState extends State<LoginForm> {
                     Navigator.pushNamed(context, SignUpScreen.id);
                   },
                 ),
+                TextButton(
+                  onPressed: () {
+                    FormFieldState? state = emailKey.currentState;
+                    if (state == null) {
+                      return;
+                    }
+                    if (!state.validate()) {
+                      return;
+                    }
+                    try {
+                      FirebaseAuth.instance
+                          .sendPasswordResetEmail(email: state.value);
+                    } on Exception {
+                      return;
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text("Check your email for further instructions"),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Forgot your password?",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(decoration: TextDecoration.underline),
+                  ),
+                )
               ],
             ),
           ),

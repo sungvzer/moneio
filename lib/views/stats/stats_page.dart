@@ -282,6 +282,7 @@ Map<String, double> _computeCurrenciesMap(
   _DisplayType displayType = _DisplayType.ByNumber,
 }) {
   Map<String, double> map = {};
+  Map<String, double> percentages = {};
   int transactionCount = transactions.length;
 
   if (displayType == _DisplayType.ByNumber) {
@@ -312,7 +313,24 @@ Map<String, double> _computeCurrenciesMap(
       map["Other currencies"] = map["Other currencies"]! + entries[group].value;
     map.remove(entries[group].key);
   }
-  return map;
+
+  int total;
+  if (displayType == _DisplayType.ByNumber) {
+    total = transactionCount;
+  } else {
+    total = transactions.fold(
+        0, (previous, element) => previous + element.amount.abs());
+  }
+
+  for (int index = 0; index < map.entries.length; index++) {
+    final entry = map.entries.elementAt(index);
+    double percentage = (entry.value / total * 100).roundToDouble();
+    debugPrint(
+        "_computeCurrenciesMap: index $index, element ${map.entries.elementAt(index).toString()}");
+    percentages[entry.key + ' - $percentage%'] = percentage;
+  }
+  debugPrint("_computeCurrenciesMap: percentages $percentages");
+  return percentages;
 }
 
 Map<String, double> _computeCategoriesMap(

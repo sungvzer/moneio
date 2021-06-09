@@ -197,9 +197,17 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
   }
 }
 
-class _CategoriesStats extends StatelessWidget {
+class _CategoriesStats extends StatefulWidget {
   final List<Transaction> _transactions;
   _CategoriesStats(this._transactions);
+
+  @override
+  _CategoriesStatsState createState() => _CategoriesStatsState(_transactions);
+}
+
+class _CategoriesStatsState extends State<_CategoriesStats> {
+  final List<Transaction> _transactions;
+  _CategoriesStatsState(this._transactions);
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +230,8 @@ class _CategoriesStats extends StatelessWidget {
         colorList: Theme.of(context).brightness == Brightness.light
             ? lightColors
             : darkColors,
-        dataMap: _computeCategoriesMap(_transactions, groupingThreshold: 4),
+        dataMap:
+            _computeCategoriesMap(widget._transactions, groupingThreshold: 4),
         chartType: ChartType.ring,
         initialAngleInDegree: 270,
         chartRadius: percentWidth(context) * 50,

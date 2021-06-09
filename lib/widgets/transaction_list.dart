@@ -325,6 +325,10 @@ List<Transaction> sortTransactions(
       transactions
           .sort((first, second) => second.amount.compareTo(first.amount));
       break;
+    case SortType.ByCategory:
+      transactions
+          .sort((first, second) => second.category.compareTo(first.category));
+      break;
   }
 
   if (strategy == SortStrategy.Ascending) {

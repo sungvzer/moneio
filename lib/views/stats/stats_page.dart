@@ -398,7 +398,7 @@ Map<String, double> _computeCategoriesMap(
     } else {
       total = amountSum;
     }
-    int percentage = (entry.value / total * 100).toInt();
+    double percentage = (entry.value / total * 100).roundToDouble();
     String keyForMap = "";
     if (entry.key == "OTHER") {
       keyForMap = "Other categories";

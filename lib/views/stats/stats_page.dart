@@ -162,11 +162,11 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
               },
               items: [
                 DropdownMenuItem(
-                  child: Text("By amount"),
+                  child: Text("Amount"),
                   value: _DisplayType.ByAmount,
                 ),
                 DropdownMenuItem(
-                  child: Text("By number"),
+                  child: Text("Number"),
                   value: _DisplayType.ByNumber,
                 ),
               ],
@@ -207,6 +207,7 @@ class _CategoriesStats extends StatefulWidget {
 
 class _CategoriesStatsState extends State<_CategoriesStats> {
   final List<Transaction> _transactions;
+  _DisplayType _displayType = _DisplayType.ByNumber;
   _CategoriesStatsState(this._transactions);
 
   @override
@@ -225,33 +226,61 @@ class _CategoriesStatsState extends State<_CategoriesStats> {
 
     return Padding(
       padding: EdgeInsets.all(percentWidth(context) * 5),
-      child: PieChart(
-        animationDuration: Duration(seconds: 2),
-        colorList: Theme.of(context).brightness == Brightness.light
-            ? lightColors
-            : darkColors,
-        dataMap:
-            _computeCategoriesMap(widget._transactions, groupingThreshold: 4),
-        chartType: ChartType.ring,
-        initialAngleInDegree: 270,
-        chartRadius: percentWidth(context) * 50,
-        ringStrokeWidth: percentWidth(context) * 12,
-        legendOptions: LegendOptions(
-          showLegends: true,
-          legendPosition: LegendPosition.top,
-          showLegendsInRow: false,
-        ),
-        chartValuesOptions: ChartValuesOptions(
-          showChartValues: false,
-        ),
+      child: Column(
+        children: [
+          DropdownButton<_DisplayType>(
+            items: [
+              DropdownMenuItem(
+                child: Text("Amount"),
+                value: _DisplayType.ByAmount,
+              ),
+              DropdownMenuItem(
+                child: Text("Number"),
+                value: _DisplayType.ByNumber,
+              ),
+            ],
+            isExpanded: true,
+            value: _displayType,
+            onChanged: (value) {
+              if (value == null) {
+                return;
+              }
+              setState(() {
+                _displayType = value;
+              });
+            },
+          ),
+          PieChart(
+            animationDuration: Duration(seconds: 2),
+            colorList: Theme.of(context).brightness == Brightness.light
+                ? lightColors
+                : darkColors,
+            dataMap: _computeCategoriesMap(_transactions,
+                groupingThreshold: 4, displayType: _displayType),
+            chartType: ChartType.ring,
+            initialAngleInDegree: 270,
+            chartRadius: percentWidth(context) * 50,
+            ringStrokeWidth: percentWidth(context) * 12,
+            legendOptions: LegendOptions(
+              showLegends: true,
+              legendPosition: LegendPosition.top,
+              showLegendsInRow: false,
+            ),
+            chartValuesOptions: ChartValuesOptions(
+              showChartValues: false,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-Map<String, double> _computeCurrenciesMap(List<Transaction> transactions,
-    {int groupingThreshold = 0,
-    _DisplayType displayType = _DisplayType.ByNumber}) {
+Map<String, double> _computeCurrenciesMap(
+  List<Transaction> transactions, {
+  int groupingThreshold = 0,
+  _DisplayType displayType = _DisplayType.ByNumber,
+}) {
   Map<String, double> map = {};
   int transactionCount = transactions.length;
 
@@ -286,17 +315,37 @@ Map<String, double> _computeCurrenciesMap(List<Transaction> transactions,
   return map;
 }
 
-Map<String, double> _computeCategoriesMap(List<Transaction> transactions,
-    {int groupingThreshold = 0}) {
+Map<String, double> _computeCategoriesMap(
+  List<Transaction> transactions, {
+  int groupingThreshold = 0,
+  _DisplayType displayType = _DisplayType.ByNumber,
+}) {
   Map<String, double> map = {};
   Map<String, int> counts = {};
   int transactionCount = transactions.length;
 
-  for (Transaction t in transactions) {
-    if (!counts.containsKey(t.category.uniqueID)) {
-      counts[t.category.uniqueID] = 1;
-    } else {
-      counts[t.category.uniqueID] = counts[t.category.uniqueID]! + 1;
+  // TODO: Maybe this is a naive way of computing percentages
+  // Like, what about 10000 JPY (€75 as of 2021-06-09) vs €100?
+  // Should they be converted to a common value and then sorted?
+  int amountSum = 0;
+
+  if (displayType == _DisplayType.ByNumber) {
+    for (Transaction t in transactions) {
+      if (!counts.containsKey(t.category.uniqueID)) {
+        counts[t.category.uniqueID] = 1;
+      } else {
+        counts[t.category.uniqueID] = counts[t.category.uniqueID]! + 1;
+      }
+    }
+  } else {
+    for (Transaction t in transactions) {
+      amountSum += t.amount.abs();
+      if (!counts.containsKey(t.category.uniqueID)) {
+        counts[t.category.uniqueID] = t.amount.abs();
+      } else {
+        counts[t.category.uniqueID] =
+            counts[t.category.uniqueID]! + t.amount.abs();
+      }
     }
   }
 
@@ -315,7 +364,13 @@ Map<String, double> _computeCategoriesMap(List<Transaction> transactions,
   entries.sort((first, second) => second.value.compareTo(first.value));
 
   for (var entry in entries) {
-    int percentage = (entry.value / transactionCount * 100).toInt();
+    int total;
+    if (displayType == _DisplayType.ByNumber) {
+      total = transactionCount;
+    } else {
+      total = amountSum;
+    }
+    int percentage = (entry.value / total * 100).toInt();
     String keyForMap = "";
     if (entry.key == "OTHER") {
       keyForMap = "Other categories";

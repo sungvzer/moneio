@@ -10,6 +10,8 @@ import 'package:moneio/models/transaction.dart';
 import 'package:moneio/models/transaction_category.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+enum _DisplayType { ByNumber, ByAmount }
+
 class StatsPage extends StatefulWidget {
   static const String id = "/stats";
   @override
@@ -126,7 +128,7 @@ class _CurrenciesStats extends StatefulWidget {
 
 class _CurrenciesStatsState extends State<_CurrenciesStats> {
   final List<Transaction> _transactions;
-
+  _DisplayType displayType = _DisplayType.ByNumber;
   _CurrenciesStatsState(this._transactions);
 
   @override
@@ -143,27 +145,55 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
     final List<Color> darkColors = List.generate(
         lightColors.length, (index) => darken(lightColors[index], 30));
     return Padding(
-      padding: EdgeInsets.all(percentWidth(context) * 5),
-      child: PieChart(
-        animationDuration: Duration(seconds: 2),
-        colorList: Theme.of(context).brightness == Brightness.light
-            ? lightColors
-            : darkColors,
-        dataMap: _computeCurrenciesMap(_transactions, groupingThreshold: 4),
-        chartType: ChartType.ring,
-        initialAngleInDegree: 270,
-        chartRadius: percentWidth(context) * 50,
-        ringStrokeWidth: percentWidth(context) * 12,
-        legendOptions: LegendOptions(
-          showLegends: true,
-          legendPosition: LegendPosition.top,
-          showLegendsInRow: false,
-        ),
-        chartValuesOptions: ChartValuesOptions(
-          showChartValues: false,
-        ),
-      ),
-    );
+        padding: EdgeInsets.all(percentWidth(context) * 5),
+        child: Column(
+          children: [
+            DropdownButton<_DisplayType>(
+              isExpanded: true,
+              onChanged: (type) {
+                if (type == null) {
+                  return;
+                }
+                setState(() {
+                  displayType = type;
+                });
+                debugPrint(
+                    "_CurrenciesStatsState.build: changed to ${type.toString()}");
+              },
+              items: [
+                DropdownMenuItem(
+                  child: Text("By amount"),
+                  value: _DisplayType.ByAmount,
+                ),
+                DropdownMenuItem(
+                  child: Text("By number"),
+                  value: _DisplayType.ByNumber,
+                ),
+              ],
+              value: displayType,
+            ),
+            PieChart(
+              animationDuration: Duration(seconds: 2),
+              colorList: Theme.of(context).brightness == Brightness.light
+                  ? lightColors
+                  : darkColors,
+              dataMap: _computeCurrenciesMap(_transactions,
+                  groupingThreshold: 4, displayType: displayType),
+              chartType: ChartType.ring,
+              initialAngleInDegree: 270,
+              chartRadius: percentWidth(context) * 50,
+              ringStrokeWidth: percentWidth(context) * 12,
+              legendOptions: LegendOptions(
+                showLegends: true,
+                legendPosition: LegendPosition.top,
+                showLegendsInRow: false,
+              ),
+              chartValuesOptions: ChartValuesOptions(
+                showChartValues: false,
+              ),
+            ),
+          ],
+        ));
   }
 }
 
@@ -211,15 +241,26 @@ class _CategoriesStats extends StatelessWidget {
 }
 
 Map<String, double> _computeCurrenciesMap(List<Transaction> transactions,
-    {int groupingThreshold = 0}) {
+    {int groupingThreshold = 0,
+    _DisplayType displayType = _DisplayType.ByNumber}) {
   Map<String, double> map = {};
   int transactionCount = transactions.length;
 
-  for (Transaction t in transactions) {
-    if (!map.containsKey(t.currency)) {
-      map[t.currency] = 1;
-    } else {
-      map[t.currency] = map[t.currency]! + 1;
+  if (displayType == _DisplayType.ByNumber) {
+    for (Transaction t in transactions) {
+      if (!map.containsKey(t.currency)) {
+        map[t.currency] = 1;
+      } else {
+        map[t.currency] = map[t.currency]! + 1;
+      }
+    }
+  } else {
+    for (Transaction t in transactions) {
+      if (!map.containsKey(t.currency)) {
+        map[t.currency] = t.amount.toDouble();
+      } else {
+        map[t.currency] = map[t.currency]! + t.amount.toDouble();
+      }
     }
   }
 

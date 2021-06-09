@@ -112,6 +112,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
+            tooltip: "Add a transaction",
             onPressed: () {
               Navigator.push(
                 context,
@@ -165,6 +166,7 @@ class HomePage extends StatelessWidget {
                           ),
                           IconButton(
                             icon: Icon(Icons.refresh),
+                            tooltip: "Refresh transactions",
                             onPressed: () {
                               BlocProvider.of<FirestoreBloc>(context).add(
                                 FirestoreWrite(

@@ -306,9 +306,9 @@ Map<String, double> _computeCurrenciesMap(
   } else {
     for (Transaction t in transactions) {
       if (!map.containsKey(t.currency)) {
-        map[t.currency] = t.amount.toDouble();
+        map[t.currency] = t.amount.toDouble().abs();
       } else {
-        map[t.currency] = map[t.currency]! + t.amount.toDouble();
+        map[t.currency] = map[t.currency]! + t.amount.toDouble().abs();
       }
     }
   }

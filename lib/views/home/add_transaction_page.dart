@@ -11,7 +11,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/categories.dart';
-import 'package:moneio/helpers/color_parser.dart';
+import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction;
 import 'package:moneio/widgets/labelled_form_field.dart';

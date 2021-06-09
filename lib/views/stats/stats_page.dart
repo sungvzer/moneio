@@ -148,7 +148,12 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
         padding: EdgeInsets.all(percentWidth(context) * 5),
         child: Column(
           children: [
+            Text(
+              "Count by",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
             DropdownButton<_DisplayType>(
+              style: Theme.of(context).textTheme.bodyText2,
               isExpanded: true,
               onChanged: (type) {
                 if (type == null) {
@@ -228,7 +233,12 @@ class _CategoriesStatsState extends State<_CategoriesStats> {
       padding: EdgeInsets.all(percentWidth(context) * 5),
       child: Column(
         children: [
+          Text(
+            "Count by",
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
           DropdownButton<_DisplayType>(
+            style: Theme.of(context).textTheme.bodyText2,
             items: [
               DropdownMenuItem(
                 child: Text("Amount"),

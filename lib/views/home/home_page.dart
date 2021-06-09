@@ -177,6 +177,32 @@ class HomePageState extends State<HomePage> {
                           ),
                           Row(
                             children: [
+                              PopupMenuButton<SortType>(
+                                onSelected: (value) {
+                                  setState(() {
+                                    transactionSortType = value;
+                                  });
+                                },
+                                tooltip: "Sort by",
+                                itemBuilder: (context) {
+                                  final sortTypes = SortType.values;
+
+                                  return sortTypes
+                                      .map(
+                                        (e) => PopupMenuItem(
+                                          value: e,
+                                          child: Text(
+                                            getSortTypeName(context, e),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2,
+                                          ),
+                                        ),
+                                      )
+                                      .toList();
+                                },
+                                child: Icon(Icons.sort),
+                              ),
                               AnimateIcons(
                                 startIcon: Icons.arrow_downward,
                                 endIcon: Icons.arrow_upward,

@@ -144,14 +144,10 @@ class _TransactionList extends StatelessWidget {
 
     debugPrint("TransactionList: sortStrategy: $sortStrategy");
 
-    int Function(Transaction first, Transaction second) sortingFunction;
-    if (sortStrategy == SortStrategy.Descending) {
-      sortingFunction = (first, second) => second.date.compareTo(first.date);
-    } else {
-      sortingFunction = (first, second) => first.date.compareTo(second.date);
-    }
+    List<Transaction> transactions = _elements;
+    transactions =
+        sortTransactions(transactions, strategy: sortStrategy, type: sortType);
 
-    _elements.sort(sortingFunction);
     if (morePrinting)
       debugPrint(
           "_TransactionList.build(): device width is ${screenWidth(context).round()}");
@@ -170,9 +166,9 @@ class _TransactionList extends StatelessWidget {
         thickness: 0,
         height: 0,
       ),
-      itemBuilder: (context, index) =>
-          _TransactionTile(_elements[index], _humanReadable, maxAmountLength),
-      itemCount: _elements.length,
+      itemBuilder: (context, index) => _TransactionTile(
+          transactions[index], _humanReadable, maxAmountLength),
+      itemCount: transactions.length,
     );
   }
 }
@@ -311,4 +307,29 @@ class _TransactionTile extends StatelessWidget {
       ),
     );
   }
+}
+
+List<Transaction> sortTransactions(
+  List<Transaction> transactions, {
+  SortStrategy strategy = SortStrategy.Descending,
+  SortType type = SortType.ByDate,
+}) {
+  switch (type) {
+    case SortType.ByDate:
+      transactions.sort((first, second) => second.date.compareTo(first.date));
+      break;
+    case SortType.ByName:
+      transactions.sort((first, second) => second.tag.compareTo(first.tag));
+      break;
+    case SortType.ByAmount:
+      transactions
+          .sort((first, second) => second.amount.compareTo(first.amount));
+      break;
+  }
+
+  if (strategy == SortStrategy.Ascending) {
+    return List.from(transactions.reversed);
+  }
+
+  return transactions;
 }

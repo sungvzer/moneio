@@ -6,6 +6,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/screen.dart';
+import 'package:moneio/models/currencies.dart';
 import 'package:moneio/widgets/setting_list_tile.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -64,11 +65,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     "_SettingsPageState.build: human readable is ${values["human_readable"].toString()}");
               }
 
-              List<String> currencies =
-                  List.from(currencyToSymbol.keys.toList())
-                    ..removeWhere(
-                        (element) => element == values["favorite_currency"]);
-              currencies.insert(0, values["favorite_currency"]);
+              List<String> currencyCodeList = currencyCodes();
+              currencyCodeList.removeWhere(
+                  (element) => element == values["favorite_currency"]);
+              currencyCodeList.insert(0, values["favorite_currency"]);
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0,
@@ -119,7 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         //   settingKey: "accent_color",
                         // ),
                         SettingListTile<List<String>>(
-                          currencies,
+                          currencyCodeList,
                           title: "Favorite currency",
                           settingKey: "favorite_currency",
                           subtitle:

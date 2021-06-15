@@ -151,17 +151,6 @@ Map<String, TransactionCategory> categories = {
   )
 };
 
-const Map<String, String> currencyToSymbol = {
-  "EUR": "€",
-  "USD": "\$",
-  "JPY": "¥",
-  "GBP": "£",
-  "AUD": "\$",
-  "CAD": "\$",
-  "CHN": "¥",
-  "NZD": "\$"
-};
-
 const Map<String, dynamic> defaultSettings = {
   "dark_mode": false,
   "human_readable": true,

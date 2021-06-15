@@ -10,6 +10,7 @@ import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/categories.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/arguments/transaction_argument.dart';
+import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction.dart';
 
 enum _FieldName {
@@ -551,13 +552,10 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                     selectedCurrency = value.trim();
                 },
                 style: Theme.of(context).textTheme.bodyText2!,
-                items: currencyToSymbol.keys.map((final String key) {
-                  const Map<String, String> map = currencyToSymbol;
-                  String value = map[key] as String;
+                items: Currency.values.map((e) {
                   return DropdownMenuItem(
-                    child: Text("$value - $key"),
-                    value: key,
-                  );
+                      value: currencyCode(e),
+                      child: Text(currencyFullName(context, e)));
                 }).toList(),
               ),
               DropdownButtonFormField<String>(

@@ -136,7 +136,7 @@ class _TransactionList extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2!
-                    .copyWith(fontSize: 12),
+                    .copyWith(fontSize: 13),
               )
             ],
             mainAxisAlignment: MainAxisAlignment.center,

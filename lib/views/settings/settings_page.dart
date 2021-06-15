@@ -63,6 +63,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 debugPrint(
                     "_SettingsPageState.build: human readable is ${values["human_readable"].toString()}");
               }
+
+              List<String> currencies =
+                  List.from(currencyToSymbol.keys.toList())
+                    ..removeWhere(
+                        (element) => element == values["favorite_currency"]);
+              currencies.insert(0, values["favorite_currency"]);
               return Scaffold(
                 appBar: AppBar(
                   elevation: 0,
@@ -113,8 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         //   settingKey: "accent_color",
                         // ),
                         SettingListTile<List<String>>(
-                          // FIXME: This doesn't show the current setting
-                          currencyToSymbol.keys.toList(),
+                          currencies,
                           title: "Favorite currency",
                           settingKey: "favorite_currency",
                           subtitle:

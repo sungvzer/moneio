@@ -123,7 +123,20 @@ class _TransactionList extends StatelessWidget {
             children: [
               Icon(Icons.money_off),
               Text(
-                "No transactions, try adding some.",
+                "No transactions to see here!",
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: percentHeight(context) * 1,
+              ),
+              Text(
+                "Hint: try adding some by tapping the plus button on the bottom!",
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(fontSize: 12),
               )
             ],
             mainAxisAlignment: MainAxisAlignment.center,

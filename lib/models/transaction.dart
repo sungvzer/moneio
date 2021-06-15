@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/strings.dart';
+import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction_category.dart';
 
 class Transaction extends Comparable {
@@ -11,7 +12,7 @@ class Transaction extends Comparable {
   String tag;
 
   int amount; // TODO: Should we switch to BigInt instead?
-  String currency;
+  Currency currency;
   DateTime date;
 
   Transaction({
@@ -19,7 +20,7 @@ class Transaction extends Comparable {
     this.tag = "",
     required this.category,
     this.amount = 0,
-    this.currency = "",
+    this.currency = Currency.NONE,
     required this.date,
   }) {
     if (id != null) {
@@ -60,7 +61,7 @@ class Transaction extends Comparable {
       tag: json["tag"] as String,
       category: category,
       amount: json["amount"] as int,
-      currency: json["currency"] as String,
+      currency: currencyFromCode(json["currency"] as String),
       date: parsed,
     );
   }
@@ -71,7 +72,7 @@ class Transaction extends Comparable {
       "tag": this.tag,
       "category": this.category.toMap(),
       "amount": this.amount,
-      "currency": this.currency,
+      "currency": currencyCode(this.currency),
       "date": date.toIso8601String(),
     };
   }
@@ -123,8 +124,8 @@ class Transaction extends Comparable {
         result += '.' + fractional.toString().padLeft(2, '0');
     }
     if (currency) {
-      String currencySymbol = this.getCurrencySymbol();
-      result = currencySymbol + result;
+      String symbol = currencySymbol(this.currency);
+      result = symbol + result;
     }
 
     // Add sign back if needed

@@ -7,6 +7,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/screen.dart';
+import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction.dart';
 
 class SumCarousel extends StatefulWidget {
@@ -274,7 +275,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
   }
 
   Transaction _sumTransactions(List<Transaction> list) {
-    Map<String, dynamic> sumByCurrency = {};
+    Map<Currency, dynamic> sumByCurrency = {};
 
     for (var t in list) {
       if (sumByCurrency[t.currency] == null) {
@@ -283,7 +284,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
       }
       sumByCurrency[t.currency] += t.amount;
     }
-    String highestCurrency = "";
+    Currency highestCurrency = Currency.NONE;
 
     num highestAmount = double.negativeInfinity;
     for (var entry in sumByCurrency.entries) {

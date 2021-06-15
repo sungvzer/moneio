@@ -1,3 +1,4 @@
+import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction_category.dart';
 import 'package:test/test.dart';
 import 'package:moneio/models/transaction.dart';
@@ -91,14 +92,14 @@ main() {
       Transaction a = Transaction(
         amount: 320,
         category: TransactionCategory("FOOD"),
-        currency: "EUR",
+        currency: Currency.EUR,
         date: now,
         tag: "Food!",
       );
       Transaction b = Transaction(
         amount: 320,
         category: TransactionCategory("FOOD"),
-        currency: "EUR",
+        currency: Currency.EUR,
         date: now,
         tag: "Food!",
       );
@@ -109,14 +110,14 @@ main() {
       Transaction a = Transaction(
         amount: 5,
         category: TransactionCategory("CLOTHING"),
-        currency: "USD",
+        currency: Currency.USD,
         date: DateTime(2000, 1, 1),
         tag: "T-Shirt!",
       );
       Transaction b = Transaction(
         amount: 320,
         category: TransactionCategory("FOOD"),
-        currency: "EUR",
+        currency: Currency.EUR,
         date: DateTime(2000, 1, 2),
         tag: "Food!",
       );

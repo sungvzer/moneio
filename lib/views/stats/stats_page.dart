@@ -6,6 +6,7 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/screen.dart';
+import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/models/transaction_category.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -321,7 +322,7 @@ Map<String, double> _computeCurrenciesMap(
   int groupingThreshold = 0,
   _DisplayType displayType = _DisplayType.ByNumber,
 }) {
-  Map<String, double> map = {};
+  Map<Currency, double> map = {};
   Map<String, double> percentages = {};
   int transactionCount = transactions.length;
 
@@ -346,11 +347,9 @@ Map<String, double> _computeCurrenciesMap(
   var entries = map.entries.toList();
   entries.sort((first, second) => first.value.compareTo(second.value));
 
+  double otherCurrenciesSum = 0;
   for (int group = 0; group < entries.length - groupingThreshold; group++) {
-    if (!map.containsKey("Other currencies"))
-      map["Other currencies"] = entries[group].value;
-    else
-      map["Other currencies"] = map["Other currencies"]! + entries[group].value;
+    otherCurrenciesSum += entries[group].value;
     map.remove(entries[group].key);
   }
 
@@ -367,8 +366,11 @@ Map<String, double> _computeCurrenciesMap(
     double percentage = (entry.value / total * 100).roundToDouble();
     debugPrint(
         "_computeCurrenciesMap: index $index, element ${map.entries.elementAt(index).toString()}");
-    percentages[entry.key + ' - $percentage%'] = percentage;
+    percentages[currencyCode(entry.key) + ' - $percentage%'] = percentage;
   }
+  double otherPercentage = (otherCurrenciesSum / total * 100).roundToDouble();
+  percentages["Other currencies - $otherPercentage%"] = otherPercentage;
+
   debugPrint("_computeCurrenciesMap: percentages $percentages");
   return percentages;
 }

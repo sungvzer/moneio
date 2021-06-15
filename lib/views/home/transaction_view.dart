@@ -301,7 +301,9 @@ class TransactionViewBody extends StatelessWidget {
         style: currentTheme.textTheme.bodyText1,
       ),
       title: Text(
-        transaction.getCurrencySymbol() + ' ' + transaction.currency,
+        currencySymbol(transaction.currency) +
+            ' ' +
+            currencyCode(transaction.currency),
         textAlign: TextAlign.right,
         style: currentTheme.textTheme.bodyText2,
       ),
@@ -414,7 +416,7 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
     final ThemeData currentTheme = Theme.of(context);
     final Transaction transaction = widget.transaction;
     tagController.text = transaction.tag;
-    selectedCurrency = transaction.currency;
+    selectedCurrency = currencyCode(transaction.currency);
     selectedCategory = transaction.category.uniqueID;
     String amountControllerText = "";
     if (transaction.amount < 0) {

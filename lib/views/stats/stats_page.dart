@@ -177,26 +177,41 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
               ],
               value: displayType,
             ),
-            PieChart(
-              animationDuration: Duration(seconds: 2),
-              colorList: Theme.of(context).brightness == Brightness.light
-                  ? lightColors
-                  : darkColors,
-              dataMap: _computeCurrenciesMap(_transactions,
-                  groupingThreshold: 4, displayType: displayType),
-              chartType: ChartType.ring,
-              initialAngleInDegree: 270,
-              chartRadius: percentWidth(context) * 50,
-              ringStrokeWidth: percentWidth(context) * 12,
-              legendOptions: LegendOptions(
-                showLegends: true,
-                legendPosition: LegendPosition.top,
-                showLegendsInRow: false,
-              ),
-              chartValuesOptions: ChartValuesOptions(
-                showChartValues: false,
-              ),
-            ),
+            this._transactions.isNotEmpty
+                ? PieChart(
+                    animationDuration: Duration(seconds: 2),
+                    colorList: Theme.of(context).brightness == Brightness.light
+                        ? lightColors
+                        : darkColors,
+                    dataMap: _computeCurrenciesMap(_transactions,
+                        groupingThreshold: 4, displayType: displayType),
+                    chartType: ChartType.ring,
+                    initialAngleInDegree: 270,
+                    chartRadius: percentWidth(context) * 50,
+                    ringStrokeWidth: percentWidth(context) * 12,
+                    legendOptions: LegendOptions(
+                      showLegends: true,
+                      legendPosition: LegendPosition.top,
+                      showLegendsInRow: false,
+                    ),
+                    chartValuesOptions: ChartValuesOptions(
+                      showChartValues: false,
+                    ),
+                  )
+                : Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Icon(Icons.money_off),
+                          Text(
+                            "No transactions, try adding some.",
+                          )
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    ),
+                  ),
           ],
         ));
   }
@@ -260,26 +275,41 @@ class _CategoriesStatsState extends State<_CategoriesStats> {
               });
             },
           ),
-          PieChart(
-            animationDuration: Duration(seconds: 2),
-            colorList: Theme.of(context).brightness == Brightness.light
-                ? lightColors
-                : darkColors,
-            dataMap: _computeCategoriesMap(_transactions,
-                groupingThreshold: 4, displayType: _displayType),
-            chartType: ChartType.ring,
-            initialAngleInDegree: 270,
-            chartRadius: percentWidth(context) * 50,
-            ringStrokeWidth: percentWidth(context) * 12,
-            legendOptions: LegendOptions(
-              showLegends: true,
-              legendPosition: LegendPosition.top,
-              showLegendsInRow: false,
-            ),
-            chartValuesOptions: ChartValuesOptions(
-              showChartValues: false,
-            ),
-          ),
+          this._transactions.isNotEmpty
+              ? PieChart(
+                  animationDuration: Duration(seconds: 2),
+                  colorList: Theme.of(context).brightness == Brightness.light
+                      ? lightColors
+                      : darkColors,
+                  dataMap: _computeCategoriesMap(_transactions,
+                      groupingThreshold: 4, displayType: _displayType),
+                  chartType: ChartType.ring,
+                  initialAngleInDegree: 270,
+                  chartRadius: percentWidth(context) * 50,
+                  ringStrokeWidth: percentWidth(context) * 12,
+                  legendOptions: LegendOptions(
+                    showLegends: true,
+                    legendPosition: LegendPosition.top,
+                    showLegendsInRow: false,
+                  ),
+                  chartValuesOptions: ChartValuesOptions(
+                    showChartValues: false,
+                  ),
+                )
+              : Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        Icon(Icons.money_off),
+                        Text(
+                          "No transactions, try adding some.",
+                        )
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                  ),
+                ),
         ],
       ),
     );

@@ -6,7 +6,7 @@ enum SortStrategy { Ascending, Descending }
 String getSortTypeName(BuildContext context, SortType type) {
   switch (type) {
     case SortType.ByCategory:
-      return "By Category";
+      return "By category";
     case SortType.ByAmount:
       return "By amount";
     case SortType.ByDate:

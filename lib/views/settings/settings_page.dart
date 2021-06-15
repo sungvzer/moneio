@@ -123,7 +123,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           title: "Favorite currency",
                           settingKey: "favorite_currency",
                           subtitle:
-                              "This will be the default currency when you add a mone",
+                              "This will be the default currency when you add a transaction",
                         ),
                         ListTile(
                           title: Text(

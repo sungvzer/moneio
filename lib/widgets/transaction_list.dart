@@ -123,7 +123,7 @@ class _TransactionList extends StatelessWidget {
             children: [
               Icon(Icons.money_off),
               Text(
-                "No mone, try adding some.",
+                "No transactions, try adding some.",
               )
             ],
             mainAxisAlignment: MainAxisAlignment.center,

@@ -11,7 +11,6 @@ import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/categories.dart';
-import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction;
 import 'package:moneio/widgets/labelled_form_field.dart';
@@ -59,9 +58,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
           body: Container(
             alignment: Alignment.center,
             child: SingleChildScrollView(
-              child: _TransactionForm(
-                  parseColorString(settings["accent_color"]!),
-                  settings["favorite_currency"]!),
+              child: _TransactionForm(settings["favorite_currency"]!),
               physics: BouncingScrollPhysics(),
               clipBehavior: Clip.none,
             ),
@@ -87,10 +84,9 @@ class AddTransactionPageState extends State<AddTransactionPage> {
 }
 
 class _TransactionForm extends StatelessWidget {
-  final Color _accentColor;
   final String _userFavoriteCurrency;
 
-  _TransactionForm(this._accentColor, this._userFavoriteCurrency);
+  _TransactionForm(this._userFavoriteCurrency);
 
   final GlobalKey<FormState> transactionFormKey =
       GlobalKey<FormState>(debugLabel: "TransactionForm");

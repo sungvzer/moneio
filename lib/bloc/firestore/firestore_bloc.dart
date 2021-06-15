@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction
@@ -336,6 +337,28 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
         success: success, type: type, updatedDocument: userDocument);
   }
 
+  Future<FirestoreSyncState> _handleSync(
+      FirestoreSyncType type, String uid, PreferenceBloc preferenceBloc,
+      {Map<String, dynamic>? data}) async {
+    if (type == FirestoreSyncType.FetchRemoteSettings) {
+      assert(data == null);
+      var userDocument = await _getUserDocument(uid);
+      Map<String, dynamic> userSettings = userDocument["settings"];
+
+      for (final setting in userSettings.entries) {
+        String key = camelToSnakeCase(setting.key);
+        final value = setting.value;
+        preferenceBloc.add(PreferenceWrite(key, value));
+      }
+    } else if (type == FirestoreSyncType.UploadLocalSettings) {
+      assert(data != null);
+      data = data!;
+      _handleWrite(FirestoreWriteType.SyncUserSettings, uid, data);
+    }
+
+    return FirestoreSyncState(success: true, type: type);
+  }
+
   @override
   Stream<FirestoreState> mapEventToState(FirestoreEvent event) async* {
     if (morePrinting) {
@@ -355,6 +378,18 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       }
       String uid = event.userId;
       yield await _handleWrite(type, uid, event.data);
+    } else if (event is FirestoreSyncSettings) {
+      FirestoreSyncType type = event.type;
+      if (morePrinting) {
+        debugPrint('FirestoreBloc.mapEventToState: Type is $type');
+      }
+      String uid = event.userId;
+      yield await _handleSync(
+        type,
+        uid,
+        event.bloc,
+        data: event.data,
+      );
     }
   }
 }

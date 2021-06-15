@@ -17,6 +17,8 @@ enum FirestoreWriteType {
   InvalidateCache
 }
 
+enum FirestoreSyncType { UploadLocalSettings, FetchRemoteSettings }
+
 @immutable
 abstract class FirestoreEvent {}
 
@@ -44,4 +46,14 @@ class FirestoreWrite extends FirestoreEvent {
 
   FirestoreWrite(
       {required this.type, required this.userId, required this.data});
+}
+
+class FirestoreSyncSettings extends FirestoreEvent {
+  final FirestoreSyncType type;
+  final String userId;
+  final Map<String, dynamic>? data;
+  final PreferenceBloc bloc;
+
+  FirestoreSyncSettings(this.bloc,
+      {required this.type, required this.userId, this.data});
 }

@@ -34,3 +34,13 @@ class FirestoreWriteState extends FirestoreState {
     hasUpdatedDocument = this.updatedDocument != null;
   }
 }
+
+class FirestoreSyncState extends FirestoreState {
+  final bool success;
+  final FirestoreSyncType type;
+
+  FirestoreSyncState({
+    required this.success,
+    required this.type,
+  });
+}

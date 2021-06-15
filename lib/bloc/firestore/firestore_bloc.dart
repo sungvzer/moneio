@@ -48,6 +48,12 @@ class FirestoreBloc extends Bloc<FirestoreEvent, FirestoreState> {
       debugPrint(
           "FirestoreBloc._getUserDocument: document does not exist! We need to do something about this.");
     }
+    if (userDocumentData == null) {
+      await userDocument.set(
+          (await users.doc('/schema').get()).data()!, SetOptions(merge: true));
+
+      userDocumentData = (await userDocument.get()).data();
+    }
     assert(userDocumentData != null);
 
     if (morePrinting)

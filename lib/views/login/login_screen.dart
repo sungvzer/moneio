@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
+import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
 import 'package:moneio/widgets/labelled_form_field.dart';
@@ -88,14 +89,22 @@ class _LoginFormState extends State<LoginForm> {
 
     debugPrint(
         "LoginScreen.build._login: credential.uid -> ${credential.user!.uid}");
+
+    FirestoreBloc bloc = BlocProvider.of<FirestoreBloc>(context);
     // Update user document at login
-    BlocProvider.of<FirestoreBloc>(context).add(
-      FirestoreWrite(
-        type: FirestoreWriteType.InvalidateCache,
+    bloc
+      ..add(
+        FirestoreWrite(
+          type: FirestoreWriteType.InvalidateCache,
+          userId: credential.user!.uid,
+          data: null,
+        ),
+      )
+      ..add(FirestoreSyncSettings(
+        BlocProvider.of<PreferenceBloc>(context),
+        type: FirestoreSyncType.FetchRemoteSettings,
         userId: credential.user!.uid,
-        data: null,
-      ),
-    );
+      ));
     debugPrint("LoginScreen.build._login: after the login!");
   }
 

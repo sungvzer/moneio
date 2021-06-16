@@ -2,9 +2,12 @@ import 'package:animate_icons/animate_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/sorting.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
@@ -27,6 +30,8 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    findSystemLocale();
+    debugPrint("main: Locale is ${Intl.systemLocale}");
     if (morePrinting) {
       debugPrint("HomePage.build: Adding PreferenceRead...");
     }
@@ -75,7 +80,7 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                   title: Text(
-                    "Settings",
+                    Localization.of(context).homeDrawerSettings,
                     style: Theme.of(context).textTheme.bodyText2!,
                   ),
                 ),
@@ -85,7 +90,7 @@ class HomePageState extends State<HomePage> {
                     Navigator.pushNamed(context, StatsPage.id);
                   },
                   title: Text(
-                    "Stats",
+                    Localization.of(context).homeDrawerStats,
                     style: Theme.of(context).textTheme.bodyText2!,
                   ),
                 ),
@@ -96,15 +101,18 @@ class HomePageState extends State<HomePage> {
                       barrierDismissible: true,
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text("Sign out"),
-                        content: Text("Are you sure you want to sign out?"),
+                        title: Text(Localization.of(context).homeDrawerSignOut),
+                        content: Text(
+                            Localization.of(context).homeSignOutPopupPrompt),
                         actions: [
                           TextButton(
-                            child: Text("Cancel"),
+                            child: Text(Localization.of(context)
+                                .homeSignOutPopupDismiss),
                             onPressed: () => Navigator.pop(context),
                           ),
                           TextButton(
-                            child: Text("Sign out"),
+                            child: Text(Localization.of(context)
+                                .homeSignOutPopupConfirm),
                             onPressed: () {
                               FirebaseAuth.instance.signOut();
                               Navigator.pop(context);
@@ -115,7 +123,7 @@ class HomePageState extends State<HomePage> {
                     );
                   },
                   title: Text(
-                    "Sign out",
+                    Localization.of(context).homeDrawerSignOut,
                     style: Theme.of(context).textTheme.bodyText2!,
                   ),
                 ),
@@ -123,7 +131,7 @@ class HomePageState extends State<HomePage> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            tooltip: "Add a transaction",
+            tooltip: Localization.of(context).homeAddATransactionTooltip,
             onPressed: () {
               Navigator.push(
                 context,
@@ -148,10 +156,10 @@ class HomePageState extends State<HomePage> {
             }),
             backgroundColor: Theme.of(context).primaryColor,
             title: Title(
-              title: "mone.io",
+              title: Localization.of(context).appName,
               color: Colors.black,
               child: Text(
-                "mone.io",
+                Localization.of(context).appName,
                 style: Theme.of(context).textTheme.headline6!,
               ),
             ),
@@ -172,7 +180,7 @@ class HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "History",
+                            Localization.of(context).homeHistory,
                             style: Theme.of(context).textTheme.headline5!,
                           ),
                           Row(
@@ -184,7 +192,7 @@ class HomePageState extends State<HomePage> {
                                     transactionSortType = value;
                                   });
                                 },
-                                tooltip: "Sort by",
+                                tooltip: Localization.of(context).homeHistory,
                                 itemBuilder: (context) {
                                   final sortTypes = SortType.values;
 
@@ -227,8 +235,10 @@ class HomePageState extends State<HomePage> {
                                   });
                                   return true;
                                 },
-                                startTooltip: "Ascending sort",
-                                endTooltip: "Descending sort",
+                                startTooltip:
+                                    Localization.of(context).homeAscendingSort,
+                                endTooltip:
+                                    Localization.of(context).homeDescendingSort,
                                 startIconColor:
                                     Theme.of(context).iconTheme.color,
                                 duration: Duration(milliseconds: 200),
@@ -237,7 +247,7 @@ class HomePageState extends State<HomePage> {
                               ),
                               IconButton(
                                 icon: Icon(Icons.refresh),
-                                tooltip: "Refresh transactions",
+                                tooltip: Localization.of(context).homeRefresh,
                                 onPressed: () {
                                   BlocProvider.of<FirestoreBloc>(context).add(
                                     FirestoreWrite(

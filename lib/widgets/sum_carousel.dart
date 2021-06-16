@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/color_palette.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/models/currencies.dart';
@@ -165,7 +166,7 @@ class _TotalSumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _GenericSumCard(
-      title: "Total",
+      title: Localization.of(context).homeTotal,
       filter: (Transaction tr) => true,
       humanReadable: this.humanReadable,
       transactions: transactions,
@@ -182,7 +183,7 @@ class _MonthSumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _GenericSumCard(
-      title: "This month",
+      title: Localization.of(context).homeThisMonth,
       filter: (Transaction tr) {
         DateTime date = DateTime(tr.date.year, tr.date.month, tr.date.day);
         return date.month == DateTime.now().month;
@@ -202,7 +203,7 @@ class _WeekSumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _GenericSumCard(
-      title: "This week",
+      title: Localization.of(context).homeThisWeek,
       filter: (Transaction tr) {
         DateTime date = DateTime(tr.date.year, tr.date.month, tr.date.day);
         DateTime today = DateTime.now();
@@ -231,7 +232,7 @@ class _DaySumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _GenericSumCard(
-      title: "Today",
+      title: Localization.of(context).homeToday,
       filter: (Transaction tr) {
         DateTime date = DateTime(tr.date.year, tr.date.month, tr.date.day);
         return date.difference(DateTime.now()).inDays == 0;

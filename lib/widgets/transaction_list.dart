@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/screen.dart';
@@ -123,7 +124,7 @@ class _TransactionList extends StatelessWidget {
             children: [
               Icon(Icons.money_off),
               Text(
-                "No transactions to see here!",
+                Localization.of(context).homeNoTransactionMessageTitle,
                 style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
               ),
@@ -131,7 +132,7 @@ class _TransactionList extends StatelessWidget {
                 height: percentHeight(context) * 1,
               ),
               Text(
-                "Hint: try adding some by tapping the plus button on the bottom!",
+                Localization.of(context).homeNoTransactionMessageHint,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme

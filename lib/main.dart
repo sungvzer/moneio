@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/constants.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/themes.dart';
 import 'package:moneio/views/firebase_error_page.dart';
 import 'package:moneio/views/home/add_transaction_page.dart';
@@ -53,9 +55,15 @@ class FirebaseApplication extends StatelessWidget {
     BlocProvider.of<PreferenceBloc>(context).add(
       PreferenceRead("dark_mode", defaultSettings["dark_mode"]),
     );
-
     return Consumer<ThemeNotifier>(
       builder: (context, theme, _) => MaterialApp(
+        localizationsDelegates: [
+          Localization.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: Localization.delegate.supportedLocales,
         theme: theme.currentTheme,
         debugShowCheckedModeBanner: true,
         title: "mone.io",

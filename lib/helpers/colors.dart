@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:moneio/color_palette.dart';
 
+/// Make a color more transparent by [percent] amount (100 = full transparency)
+Color fade(Color c, [int percent = 10]) {
+  var factor = 1 - percent / 100;
+  return Color.fromARGB(
+      (c.alpha * factor).clamp(0, 1).round(), c.red, c.green, c.blue);
+}
+
+/// Make a color more opaque by [percent] amount (100 = full opacity)
+Color opacify(Color c, [int percent = 10]) {
+  var factor = 1 - percent / 100;
+  return Color.fromARGB(
+      (c.alpha + c.alpha * factor).clamp(0, 1).round(), c.red, c.green, c.blue);
+}
+
 /// https://stackoverflow.com/a/60191441/7163750
 ///
 /// Darken a color by [percent] amount (100 = black)

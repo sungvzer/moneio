@@ -106,23 +106,6 @@ class _TransactionForm extends StatelessWidget {
     String _selectedCategory = "";
     InputDecoration _decoration = InputDecoration(
       errorMaxLines: 3,
-      border: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Theme.of(context).accentColor,
-        ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(14.0),
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Theme.of(context).accentColor,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.all(
-          Radius.circular(14.0),
-        ),
-      ),
       contentPadding: EdgeInsets.only(top: 1, bottom: 1, left: 20, right: 20),
     );
 

@@ -152,6 +152,8 @@ class _LoginFormState extends State<LoginForm> {
                           _passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
+                          color:
+                              Theme.of(context).inputDecorationTheme.focusColor,
                         ),
                       ),
                     ),

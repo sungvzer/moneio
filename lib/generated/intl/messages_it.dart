@@ -20,5 +20,43 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'it';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "appName": MessageLookupByLibrary.simpleMessage("mone.io"),
+        "homeAddATransactionTooltip":
+            MessageLookupByLibrary.simpleMessage("Aggiungi una transazione"),
+        "homeAscendingSort":
+            MessageLookupByLibrary.simpleMessage("Ordine ascendente"),
+        "homeDescendingSort":
+            MessageLookupByLibrary.simpleMessage("Ordine discendente"),
+        "homeDrawerSettings":
+            MessageLookupByLibrary.simpleMessage("Impostazioni"),
+        "homeDrawerSignOut": MessageLookupByLibrary.simpleMessage("Esci"),
+        "homeDrawerStats": MessageLookupByLibrary.simpleMessage("Statistiche"),
+        "homeHistory": MessageLookupByLibrary.simpleMessage("Cronologia"),
+        "homeNoTransactionMessageHint": MessageLookupByLibrary.simpleMessage(
+            "Suggerimento: prova ad aggiungerne alcune premendo il tasto in basso!"),
+        "homeNoTransactionMessageTitle":
+            MessageLookupByLibrary.simpleMessage("Nessuna transazione qui!"),
+        "homeRefresh":
+            MessageLookupByLibrary.simpleMessage("Ricarica transazioni"),
+        "homeSignOutPopupConfirm": MessageLookupByLibrary.simpleMessage("OK"),
+        "homeSignOutPopupDismiss":
+            MessageLookupByLibrary.simpleMessage("Annulla"),
+        "homeSignOutPopupPrompt":
+            MessageLookupByLibrary.simpleMessage("Sei sicuro di voler uscire?"),
+        "homeSortByAmount":
+            MessageLookupByLibrary.simpleMessage("Ordina per importo"),
+        "homeSortByCategory":
+            MessageLookupByLibrary.simpleMessage("Ordina per categoria"),
+        "homeSortByDate":
+            MessageLookupByLibrary.simpleMessage("Ordina per data"),
+        "homeSortByTag":
+            MessageLookupByLibrary.simpleMessage("Ordina per etichetta"),
+        "homeSortByTooltip": MessageLookupByLibrary.simpleMessage("Ordina per"),
+        "homeThisMonth": MessageLookupByLibrary.simpleMessage("Questo mese"),
+        "homeThisWeek":
+            MessageLookupByLibrary.simpleMessage("Questa settimana"),
+        "homeToday": MessageLookupByLibrary.simpleMessage("Oggi"),
+        "homeTotal": MessageLookupByLibrary.simpleMessage("Totale")
+      };
 }

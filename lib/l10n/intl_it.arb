@@ -1,1 +1,26 @@
-{}
+{
+    "@@locale": "it",
+    "appName": "mone.io",
+    "homeTotal": "Totale",
+    "homeToday": "Oggi",
+    "homeThisWeek": "Questa settimana",
+    "homeThisMonth": "Questo mese",
+    "homeHistory": "Cronologia",
+    "homeNoTransactionMessageTitle": "Nessuna transazione qui!",
+    "homeNoTransactionMessageHint": "Suggerimento: prova ad aggiungerne alcune premendo il tasto in basso!",
+    "homeSortByTooltip": "Ordina per",
+    "homeSortByTag": "Ordina per etichetta",
+    "homeSortByDate": "Ordina per data",
+    "homeSortByAmount": "Ordina per importo",
+    "homeSortByCategory": "Ordina per categoria",
+    "homeRefresh": "Ricarica transazioni",
+    "homeAscendingSort": "Ordine ascendente",
+    "homeDescendingSort": "Ordine discendente",
+    "homeAddATransactionTooltip": "Aggiungi una transazione",
+    "homeDrawerStats": "Statistiche",
+    "homeDrawerSettings": "Impostazioni",
+    "homeDrawerSignOut": "Esci",
+    "homeSignOutPopupPrompt": "Sei sicuro di voler uscire?",
+    "homeSignOutPopupDismiss": "Annulla",
+    "homeSignOutPopupConfirm": "OK"
+}

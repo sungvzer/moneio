@@ -98,6 +98,39 @@ class ThemeNotifier with ChangeNotifier {
       foregroundColor: ColorPalette.ImperialPrimer,
     ),
     backgroundColor: ColorPalette.ImperialPrimer,
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: ColorPalette.LightBlueBallerina,
+      selectionHandleColor: ColorPalette.LightBlueBallerina,
+      selectionColor: darken(ColorPalette.LightBlueBallerina, 70),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(
+        color: ColorPalette.LightBlueBallerina,
+      ),
+      focusColor: ColorPalette.LightBlueBallerina,
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorPalette.LightBlueBallerina,
+        ),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          width: 2,
+          color: ColorPalette.LightBlueBallerina,
+        ),
+      ),
+      focusedErrorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorPalette.Amour,
+          width: 2,
+        ),
+      ),
+      errorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorPalette.Amour,
+        ),
+      ),
+    ),
   );
 
   var _lightTheme = ThemeData(
@@ -120,6 +153,39 @@ class ThemeNotifier with ChangeNotifier {
     ),
     primaryColor: ColorPalette.DarkMountainMeadow,
     accentColor: ColorPalette.DarkMountainMeadow,
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: ColorPalette.DarkMountainMeadow,
+      selectionHandleColor: ColorPalette.DarkMountainMeadow,
+      selectionColor: lighten(ColorPalette.DarkMountainMeadow, 70),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(
+        color: ColorPalette.ImperialPrimer,
+      ),
+      focusColor: ColorPalette.DarkMountainMeadow,
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorPalette.DarkMountainMeadow,
+        ),
+      ),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          width: 2,
+          color: ColorPalette.DarkMountainMeadow,
+        ),
+      ),
+      focusedErrorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorPalette.Amour,
+          width: 2,
+        ),
+      ),
+      errorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorPalette.Amour,
+        ),
+      ),
+    ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         foregroundColor:

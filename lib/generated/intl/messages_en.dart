@@ -52,6 +52,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeThisMonth": MessageLookupByLibrary.simpleMessage("This month"),
         "homeThisWeek": MessageLookupByLibrary.simpleMessage("This week"),
         "homeToday": MessageLookupByLibrary.simpleMessage("Today"),
-        "homeTotal": MessageLookupByLibrary.simpleMessage("Total")
+        "homeTotal": MessageLookupByLibrary.simpleMessage("Total"),
+        "settingsDarkThemeDescription":
+            MessageLookupByLibrary.simpleMessage("Embrace the night"),
+        "settingsDarkThemeTitle":
+            MessageLookupByLibrary.simpleMessage("Dark theme"),
+        "settingsFavoriteCurrencyDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "This will be the default currency when you add a transaction"),
+        "settingsFavoriteCurrencyTitle":
+            MessageLookupByLibrary.simpleMessage("Favorite currency"),
+        "settingsHumanReadableDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Use a readable format for amounts greater than 10\'000"),
+        "settingsHumanReadableTitle":
+            MessageLookupByLibrary.simpleMessage("Human readable"),
+        "settingsSyncToCloudTitle":
+            MessageLookupByLibrary.simpleMessage("Sync settings to cloud")
       };
 }

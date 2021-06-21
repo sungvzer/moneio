@@ -279,6 +279,76 @@ class Localization {
       args: [],
     );
   }
+
+  /// `Human readable`
+  String get settingsHumanReadableTitle {
+    return Intl.message(
+      'Human readable',
+      name: 'settingsHumanReadableTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use a readable format for amounts greater than 10'000`
+  String get settingsHumanReadableDescription {
+    return Intl.message(
+      'Use a readable format for amounts greater than 10\'000',
+      name: 'settingsHumanReadableDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark theme`
+  String get settingsDarkThemeTitle {
+    return Intl.message(
+      'Dark theme',
+      name: 'settingsDarkThemeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Embrace the night`
+  String get settingsDarkThemeDescription {
+    return Intl.message(
+      'Embrace the night',
+      name: 'settingsDarkThemeDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Favorite currency`
+  String get settingsFavoriteCurrencyTitle {
+    return Intl.message(
+      'Favorite currency',
+      name: 'settingsFavoriteCurrencyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This will be the default currency when you add a transaction`
+  String get settingsFavoriteCurrencyDescription {
+    return Intl.message(
+      'This will be the default currency when you add a transaction',
+      name: 'settingsFavoriteCurrencyDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sync settings to cloud`
+  String get settingsSyncToCloudTitle {
+    return Intl.message(
+      'Sync settings to cloud',
+      name: 'settingsSyncToCloudTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Localization> {

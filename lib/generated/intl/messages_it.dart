@@ -57,6 +57,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeThisWeek":
             MessageLookupByLibrary.simpleMessage("Questa settimana"),
         "homeToday": MessageLookupByLibrary.simpleMessage("Oggi"),
-        "homeTotal": MessageLookupByLibrary.simpleMessage("Totale")
+        "homeTotal": MessageLookupByLibrary.simpleMessage("Totale"),
+        "settingsDarkThemeDescription":
+            MessageLookupByLibrary.simpleMessage("Accogli la notte"),
+        "settingsDarkThemeTitle":
+            MessageLookupByLibrary.simpleMessage("Tema scuro"),
+        "settingsFavoriteCurrencyDescription": MessageLookupByLibrary.simpleMessage(
+            "Questa sarà la valuta predefinita quando aggiungerai una transazione"),
+        "settingsFavoriteCurrencyTitle":
+            MessageLookupByLibrary.simpleMessage("Valuta preferita"),
+        "settingsHumanReadableDescription": MessageLookupByLibrary.simpleMessage(
+            "Utilizza un formato leggibile per importi maggiori di 10\'000"),
+        "settingsHumanReadableTitle":
+            MessageLookupByLibrary.simpleMessage("Formato leggibile"),
+        "settingsSyncToCloudTitle": MessageLookupByLibrary.simpleMessage(
+            "Sincronizza le impostazioni col cloud")
       };
 }

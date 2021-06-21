@@ -22,5 +22,12 @@
     "homeDrawerSignOut": "Esci",
     "homeSignOutPopupPrompt": "Sei sicuro di voler uscire?",
     "homeSignOutPopupDismiss": "Annulla",
-    "homeSignOutPopupConfirm": "OK"
+    "homeSignOutPopupConfirm": "OK",
+    "settingsHumanReadableTitle": "Formato leggibile",
+    "settingsHumanReadableDescription": "Utilizza un formato leggibile per importi maggiori di 10'000",
+    "settingsDarkThemeTitle": "Tema scuro",
+    "settingsDarkThemeDescription": "Accogli la notte",
+    "settingsFavoriteCurrencyTitle": "Valuta preferita",
+    "settingsFavoriteCurrencyDescription": "Questa sarà la valuta predefinita quando aggiungerai una transazione",
+    "settingsSyncToCloudTitle": "Sincronizza le impostazioni col cloud"
 }

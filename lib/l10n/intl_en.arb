@@ -22,5 +22,12 @@
     "homeDrawerSignOut": "Sign out",
     "homeSignOutPopupPrompt": "Are you sure you want to sign out?",
     "homeSignOutPopupDismiss": "Cancel",
-    "homeSignOutPopupConfirm": "OK"
+    "homeSignOutPopupConfirm": "OK",
+    "settingsHumanReadableTitle": "Human readable",
+    "settingsHumanReadableDescription": "Use a readable format for amounts greater than 10'000",
+    "settingsDarkThemeTitle": "Dark theme",
+    "settingsDarkThemeDescription": "Embrace the night",
+    "settingsFavoriteCurrencyTitle": "Favorite currency",
+    "settingsFavoriteCurrencyDescription": "This will be the default currency when you add a transaction",
+    "settingsSyncToCloudTitle": "Sync settings to cloud"
 }

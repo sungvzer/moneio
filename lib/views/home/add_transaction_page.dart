@@ -28,8 +28,9 @@ class AddTransactionPage extends StatefulWidget {
 class AddTransactionPageState extends State<AddTransactionPage> {
   @override
   Widget build(BuildContext context) {
-    debugPrint("AddTransactionPageState.build: Adding PreferenceRead...");
-
+    if (Constants.morePrinting) {
+      debugPrint("AddTransactionPageState.build: Adding PreferenceRead...");
+    }
     BlocProvider.of<PreferenceBloc>(context)
         .add(PreferenceRead("", defaultSettings));
     return BlocBuilder<PreferenceBloc, PreferenceState>(
@@ -375,7 +376,9 @@ class _TransactionForm extends StatelessWidget {
                           ),
                         );
 
-                        debugPrint("Data:\n$map");
+                        if (Constants.morePrinting) {
+                          debugPrint("Data:\n$map");
+                        }
                         Navigator.pop(context);
                       }
                     },

@@ -5,14 +5,7 @@ List<DropdownMenuItem<String>> getCategoriesMenuItems() {
   final values = Constants.categories();
   var list = <DropdownMenuItem<String>>[];
 
-  list.add(
-    DropdownMenuItem(
-      child: Text("None"),
-      value: "NONE",
-    ),
-  );
-
-  for (var value in values.where((c) => c.key != "NONE")) {
+  for (var value in values) {
     list.add(DropdownMenuItem(
       child: Text("${value.emoji} - ${value.name}"),
       value: value.key,

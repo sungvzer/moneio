@@ -361,7 +361,7 @@ class _TransactionForm extends StatelessWidget {
                         map["amount"] = amountNumber;
                         map["tag"] = tag;
                         map["category"] =
-                            categories[_selectedCategory]!.toMap();
+                            Constants.getCategory(_selectedCategory).toMap();
                         map["date"] = DateTime(dateList[2], dateList[1],
                                 dateList[0], parsedTime.hour, parsedTime.minute)
                             .toIso8601String();

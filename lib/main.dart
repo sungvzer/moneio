@@ -98,7 +98,7 @@ class FirebaseApplication extends StatelessWidget {
                   }
                   return LoginRouter();
                 }
-
+                Constants.initializeCategoriesMap(context);
                 return LoadingScreen();
               },
             ),

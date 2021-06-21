@@ -1,11 +1,7 @@
 class TransactionCategory extends Comparable {
-  String _key;
-  String _name;
-  String _emoji;
-
-  String get uniqueID => _key;
-  String get name => _name;
-  String get emoji => _emoji;
+  String key;
+  String name;
+  String emoji;
 
   bool get hasEmoji => emoji != "";
 
@@ -25,13 +21,13 @@ class TransactionCategory extends Comparable {
     return cat;
   }
 
-  TransactionCategory._internal(this._key, this._name, this._emoji);
+  TransactionCategory._internal(this.key, this.name, this.emoji);
 
   Map<String, dynamic> toMap() {
     return {
-      "key": _key,
-      "name": _name,
-      "emoji": _emoji,
+      "key": key,
+      "name": name,
+      "emoji": emoji,
     };
   }
 
@@ -48,17 +44,17 @@ class TransactionCategory extends Comparable {
     bool value = true;
     value &= identical(other, this);
     value &= runtimeType == other.runtimeType;
-    value &= other is TransactionCategory && uniqueID == other.uniqueID;
+    value &= other is TransactionCategory && key == other.key;
 
     return value;
   }
 
   @override
-  int get hashCode => uniqueID.hashCode;
+  int get hashCode => key.hashCode;
 
   @override
   String toString() {
-    return "Category ($_key, $_name, $_emoji)";
+    return "Category ($key, $name, $emoji)";
   }
 
   @override

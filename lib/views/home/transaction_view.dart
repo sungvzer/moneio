@@ -82,7 +82,7 @@ class _TransactionViewState extends State<TransactionView> {
       // Initialize map
       map["amount"] = amountNumber;
       map["tag"] = tag;
-      map["category"] = categories[category]!.toMap();
+      map["category"] = Constants.getCategory(category).toMap();
       map["date"] = DateTime(dateList[2], dateList[1], dateList[0],
               parsedTime.hour, parsedTime.minute)
           .toIso8601String();
@@ -417,7 +417,7 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
     final Transaction transaction = widget.transaction;
     tagController.text = transaction.tag;
     selectedCurrency = currencyCode(transaction.currency);
-    selectedCategory = transaction.category.uniqueID;
+    selectedCategory = transaction.category.key;
     String amountControllerText = "";
     if (transaction.amount < 0) {
       amountControllerText += '-';

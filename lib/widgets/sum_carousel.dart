@@ -300,7 +300,7 @@ class _GenericSumCardState extends State<_GenericSumCard> {
     }
 
     return Transaction(
-      category: categories["NONE"]!,
+      category: Constants.getCategory("NONE"),
       date: DateTime.now(),
       amount: highestAmount.toInt(),
       currency: highestCurrency,

@@ -391,20 +391,19 @@ Map<String, double> _computeCategoriesMap(
 
   if (displayType == _DisplayType.ByNumber) {
     for (Transaction t in transactions) {
-      if (!counts.containsKey(t.category.uniqueID)) {
-        counts[t.category.uniqueID] = 1;
+      if (!counts.containsKey(t.category.key)) {
+        counts[t.category.key] = 1;
       } else {
-        counts[t.category.uniqueID] = counts[t.category.uniqueID]! + 1;
+        counts[t.category.key] = counts[t.category.key]! + 1;
       }
     }
   } else {
     for (Transaction t in transactions) {
       amountSum += t.amount.abs();
-      if (!counts.containsKey(t.category.uniqueID)) {
-        counts[t.category.uniqueID] = t.amount.abs();
+      if (!counts.containsKey(t.category.key)) {
+        counts[t.category.key] = t.amount.abs();
       } else {
-        counts[t.category.uniqueID] =
-            counts[t.category.uniqueID]! + t.amount.abs();
+        counts[t.category.key] = counts[t.category.key]! + t.amount.abs();
       }
     }
   }
@@ -435,7 +434,7 @@ Map<String, double> _computeCategoriesMap(
     if (entry.key == "OTHER") {
       keyForMap = "Other categories";
     } else {
-      final TransactionCategory category = categories[entry.key]!;
+      final TransactionCategory category = Constants.getCategory(entry.key);
       keyForMap = category.name;
     }
 

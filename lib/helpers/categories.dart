@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneio/constants.dart';
 
 List<DropdownMenuItem<String>> getCategoriesMenuItems() {
-  final values = categories.values.toList();
+  final values = Constants.categories();
   var list = <DropdownMenuItem<String>>[];
 
   list.add(
@@ -12,10 +12,10 @@ List<DropdownMenuItem<String>> getCategoriesMenuItems() {
     ),
   );
 
-  for (var value in values.where((c) => c.uniqueID != "NONE")) {
+  for (var value in values.where((c) => c.key != "NONE")) {
     list.add(DropdownMenuItem(
       child: Text("${value.emoji} - ${value.name}"),
-      value: value.uniqueID,
+      value: value.key,
     ));
   }
   return list;

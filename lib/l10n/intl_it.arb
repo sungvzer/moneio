@@ -65,5 +65,10 @@
     "transactionCategoryATM": "Bancomat",
     "transactionCategoryCrypto": "Criptovalute",
     "transactionCategoryShopping": "Shopping",
-    "transactionCategoryNone": "Nessuna categoria"
+    "transactionCategoryNone": "Nessuna categoria",
+    "statisticsTitle": "Statistiche",
+    "statisticsCategories": "Categorie",
+    "statisticsCurrencies": "Valute",
+    "statisticsCountBy": "Conta per",
+    "statisticsCountByNumber": "Numero"
 }

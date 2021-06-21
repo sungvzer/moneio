@@ -72,6 +72,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Formato leggibile"),
         "settingsSyncToCloudTitle": MessageLookupByLibrary.simpleMessage(
             "Sincronizza le impostazioni col cloud"),
+        "statisticsCategories":
+            MessageLookupByLibrary.simpleMessage("Categorie"),
+        "statisticsCountBy": MessageLookupByLibrary.simpleMessage("Conta per"),
+        "statisticsCountByNumber":
+            MessageLookupByLibrary.simpleMessage("Numero"),
+        "statisticsCurrencies": MessageLookupByLibrary.simpleMessage("Valute"),
+        "statisticsTitle": MessageLookupByLibrary.simpleMessage("Statistiche"),
         "transactionAmount": MessageLookupByLibrary.simpleMessage("Importo"),
         "transactionCategory":
             MessageLookupByLibrary.simpleMessage("Categoria"),

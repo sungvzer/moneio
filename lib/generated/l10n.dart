@@ -709,6 +709,56 @@ class Localization {
       args: [],
     );
   }
+
+  /// `Statistics`
+  String get statisticsTitle {
+    return Intl.message(
+      'Statistics',
+      name: 'statisticsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Categories`
+  String get statisticsCategories {
+    return Intl.message(
+      'Categories',
+      name: 'statisticsCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Currencies`
+  String get statisticsCurrencies {
+    return Intl.message(
+      'Currencies',
+      name: 'statisticsCurrencies',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Count by`
+  String get statisticsCountBy {
+    return Intl.message(
+      'Count by',
+      name: 'statisticsCountBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number`
+  String get statisticsCountByNumber {
+    return Intl.message(
+      'Number',
+      name: 'statisticsCountByNumber',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Localization> {

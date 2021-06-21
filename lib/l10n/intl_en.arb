@@ -65,5 +65,10 @@
     "transactionCategoryATM": "ATM",
     "transactionCategoryCrypto": "Cryptocurrencies",
     "transactionCategoryShopping": "Shopping",
-    "transactionCategoryNone": "No category"
+    "transactionCategoryNone": "No category",
+    "statisticsTitle": "Statistics",
+    "statisticsCategories": "Categories",
+    "statisticsCurrencies": "Currencies",
+    "statisticsCountBy": "Count by",
+    "statisticsCountByNumber": "Number"
 }

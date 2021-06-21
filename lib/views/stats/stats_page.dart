@@ -9,6 +9,7 @@ import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction.dart';
 import 'package:moneio/models/transaction_category.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:moneio/generated/l10n.dart';
 
 enum _DisplayType { ByNumber, ByAmount }
 
@@ -23,13 +24,13 @@ class _StatsPageState extends State<StatsPage>
   List<Transaction> _transactions = [];
   late TabController _controller;
 
-  static const List<Tab> _tabs = [
+  static List<Tab> _tabs = [
     Tab(
-      text: "Categories",
+      text: Localization.current.statisticsCategories,
       icon: Icon(Icons.category),
     ),
     Tab(
-      text: "Currencies",
+      text: Localization.current.statisticsCurrencies,
       icon: Icon(Icons.attach_money),
     ),
   ];
@@ -40,6 +41,7 @@ class _StatsPageState extends State<StatsPage>
   }
   @override
   Widget build(BuildContext context) {
+    Localization local = Localization.of(context);
     return Scaffold(
       appBar: AppBar(
         bottom: TabBar(
@@ -50,7 +52,7 @@ class _StatsPageState extends State<StatsPage>
           dragStartBehavior: DragStartBehavior.down,
         ),
         title: Text(
-          "Statistics",
+          local.statisticsTitle,
           style: Theme.of(context).textTheme.headline6!,
         ),
       ),
@@ -133,6 +135,7 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
 
   @override
   Widget build(BuildContext context) {
+    Localization local = Localization.of(context);
     const List<Color> lightColors = [
       ColorPalette.Amour,
       ColorPalette.JadeDust,
@@ -149,7 +152,7 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
         child: Column(
           children: [
             Text(
-              "Count by",
+              local.statisticsCountBy,
               style: Theme.of(context).textTheme.bodyText1,
             ),
             DropdownButton<_DisplayType>(
@@ -167,11 +170,11 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
               },
               items: [
                 DropdownMenuItem(
-                  child: Text("Amount"),
+                  child: Text(local.transactionAmount),
                   value: _DisplayType.ByAmount,
                 ),
                 DropdownMenuItem(
-                  child: Text("Number"),
+                  child: Text(local.statisticsCountByNumber),
                   value: _DisplayType.ByNumber,
                 ),
               ],
@@ -205,7 +208,7 @@ class _CurrenciesStatsState extends State<_CurrenciesStats> {
                         children: [
                           Icon(Icons.money_off),
                           Text(
-                            "No transactions, try adding some.",
+                            local.homeNoTransactionMessageTitle,
                           )
                         ],
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -243,24 +246,24 @@ class _CategoriesStatsState extends State<_CategoriesStats> {
     ];
     final List<Color> darkColors = List.generate(
         lightColors.length, (index) => darken(lightColors[index], 30));
-
+    Localization local = Localization.of(context);
     return Padding(
       padding: EdgeInsets.all(percentWidth(context) * 5),
       child: Column(
         children: [
           Text(
-            "Count by",
+            local.statisticsCountBy,
             style: Theme.of(context).textTheme.bodyText1,
           ),
           DropdownButton<_DisplayType>(
             style: Theme.of(context).textTheme.bodyText2,
             items: [
               DropdownMenuItem(
-                child: Text("Amount"),
+                child: Text(local.transactionAmount),
                 value: _DisplayType.ByAmount,
               ),
               DropdownMenuItem(
-                child: Text("Number"),
+                child: Text(local.statisticsCountByNumber),
                 value: _DisplayType.ByNumber,
               ),
             ],
@@ -303,7 +306,7 @@ class _CategoriesStatsState extends State<_CategoriesStats> {
                       children: [
                         Icon(Icons.money_off),
                         Text(
-                          "No transactions, try adding some.",
+                          local.homeNoTransactionMessageTitle,
                         )
                       ],
                       mainAxisAlignment: MainAxisAlignment.center,

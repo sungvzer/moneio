@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addTransactionCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "addTransactionConfirm": MessageLookupByLibrary.simpleMessage("Add"),
         "appName": MessageLookupByLibrary.simpleMessage("mone.io"),
         "homeAddATransactionTooltip":
             MessageLookupByLibrary.simpleMessage("Add a transaction"),
@@ -53,6 +55,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "homeThisWeek": MessageLookupByLibrary.simpleMessage("This week"),
         "homeToday": MessageLookupByLibrary.simpleMessage("Today"),
         "homeTotal": MessageLookupByLibrary.simpleMessage("Total"),
+        "insertAmountPrompt":
+            MessageLookupByLibrary.simpleMessage("Please insert an amount"),
+        "insertCategoryPrompt":
+            MessageLookupByLibrary.simpleMessage("Please select a category"),
+        "insertCurrencyPrompt":
+            MessageLookupByLibrary.simpleMessage("Please select a currency"),
+        "insertDatePrompt":
+            MessageLookupByLibrary.simpleMessage("Please enter a date"),
+        "insertTimePrompt":
+            MessageLookupByLibrary.simpleMessage("Please enter a time"),
         "settingsDarkThemeDescription":
             MessageLookupByLibrary.simpleMessage("Embrace the night"),
         "settingsDarkThemeTitle":
@@ -140,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "transactionCurrency": MessageLookupByLibrary.simpleMessage("Currency"),
         "transactionDate": MessageLookupByLibrary.simpleMessage("Date"),
         "transactionTag": MessageLookupByLibrary.simpleMessage("Tag"),
-        "transactionTime": MessageLookupByLibrary.simpleMessage("Time")
+        "transactionTime": MessageLookupByLibrary.simpleMessage("Time"),
+        "transactionUntitled": MessageLookupByLibrary.simpleMessage("Untitled")
       };
 }

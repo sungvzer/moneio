@@ -21,6 +21,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addTransactionCancel": MessageLookupByLibrary.simpleMessage("Annulla"),
+        "addTransactionConfirm":
+            MessageLookupByLibrary.simpleMessage("Aggiungi"),
         "appName": MessageLookupByLibrary.simpleMessage("mone.io"),
         "homeAddATransactionTooltip":
             MessageLookupByLibrary.simpleMessage("Aggiungi una transazione"),
@@ -58,6 +61,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Questa settimana"),
         "homeToday": MessageLookupByLibrary.simpleMessage("Oggi"),
         "homeTotal": MessageLookupByLibrary.simpleMessage("Totale"),
+        "insertAmountPrompt":
+            MessageLookupByLibrary.simpleMessage("Inserisci un importo"),
+        "insertCategoryPrompt":
+            MessageLookupByLibrary.simpleMessage("Seleziona una categoria"),
+        "insertCurrencyPrompt":
+            MessageLookupByLibrary.simpleMessage("Seleziona una valuta"),
+        "insertDatePrompt":
+            MessageLookupByLibrary.simpleMessage("Inserisci una data"),
+        "insertTimePrompt":
+            MessageLookupByLibrary.simpleMessage("Inserisci un\'ora"),
         "settingsDarkThemeDescription":
             MessageLookupByLibrary.simpleMessage("Accogli la notte"),
         "settingsDarkThemeTitle":
@@ -144,6 +157,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "transactionCurrency": MessageLookupByLibrary.simpleMessage("Valuta"),
         "transactionDate": MessageLookupByLibrary.simpleMessage("Data"),
         "transactionTag": MessageLookupByLibrary.simpleMessage("Etichetta"),
-        "transactionTime": MessageLookupByLibrary.simpleMessage("Ora")
+        "transactionTime": MessageLookupByLibrary.simpleMessage("Ora"),
+        "transactionUntitled":
+            MessageLookupByLibrary.simpleMessage("Senza etichetta")
       };
 }

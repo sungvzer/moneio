@@ -66,9 +66,17 @@
     "transactionCategoryCrypto": "Cryptocurrencies",
     "transactionCategoryShopping": "Shopping",
     "transactionCategoryNone": "No category",
+    "transactionUntitled": "Untitled",
     "statisticsTitle": "Statistics",
     "statisticsCategories": "Categories",
     "statisticsCurrencies": "Currencies",
     "statisticsCountBy": "Count by",
-    "statisticsCountByNumber": "Number"
+    "statisticsCountByNumber": "Number",
+    "insertAmountPrompt": "Please insert an amount",
+    "insertCurrencyPrompt": "Please select a currency",
+    "insertDatePrompt": "Please enter a date",
+    "insertTimePrompt": "Please enter a time",
+    "insertCategoryPrompt": "Please select a category",
+    "addTransactionConfirm": "Add",
+    "addTransactionCancel": "Cancel"
 }

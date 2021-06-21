@@ -4,7 +4,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart' show DateFormat;
+import 'package:intl/intl.dart' show DateFormat, Intl;
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/helpers/colors.dart';
@@ -15,6 +15,7 @@ import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction.dart' as UserTransaction;
 import 'package:moneio/widgets/labelled_form_field.dart';
+import 'package:moneio/generated/l10n.dart';
 
 class AddTransactionPage extends StatefulWidget {
   static final String id = '/home/add_transaction';
@@ -70,10 +71,10 @@ class AddTransactionPageState extends State<AddTransactionPage> {
             elevation: 0,
             centerTitle: true,
             title: Title(
-              title: "mone.io",
+              title: Localization.of(context).appName,
               color: ColorPalette.Black,
               child: Text(
-                "mone.io",
+                Localization.of(context).appName,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline6!,
               ),
@@ -118,11 +119,11 @@ class _TransactionForm extends StatelessWidget {
         child: Column(
           children: <Widget>[
             LabelledFormField(
-              "Tag",
+              Localization.of(context).transactionTag,
               child: TextFormField(
                 textInputAction: TextInputAction.next,
                 decoration: _decoration.copyWith(
-                  labelText: "Untitled",
+                  labelText: Localization.of(context).transactionUntitled,
                   alignLabelWithHint: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   labelStyle: Theme.of(context).textTheme.bodyText2!,
@@ -142,7 +143,7 @@ class _TransactionForm extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: LabelledFormField(
-                    "Amount",
+                    Localization.of(context).transactionAmount,
                     child: TextFormField(
                       textInputAction: TextInputAction.next,
                       decoration: _decoration,
@@ -155,10 +156,11 @@ class _TransactionForm extends StatelessWidget {
                       controller: _controllers["amount"],
                       validator: (value) {
                         if (value == null) return null;
-                        if (value.isEmpty) return "Please enter an amount.";
+                        if (value.isEmpty)
+                          return Localization.of(context).insertAmountPrompt;
                         value = value.replaceAll(',', "");
                         if (double.parse(value) == 0.0)
-                          return "Please enter an amount";
+                          return Localization.of(context).insertAmountPrompt;
                         return null;
                       },
                     ),
@@ -168,11 +170,12 @@ class _TransactionForm extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: LabelledFormField(
-                    "Currency",
+                    Localization.of(context).transactionCurrency,
                     child: DropdownButtonFormField(
                       value: _selectedCurrency,
-                      validator: (str) =>
-                          str == null ? "Please insert a currency" : null,
+                      validator: (str) => str == null
+                          ? Localization.of(context).insertCurrencyPrompt
+                          : null,
                       decoration: _decoration,
                       isExpanded: true,
                       onChanged: (value) {
@@ -202,12 +205,12 @@ class _TransactionForm extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LabelledFormField(
-                        "Date",
+                        Localization.of(context).transactionDate,
                         child: TextFormField(
                           decoration: _decoration,
                           validator: (value) {
                             return value == null || value == ""
-                                ? "Please enter a date."
+                                ? Localization.of(context).insertDatePrompt
                                 : null;
                           },
                           textAlign: TextAlign.center,
@@ -215,7 +218,7 @@ class _TransactionForm extends StatelessWidget {
                           readOnly: true,
                           controller: _controllers["date"],
                           onTap: () => showDatePicker(
-                            // TODO: Locale
+                            locale: Locale(Intl.getCurrentLocale()),
                             context: context,
                             firstDate: DateTime(1900, 1, 1),
                             lastDate: DateTime.now(),
@@ -242,7 +245,7 @@ class _TransactionForm extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LabelledFormField(
-                        "Time",
+                        Localization.of(context).transactionTime,
                         child: TextFormField(
                           decoration: _decoration,
                           textAlign: TextAlign.center,
@@ -264,7 +267,8 @@ class _TransactionForm extends StatelessWidget {
                             });
                           },
                           validator: (value) {
-                            if (value == "") return "Please enter a time.";
+                            if (value == "")
+                              return Localization.of(context).insertTimePrompt;
 
                             return null;
                           },
@@ -279,20 +283,21 @@ class _TransactionForm extends StatelessWidget {
               height: 20,
             ),
             LabelledFormField(
-              "Category",
+              Localization.of(context).transactionCategory,
               child: DropdownButtonFormField(
                 decoration: _decoration,
                 isExpanded: true,
                 onChanged: (value) {
                   _selectedCategory = value.toString().trim();
                 },
-                validator: (str) =>
-                    str == null ? "Please enter a category" : null,
+                validator: (str) => str == null
+                    ? Localization.of(context).insertCategoryPrompt
+                    : null,
                 style: Theme.of(context).textTheme.bodyText2!,
                 items: getCategoriesMenuItems(),
                 hint: Center(
                   child: Text(
-                    "Please select a category",
+                    Localization.of(context).insertCategoryPrompt,
                     style: Theme.of(context).textTheme.bodyText2!,
                   ),
                 ),
@@ -306,7 +311,7 @@ class _TransactionForm extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     child: Text(
-                      "Add",
+                      Localization.of(context).addTransactionConfirm,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     style: ButtonStyle(
@@ -388,7 +393,7 @@ class _TransactionForm extends StatelessWidget {
                   ),
                   ElevatedButton(
                     child: Text(
-                      "Back",
+                      Localization.of(context).addTransactionCancel,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     style: ButtonStyle(

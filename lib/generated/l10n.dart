@@ -710,6 +710,16 @@ class Localization {
     );
   }
 
+  /// `Untitled`
+  String get transactionUntitled {
+    return Intl.message(
+      'Untitled',
+      name: 'transactionUntitled',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Statistics`
   String get statisticsTitle {
     return Intl.message(
@@ -755,6 +765,76 @@ class Localization {
     return Intl.message(
       'Number',
       name: 'statisticsCountByNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please insert an amount`
+  String get insertAmountPrompt {
+    return Intl.message(
+      'Please insert an amount',
+      name: 'insertAmountPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a currency`
+  String get insertCurrencyPrompt {
+    return Intl.message(
+      'Please select a currency',
+      name: 'insertCurrencyPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a date`
+  String get insertDatePrompt {
+    return Intl.message(
+      'Please enter a date',
+      name: 'insertDatePrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a time`
+  String get insertTimePrompt {
+    return Intl.message(
+      'Please enter a time',
+      name: 'insertTimePrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a category`
+  String get insertCategoryPrompt {
+    return Intl.message(
+      'Please select a category',
+      name: 'insertCategoryPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get addTransactionConfirm {
+    return Intl.message(
+      'Add',
+      name: 'addTransactionConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get addTransactionCancel {
+    return Intl.message(
+      'Cancel',
+      name: 'addTransactionCancel',
       desc: '',
       args: [],
     );

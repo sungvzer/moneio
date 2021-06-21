@@ -347,11 +347,12 @@ Map<String, double> _computeCurrenciesMap(
   entries.sort((first, second) => first.value.compareTo(second.value));
 
   double otherCurrenciesSum = 0;
-  for (int group = 0; group < entries.length - groupingThreshold; group++) {
-    otherCurrenciesSum += entries[group].value;
-    map.remove(entries[group].key);
+  if (entries.length >= groupingThreshold) {
+    for (int group = 0; group < entries.length - groupingThreshold; group++) {
+      otherCurrenciesSum += entries[group].value;
+      map.remove(entries[group].key);
+    }
   }
-
   int total;
   if (displayType == _DisplayType.ByNumber) {
     total = transactionCount;
@@ -367,9 +368,11 @@ Map<String, double> _computeCurrenciesMap(
         "_computeCurrenciesMap: index $index, element ${map.entries.elementAt(index).toString()}");
     percentages[currencyCode(entry.key) + ' - $percentage%'] = percentage;
   }
-  double otherPercentage = (otherCurrenciesSum / total * 100).roundToDouble();
-  percentages["Other currencies - $otherPercentage%"] = otherPercentage;
 
+  if (entries.length >= groupingThreshold) {
+    double otherPercentage = (otherCurrenciesSum / total * 100).roundToDouble();
+    percentages["Other currencies - $otherPercentage%"] = otherPercentage;
+  }
   debugPrint("_computeCurrenciesMap: percentages $percentages");
   return percentages;
 }

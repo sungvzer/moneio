@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/constants.dart';
 
 List<DropdownMenuItem<String>> getCategoriesMenuItems() {
   final values = Constants.categories();

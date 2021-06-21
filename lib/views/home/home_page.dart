@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
-import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/constants.dart';
 import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/sorting.dart';

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
-import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/constants.dart';
 import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/themes.dart';
 import 'package:moneio/views/firebase_error_page.dart';

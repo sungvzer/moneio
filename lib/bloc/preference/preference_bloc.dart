@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'preference_event.dart';

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/constants.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/currencies.dart';
 import 'package:moneio/models/transaction_category.dart';

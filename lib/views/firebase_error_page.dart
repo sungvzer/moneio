@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
-import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/constants.dart';
 
 class FirebaseErrorPage extends StatefulWidget {
   static const String id = '/error';

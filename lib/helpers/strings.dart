@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:moneio/constants.dart';
+import 'package:moneio/helpers/constants.dart';
 
 String getRandomString([int length = 32]) {
   assert(length > 0, "Length needs to be a positive integer");

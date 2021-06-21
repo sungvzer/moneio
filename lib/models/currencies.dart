@@ -99,6 +99,12 @@ String currencyFullName(BuildContext context, Currency currency) {
   }
 }
 
+List<Currency> currenciesWithoutNone() {
+  List<Currency> currencies = List.from(Currency.values);
+  currencies.removeWhere((element) => element == Currency.NONE);
+  return currencies;
+}
+
 List<String> currencyCodes() {
   List<Currency> currencies = List.from(Currency.values);
   currencies.removeWhere((element) => element == Currency.NONE);

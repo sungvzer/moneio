@@ -236,13 +236,13 @@ class _TransactionTile extends StatelessWidget {
         builder: (BuildContext dialogContext) {
           return SimpleDialog(
             title: Text(
-              'Select action',
+              Localization.of(context).homeSelectActionTitle,
               style: Theme.of(dialogContext).textTheme.headline5!,
             ),
             children: [
               SimpleDialogOption(
                 child: Text(
-                  "Edit",
+                  Localization.of(context).actionEdit,
                   style: Theme.of(dialogContext).textTheme.bodyText2!,
                 ),
                 onPressed: () {
@@ -266,7 +266,7 @@ class _TransactionTile extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: Text(
-                  "Delete",
+                  Localization.of(context).actionDelete,
                   style: Theme.of(dialogContext).textTheme.bodyText2!,
                 ),
               ),

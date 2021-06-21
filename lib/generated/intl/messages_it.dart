@@ -21,6 +21,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "actionDelete": MessageLookupByLibrary.simpleMessage("Elimina"),
+        "actionEdit": MessageLookupByLibrary.simpleMessage("Modifica"),
         "addTransactionCancel": MessageLookupByLibrary.simpleMessage("Annulla"),
         "addTransactionConfirm":
             MessageLookupByLibrary.simpleMessage("Aggiungi"),
@@ -42,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Nessuna transazione qui!"),
         "homeRefresh":
             MessageLookupByLibrary.simpleMessage("Ricarica transazioni"),
+        "homeSelectActionTitle":
+            MessageLookupByLibrary.simpleMessage("Scegli un\'azione"),
         "homeSignOutPopupConfirm": MessageLookupByLibrary.simpleMessage("OK"),
         "homeSignOutPopupDismiss":
             MessageLookupByLibrary.simpleMessage("Annulla"),

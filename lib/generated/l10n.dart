@@ -280,6 +280,36 @@ class Localization {
     );
   }
 
+  /// `Select action`
+  String get homeSelectActionTitle {
+    return Intl.message(
+      'Select action',
+      name: 'homeSelectActionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get actionEdit {
+    return Intl.message(
+      'Edit',
+      name: 'actionEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get actionDelete {
+    return Intl.message(
+      'Delete',
+      name: 'actionDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Human readable`
   String get settingsHumanReadableTitle {
     return Intl.message(

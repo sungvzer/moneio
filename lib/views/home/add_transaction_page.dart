@@ -179,10 +179,11 @@ class _TransactionForm extends StatelessWidget {
                           _selectedCurrency = value.trim();
                       },
                       style: Theme.of(context).textTheme.bodyText2!,
-                      items: Currency.values.map((e) {
+                      items: currenciesWithoutNone().map((e) {
                         return DropdownMenuItem(
                             value: currencyCode(e),
-                            child: Text(currencyFullName(context, e)));
+                            child: Text(
+                                currencySymbol(e) + ' - ' + currencyCode(e)));
                       }).toList(),
                     ),
                   ),

@@ -154,6 +154,5 @@ Map<String, TransactionCategory> categories = {
 const Map<String, dynamic> defaultSettings = {
   "dark_mode": false,
   "human_readable": true,
-  "accent_color": "0xfffeca57",
   "favorite_currency": "EUR",
 };

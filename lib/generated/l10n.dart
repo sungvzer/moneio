@@ -349,6 +349,366 @@ class Localization {
       args: [],
     );
   }
+
+  /// `Tag`
+  String get transactionTag {
+    return Intl.message(
+      'Tag',
+      name: 'transactionTag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get transactionAmount {
+    return Intl.message(
+      'Amount',
+      name: 'transactionAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Currency`
+  String get transactionCurrency {
+    return Intl.message(
+      'Currency',
+      name: 'transactionCurrency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get transactionDate {
+    return Intl.message(
+      'Date',
+      name: 'transactionDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get transactionTime {
+    return Intl.message(
+      'Time',
+      name: 'transactionTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get transactionCategory {
+    return Intl.message(
+      'Category',
+      name: 'transactionCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select a category`
+  String get transactionCategoryPrompt {
+    return Intl.message(
+      'Select a category',
+      name: 'transactionCategoryPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clothing`
+  String get transactionCategoryClothing {
+    return Intl.message(
+      'Clothing',
+      name: 'transactionCategoryClothing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Food`
+  String get transactionCategoryFood {
+    return Intl.message(
+      'Food',
+      name: 'transactionCategoryFood',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Animals`
+  String get transactionCategoryAnimal {
+    return Intl.message(
+      'Animals',
+      name: 'transactionCategoryAnimal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insurance`
+  String get transactionCategoryInsurance {
+    return Intl.message(
+      'Insurance',
+      name: 'transactionCategoryInsurance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bills`
+  String get transactionCategoryBills {
+    return Intl.message(
+      'Bills',
+      name: 'transactionCategoryBills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home expenses`
+  String get transactionCategoryHome {
+    return Intl.message(
+      'Home expenses',
+      name: 'transactionCategoryHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Body care`
+  String get transactionCategoryBodyCare {
+    return Intl.message(
+      'Body care',
+      name: 'transactionCategoryBodyCare',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Electronics and software`
+  String get transactionCategoryElectronic {
+    return Intl.message(
+      'Electronics and software',
+      name: 'transactionCategoryElectronic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Family`
+  String get transactionCategoryFamily {
+    return Intl.message(
+      'Family',
+      name: 'transactionCategoryFamily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financing and loans`
+  String get transactionCategoryFinancing {
+    return Intl.message(
+      'Financing and loans',
+      name: 'transactionCategoryFinancing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Entertainment`
+  String get transactionCategoryEntertainment {
+    return Intl.message(
+      'Entertainment',
+      name: 'transactionCategoryEntertainment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Investments`
+  String get transactionCategoryInvestment {
+    return Intl.message(
+      'Investments',
+      name: 'transactionCategoryInvestment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education`
+  String get transactionCategoryEducation {
+    return Intl.message(
+      'Education',
+      name: 'transactionCategoryEducation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Work and salary`
+  String get transactionCategoryWorkSalary {
+    return Intl.message(
+      'Work and salary',
+      name: 'transactionCategoryWorkSalary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gifts and donations`
+  String get transactionCategoryGift {
+    return Intl.message(
+      'Gifts and donations',
+      name: 'transactionCategoryGift',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generic`
+  String get transactionCategoryGeneric {
+    return Intl.message(
+      'Generic',
+      name: 'transactionCategoryGeneric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refunds`
+  String get transactionCategoryRefund {
+    return Intl.message(
+      'Refunds',
+      name: 'transactionCategoryRefund',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restaurants and coffee shops`
+  String get transactionCategoryRestaurants {
+    return Intl.message(
+      'Restaurants and coffee shops',
+      name: 'transactionCategoryRestaurants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Health`
+  String get transactionCategoryHealth {
+    return Intl.message(
+      'Health',
+      name: 'transactionCategoryHealth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sports`
+  String get transactionCategorySport {
+    return Intl.message(
+      'Sports',
+      name: 'transactionCategorySport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hobbies`
+  String get transactionCategoryHobby {
+    return Intl.message(
+      'Hobbies',
+      name: 'transactionCategoryHobby',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Taxes and commissions`
+  String get transactionCategoryTax {
+    return Intl.message(
+      'Taxes and commissions',
+      name: 'transactionCategoryTax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transportation`
+  String get transactionCategoryTransport {
+    return Intl.message(
+      'Transportation',
+      name: 'transactionCategoryTransport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales`
+  String get transactionCategorySale {
+    return Intl.message(
+      'Sales',
+      name: 'transactionCategorySale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top-ups`
+  String get transactionCategoryTopup {
+    return Intl.message(
+      'Top-ups',
+      name: 'transactionCategoryTopup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ATM`
+  String get transactionCategoryATM {
+    return Intl.message(
+      'ATM',
+      name: 'transactionCategoryATM',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cryptocurrencies`
+  String get transactionCategoryCrypto {
+    return Intl.message(
+      'Cryptocurrencies',
+      name: 'transactionCategoryCrypto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shopping`
+  String get transactionCategoryShopping {
+    return Intl.message(
+      'Shopping',
+      name: 'transactionCategoryShopping',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No category`
+  String get transactionCategoryNone {
+    return Intl.message(
+      'No category',
+      name: 'transactionCategoryNone',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Localization> {

@@ -71,6 +71,72 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsHumanReadableTitle":
             MessageLookupByLibrary.simpleMessage("Formato leggibile"),
         "settingsSyncToCloudTitle": MessageLookupByLibrary.simpleMessage(
-            "Sincronizza le impostazioni col cloud")
+            "Sincronizza le impostazioni col cloud"),
+        "transactionAmount": MessageLookupByLibrary.simpleMessage("Importo"),
+        "transactionCategory":
+            MessageLookupByLibrary.simpleMessage("Categoria"),
+        "transactionCategoryATM":
+            MessageLookupByLibrary.simpleMessage("Bancomat"),
+        "transactionCategoryAnimal":
+            MessageLookupByLibrary.simpleMessage("Animali"),
+        "transactionCategoryBills":
+            MessageLookupByLibrary.simpleMessage("Bollette"),
+        "transactionCategoryBodyCare":
+            MessageLookupByLibrary.simpleMessage("Cura del corpo"),
+        "transactionCategoryClothing":
+            MessageLookupByLibrary.simpleMessage("Abbigliamento"),
+        "transactionCategoryCrypto":
+            MessageLookupByLibrary.simpleMessage("Criptovalute"),
+        "transactionCategoryEducation":
+            MessageLookupByLibrary.simpleMessage("Istruzione"),
+        "transactionCategoryElectronic":
+            MessageLookupByLibrary.simpleMessage("Elettronica e software"),
+        "transactionCategoryEntertainment":
+            MessageLookupByLibrary.simpleMessage("Intrattenimento"),
+        "transactionCategoryFamily":
+            MessageLookupByLibrary.simpleMessage("Famiglia"),
+        "transactionCategoryFinancing":
+            MessageLookupByLibrary.simpleMessage("Finanza e prestiti"),
+        "transactionCategoryFood": MessageLookupByLibrary.simpleMessage("Cibo"),
+        "transactionCategoryGeneric":
+            MessageLookupByLibrary.simpleMessage("Generali"),
+        "transactionCategoryGift":
+            MessageLookupByLibrary.simpleMessage("Regali e donazioni"),
+        "transactionCategoryHealth":
+            MessageLookupByLibrary.simpleMessage("Salute"),
+        "transactionCategoryHobby":
+            MessageLookupByLibrary.simpleMessage("Hobby"),
+        "transactionCategoryHome":
+            MessageLookupByLibrary.simpleMessage("Spese casalinghe"),
+        "transactionCategoryInsurance":
+            MessageLookupByLibrary.simpleMessage("Assicurazione"),
+        "transactionCategoryInvestment":
+            MessageLookupByLibrary.simpleMessage("Investimenti"),
+        "transactionCategoryNone":
+            MessageLookupByLibrary.simpleMessage("Nessuna categoria"),
+        "transactionCategoryPrompt":
+            MessageLookupByLibrary.simpleMessage("Seleziona una categoria"),
+        "transactionCategoryRefund":
+            MessageLookupByLibrary.simpleMessage("Rimborsi"),
+        "transactionCategoryRestaurants":
+            MessageLookupByLibrary.simpleMessage("Ristoranti e bar"),
+        "transactionCategorySale":
+            MessageLookupByLibrary.simpleMessage("Vendite"),
+        "transactionCategoryShopping":
+            MessageLookupByLibrary.simpleMessage("Shopping"),
+        "transactionCategorySport":
+            MessageLookupByLibrary.simpleMessage("Sport"),
+        "transactionCategoryTax":
+            MessageLookupByLibrary.simpleMessage("Tasse e commissioni"),
+        "transactionCategoryTopup":
+            MessageLookupByLibrary.simpleMessage("Ricariche"),
+        "transactionCategoryTransport":
+            MessageLookupByLibrary.simpleMessage("Trasporto"),
+        "transactionCategoryWorkSalary":
+            MessageLookupByLibrary.simpleMessage("Lavoro e stipendi"),
+        "transactionCurrency": MessageLookupByLibrary.simpleMessage("Valuta"),
+        "transactionDate": MessageLookupByLibrary.simpleMessage("Data"),
+        "transactionTag": MessageLookupByLibrary.simpleMessage("Etichetta"),
+        "transactionTime": MessageLookupByLibrary.simpleMessage("Ora")
       };
 }

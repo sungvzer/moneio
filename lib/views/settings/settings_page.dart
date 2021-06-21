@@ -8,6 +8,7 @@ import 'package:moneio/helpers/auth/auth_helpers.dart';
 import 'package:moneio/helpers/screen.dart';
 import 'package:moneio/models/currencies.dart';
 import 'package:moneio/widgets/setting_list_tile.dart';
+import 'package:moneio/generated/l10n.dart';
 
 class SettingsPage extends StatefulWidget {
   static final String id = '/settings';
@@ -74,10 +75,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   elevation: 0,
                   centerTitle: true,
                   title: Title(
-                    title: "mone.io",
+                    title: Localization.of(context).appName,
                     color: ColorPalette.ImperialPrimer,
                     child: Text(
-                      "mone.io",
+                      Localization.of(context).appName,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline6,
                     ),
@@ -99,15 +100,18 @@ class _SettingsPageState extends State<SettingsPage> {
                           values["human_readable"]
                               ? values["human_readable"]
                               : false,
-                          title: "Human readable",
-                          subtitle:
-                              "Use readable format for amounts greater than 10'000",
+                          title: Localization.of(context)
+                              .settingsHumanReadableTitle,
+                          subtitle: Localization.of(context)
+                              .settingsHumanReadableDescription,
                           settingKey: "human_readable",
                         ),
                         SettingListTile<bool>(
                           values["dark_mode"] ? values["dark_mode"] : false,
-                          title: "Dark mode",
-                          subtitle: "Embrace the night",
+                          title:
+                              Localization.of(context).settingsDarkThemeTitle,
+                          subtitle: Localization.of(context)
+                              .settingsDarkThemeDescription,
                           settingKey: "dark_mode",
                         ),
                         // Temporarily removed
@@ -120,14 +124,15 @@ class _SettingsPageState extends State<SettingsPage> {
                         // ),
                         SettingListTile<List<String>>(
                           currencyCodeList,
-                          title: "Favorite currency",
+                          title: Localization.of(context)
+                              .settingsFavoriteCurrencyTitle,
                           settingKey: "favorite_currency",
-                          subtitle:
-                              "This will be the default currency when you add a transaction",
+                          subtitle: Localization.of(context)
+                              .settingsFavoriteCurrencyDescription,
                         ),
                         ListTile(
                           title: Text(
-                            "Sync settings to cloud",
+                            Localization.of(context).settingsSyncToCloudTitle,
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           onTap: () {

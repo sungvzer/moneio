@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneio/color_palette.dart';
+import 'package:moneio/helpers/colors.dart';
 
 class LabelledFormField extends StatelessWidget {
   final String _label;

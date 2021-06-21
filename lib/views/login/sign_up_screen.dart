@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:moneio/color_palette.dart';
+import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 
 class SignUpScreen extends StatefulWidget {

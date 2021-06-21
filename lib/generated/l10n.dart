@@ -310,6 +310,26 @@ class Localization {
     );
   }
 
+  /// `Cancel`
+  String get actionCancel {
+    return Intl.message(
+      'Cancel',
+      name: 'actionCancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this transaction?`
+  String get actionDeletePrompt {
+    return Intl.message(
+      'Are you sure you want to delete this transaction?',
+      name: 'actionDeletePrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Human readable`
   String get settingsHumanReadableTitle {
     return Intl.message(
@@ -865,6 +885,76 @@ class Localization {
     return Intl.message(
       'Cancel',
       name: 'addTransactionCancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `General info`
+  String get transactionViewInfoTitle {
+    return Intl.message(
+      'General info',
+      name: 'transactionViewInfoTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Emoji`
+  String get categoryEmoji {
+    return Intl.message(
+      'Emoji',
+      name: 'categoryEmoji',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get categoryName {
+    return Intl.message(
+      'Name',
+      name: 'categoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsaved changes`
+  String get transactionViewUnsavedChangesPrompt {
+    return Intl.message(
+      'Unsaved changes',
+      name: 'transactionViewUnsavedChangesPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There are some unsaved changes.\nSave them now?`
+  String get transactionViewUnsavedChangesText {
+    return Intl.message(
+      'There are some unsaved changes.\nSave them now?',
+      name: 'transactionViewUnsavedChangesText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get transactionViewUnsavedChangesApply {
+    return Intl.message(
+      'Apply',
+      name: 'transactionViewUnsavedChangesApply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discard`
+  String get transactionViewUnsavedChangesDiscard {
+    return Intl.message(
+      'Discard',
+      name: 'transactionViewUnsavedChangesDiscard',
       desc: '',
       args: [],
     );

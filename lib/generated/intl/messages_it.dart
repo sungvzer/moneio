@@ -21,12 +21,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "actionCancel": MessageLookupByLibrary.simpleMessage("Annulla"),
         "actionDelete": MessageLookupByLibrary.simpleMessage("Elimina"),
+        "actionDeletePrompt": MessageLookupByLibrary.simpleMessage(
+            "Sei sicuro di voler eliminare questa transazione?"),
         "actionEdit": MessageLookupByLibrary.simpleMessage("Modifica"),
         "addTransactionCancel": MessageLookupByLibrary.simpleMessage("Annulla"),
         "addTransactionConfirm":
             MessageLookupByLibrary.simpleMessage("Aggiungi"),
         "appName": MessageLookupByLibrary.simpleMessage("mone.io"),
+        "categoryEmoji": MessageLookupByLibrary.simpleMessage("Emoji"),
+        "categoryName": MessageLookupByLibrary.simpleMessage("Nome"),
         "homeAddATransactionTooltip":
             MessageLookupByLibrary.simpleMessage("Aggiungi una transazione"),
         "homeAscendingSort":
@@ -163,6 +168,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "transactionTag": MessageLookupByLibrary.simpleMessage("Etichetta"),
         "transactionTime": MessageLookupByLibrary.simpleMessage("Ora"),
         "transactionUntitled":
-            MessageLookupByLibrary.simpleMessage("Senza etichetta")
+            MessageLookupByLibrary.simpleMessage("Senza etichetta"),
+        "transactionViewInfoTitle":
+            MessageLookupByLibrary.simpleMessage("Informazioni generali"),
+        "transactionViewUnsavedChangesApply":
+            MessageLookupByLibrary.simpleMessage("Salva"),
+        "transactionViewUnsavedChangesDiscard":
+            MessageLookupByLibrary.simpleMessage("Ignora modifiche"),
+        "transactionViewUnsavedChangesPrompt":
+            MessageLookupByLibrary.simpleMessage("Modifiche non salvate"),
+        "transactionViewUnsavedChangesText":
+            MessageLookupByLibrary.simpleMessage(
+                "Ci sono modifiche non salvate.\nSalvarle ora?")
       };
 }

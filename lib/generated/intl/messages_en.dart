@@ -21,11 +21,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "actionCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "actionDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "actionDeletePrompt": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this transaction?"),
         "actionEdit": MessageLookupByLibrary.simpleMessage("Edit"),
         "addTransactionCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "addTransactionConfirm": MessageLookupByLibrary.simpleMessage("Add"),
         "appName": MessageLookupByLibrary.simpleMessage("mone.io"),
+        "categoryEmoji": MessageLookupByLibrary.simpleMessage("Emoji"),
+        "categoryName": MessageLookupByLibrary.simpleMessage("Name"),
         "homeAddATransactionTooltip":
             MessageLookupByLibrary.simpleMessage("Add a transaction"),
         "homeAscendingSort":
@@ -157,6 +162,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "transactionDate": MessageLookupByLibrary.simpleMessage("Date"),
         "transactionTag": MessageLookupByLibrary.simpleMessage("Tag"),
         "transactionTime": MessageLookupByLibrary.simpleMessage("Time"),
-        "transactionUntitled": MessageLookupByLibrary.simpleMessage("Untitled")
+        "transactionUntitled": MessageLookupByLibrary.simpleMessage("Untitled"),
+        "transactionViewInfoTitle":
+            MessageLookupByLibrary.simpleMessage("General info"),
+        "transactionViewUnsavedChangesApply":
+            MessageLookupByLibrary.simpleMessage("Apply"),
+        "transactionViewUnsavedChangesDiscard":
+            MessageLookupByLibrary.simpleMessage("Discard"),
+        "transactionViewUnsavedChangesPrompt":
+            MessageLookupByLibrary.simpleMessage("Unsaved changes"),
+        "transactionViewUnsavedChangesText":
+            MessageLookupByLibrary.simpleMessage(
+                "There are some unsaved changes.\nSave them now?")
       };
 }

@@ -11,6 +11,7 @@ import 'package:moneio/helpers/categories.dart';
 import 'package:moneio/helpers/strings.dart';
 import 'package:moneio/models/arguments/transaction_argument.dart';
 import 'package:moneio/models/currencies.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/models/transaction.dart';
 
 enum _FieldName {
@@ -130,15 +131,18 @@ class _TransactionViewState extends State<TransactionView> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Changes not applied"),
+                        title: Text(Localization.of(context)
+                            .transactionViewUnsavedChangesPrompt),
                         content: SingleChildScrollView(
                           child: Text(
-                            "The changes you made to this transaction will not be applied, are you sure about that?",
+                            Localization.of(context)
+                                .transactionViewUnsavedChangesText,
                           ),
                         ),
                         actions: [
                           TextButton(
-                            child: Text("Apply changes"),
+                            child: Text(Localization.of(context)
+                                .transactionViewUnsavedChangesApply),
                             onPressed: () {
                               debugPrint(
                                 "_TransactionViewState.build: applying changes",
@@ -157,7 +161,8 @@ class _TransactionViewState extends State<TransactionView> {
                             },
                           ),
                           TextButton(
-                            child: Text("Discard changes"),
+                            child: Text(Localization.of(context)
+                                .transactionViewUnsavedChangesDiscard),
                             onPressed: () {
                               debugPrint(
                                 "_TransactionViewState.build: discarding changes",
@@ -181,9 +186,9 @@ class _TransactionViewState extends State<TransactionView> {
             ),
             title: Title(
               color: Theme.of(context).primaryColor,
-              title: "mone.io",
+              title: Localization.of(context).appName,
               child: Text(
-                "mone.io: ${_transaction.tag}",
+                "${Localization.of(context).appName}: ${_transaction.tag}",
                 style: Theme.of(context).textTheme.headline6!,
               ),
             ),
@@ -206,24 +211,24 @@ class _TransactionViewState extends State<TransactionView> {
                 duration: Duration(milliseconds: 300),
               ),
               IconButton(
-                tooltip: "Delete",
+                tooltip: Localization.of(context).actionDelete,
                 icon: Icon(Icons.delete),
                 onPressed: () {
                   showDialog(
                     barrierDismissible: true,
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text("Delete"),
+                      title: Text(Localization.of(context).actionDelete),
                       content: Text(
-                        "Are you sure you want to delete this transaction?",
+                        Localization.of(context).actionDeletePrompt,
                       ),
                       actions: [
                         TextButton(
-                          child: Text("Cancel"),
+                          child: Text(Localization.of(context).actionCancel),
                           onPressed: () => Navigator.pop(context),
                         ),
                         TextButton(
-                          child: Text("Delete"),
+                          child: Text(Localization.of(context).actionDelete),
                           onPressed: () {
                             debugPrint(
                                 "_TransactionViewState: deleting ${_transaction.id}");
@@ -275,7 +280,7 @@ class TransactionViewBody extends StatelessWidget {
 
     titleTile = ListTile(
       leading: Text(
-        "Tag",
+        Localization.of(context).transactionTag,
         style: currentTheme.textTheme.bodyText1,
       ),
       title: Text(
@@ -286,7 +291,7 @@ class TransactionViewBody extends StatelessWidget {
     );
     amountTile = ListTile(
       leading: Text(
-        "Amount",
+        Localization.of(context).transactionAmount,
         style: currentTheme.textTheme.bodyText1,
       ),
       title: Text(
@@ -297,7 +302,7 @@ class TransactionViewBody extends StatelessWidget {
     );
     currencyTile = ListTile(
       leading: Text(
-        "Currency",
+        Localization.of(context).transactionCurrency,
         style: currentTheme.textTheme.bodyText1,
       ),
       title: Text(
@@ -310,7 +315,7 @@ class TransactionViewBody extends StatelessWidget {
     );
     nameTile = ListTile(
       leading: Text(
-        "Name",
+        Localization.of(context).categoryName,
         style: currentTheme.textTheme.bodyText1,
       ),
       title: Text(
@@ -321,7 +326,7 @@ class TransactionViewBody extends StatelessWidget {
     );
     emojiTile = ListTile(
       leading: Text(
-        "Emoji",
+        Localization.of(context).categoryEmoji,
         style: currentTheme.textTheme.bodyText1,
       ),
       title: Text(
@@ -340,7 +345,7 @@ class TransactionViewBody extends StatelessWidget {
 
     dateTile = ListTile(
       leading: Text(
-        "Date",
+        Localization.of(context).transactionDate,
         style: currentTheme.textTheme.bodyText1,
       ),
       title: Text(
@@ -359,7 +364,7 @@ class TransactionViewBody extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "General info",
+                Localization.of(context).transactionViewInfoTitle,
                 style: currentTheme.textTheme.headline5,
               ),
             ),
@@ -373,7 +378,7 @@ class TransactionViewBody extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Category",
+                Localization.of(context).transactionCategory,
                 style: currentTheme.textTheme.headline5,
               ),
             ),
@@ -440,7 +445,7 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Edit",
+                  Localization.of(context).actionEdit,
                   style: currentTheme.textTheme.headline5,
                 ),
               ),
@@ -454,8 +459,8 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                 },
                 style: Theme.of(context).textTheme.bodyText2!,
                 decoration: InputDecoration(
-                  labelText: "Tag",
-                  hintText: "Untitled",
+                  labelText: Localization.of(context).transactionTag,
+                  hintText: Localization.of(context).transactionUntitled,
                 ),
                 controller: tagController,
               ),
@@ -465,7 +470,8 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                   _formValues[_FieldName.Amount] = s;
                 },
                 textInputAction: TextInputAction.next,
-                decoration: InputDecoration(labelText: "Amount"),
+                decoration: InputDecoration(
+                    labelText: Localization.of(context).transactionAmount),
                 style: Theme.of(context).textTheme.bodyText2!,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
@@ -474,10 +480,11 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                 controller: amountController,
                 validator: (value) {
                   if (value == null) return null;
-                  if (value.isEmpty) return "Please enter an amount.";
+                  if (value.isEmpty)
+                    return Localization.of(context).insertAmountPrompt;
                   value = value.replaceAll(',', "");
                   if (double.parse(value) == 0.0)
-                    return "Please enter an amount";
+                    return Localization.of(context).insertAmountPrompt;
                   return null;
                 },
               ),
@@ -486,10 +493,11 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                   if (s == null) return;
                   _formValues[_FieldName.Date] = s;
                 },
-                decoration: InputDecoration(labelText: "Date"),
+                decoration: InputDecoration(
+                    labelText: Localization.of(context).transactionDate),
                 validator: (value) {
                   return value == null || value == ""
-                      ? "Please enter a date."
+                      ? Localization.of(context).insertDatePrompt
                       : null;
                 },
                 style: Theme.of(context).textTheme.bodyText2!,
@@ -515,7 +523,8 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                   if (s == null) return;
                   _formValues[_FieldName.Time] = s;
                 },
-                decoration: InputDecoration(labelText: "Time"),
+                decoration: InputDecoration(
+                    labelText: Localization.of(context).transactionTime),
                 style: Theme.of(context).textTheme.bodyText2!,
                 readOnly: true,
                 controller: timeController,
@@ -533,7 +542,8 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                   });
                 },
                 validator: (value) {
-                  if (value == "") return "Please enter a time.";
+                  if (value == "")
+                    return Localization.of(context).insertTimePrompt;
 
                   return null;
                 },
@@ -544,10 +554,12 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                   if (s == null) return;
                   _formValues[_FieldName.Currency] = s;
                 },
-                decoration: InputDecoration(labelText: "Currency"),
+                decoration: InputDecoration(
+                    labelText: Localization.of(context).transactionCurrency),
                 value: selectedCurrency,
-                validator: (str) =>
-                    str == null ? "Please insert a currency" : null,
+                validator: (str) => str == null
+                    ? Localization.of(context).insertCurrencyPrompt
+                    : null,
                 isExpanded: true,
                 onChanged: (value) {
                   if (value is String?) if (value != null)
@@ -565,14 +577,16 @@ class _TransactionEditBodyState extends State<TransactionEditBody> {
                   if (s == null) return;
                   _formValues[_FieldName.Category] = s;
                 },
-                decoration: InputDecoration(labelText: "Category"),
+                decoration: InputDecoration(
+                    labelText: Localization.of(context).transactionCategory),
                 value: selectedCategory,
                 isExpanded: true,
                 onChanged: (value) {
                   selectedCategory = value.toString().trim();
                 },
-                validator: (str) =>
-                    str == null ? "Please enter a category" : null,
+                validator: (str) => str == null
+                    ? Localization.of(context).insertCategoryPrompt
+                    : null,
                 style: Theme.of(context).textTheme.bodyText2!,
                 items: getCategoriesMenuItems(),
               ),

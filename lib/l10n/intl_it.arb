@@ -90,5 +90,30 @@
     "transactionViewUnsavedChangesPrompt": "Modifiche non salvate",
     "transactionViewUnsavedChangesText": "Ci sono modifiche non salvate.\nSalvarle ora?",
     "transactionViewUnsavedChangesApply": "Salva",
-    "transactionViewUnsavedChangesDiscard": "Ignora modifiche"
+    "transactionViewUnsavedChangesDiscard": "Ignora modifiche",
+    "loginEmailAddress": "Indirizzo e-mail",
+    "loginPassword": "Password",
+    "loginEmailRequired": "È necessaria un'e-mail per accedere",
+    "loginPasswordRequired": "È necessaria una password per accedere",
+    "loginPasswordReset": "Hai dimenticato la password?",
+    "loginContinue": "Accedi",
+    "loginCheckEmailForPasswordReset": "Controlla la tua e-mail per ulteriori istruzioni",
+    "loginSignUp": "Registrati",
+    "signUpInformationLabel": "Informazioni personali (opzionali)",
+    "signUpCredentialsLabel": "E-mail e password",
+    "signUpPasswordRequired": "È necessaria una password per registrarsi",
+    "signUpPasswordLengthError": "Le password devono essere lunghe almeno {characters} caratteri",
+    "@signUpPasswordLengthError": {
+        "placeholders": {
+            "characters": {
+                "example": "6",
+                "description": "Minimum length for the password"
+            }
+        }
+    },
+    "signUpPasswordCaseError": "Le password devono contenere almeno un carattere maiuscolo",
+    "signUpEmailRequired": "È necessaria un'e-mail per registrarsi",
+    "userPersonalName": "Nome",
+    "userPersonalSurname": "Cognome",
+    "userPersonalBirthday": "Data di nascita"
 }

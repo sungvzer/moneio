@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moneio/bloc/firestore/firestore_bloc.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 import 'package:moneio/views/login/sign_up_screen.dart';
 import 'package:moneio/widgets/labelled_form_field.dart';
@@ -34,10 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
         leading: Container(),
         centerTitle: true,
         title: Title(
-          title: "mone.io",
+          title: Localization.of(context).appName,
           color: Theme.of(context).primaryColor,
           child: Text(
-            "mone.io",
+            Localization.of(context).appName,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline6!,
           ),
@@ -122,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 LabelledFormField(
-                  "E-mail",
+                  Localization.of(context).loginEmailAddress,
                   child: TextFormField(
                     key: emailKey,
                     controller: _controllers["email"],
@@ -131,7 +132,7 @@ class _LoginFormState extends State<LoginForm> {
                     autofillHints: [AutofillHints.email],
                     validator: (value) {
                       if (value!.trim().toLowerCase() == "") {
-                        return "An e-mail is required to login";
+                        return Localization.of(context).loginEmailRequired;
                       }
                       return null;
                     },
@@ -139,7 +140,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 SizedBox(height: 20),
                 LabelledFormField(
-                  "Password",
+                  Localization.of(context).loginPassword,
                   child: TextFormField(
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
@@ -166,7 +167,7 @@ class _LoginFormState extends State<LoginForm> {
                     style: Theme.of(context).textTheme.bodyText2!,
                     validator: (value) {
                       if (value! == "") {
-                        return "A password is required to login";
+                        return Localization.of(context).loginPasswordRequired;
                       }
                       return null;
                     },
@@ -267,13 +268,13 @@ class _LoginFormState extends State<LoginForm> {
                     }
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content:
-                            Text("Check your email for further instructions"),
+                        content: Text(Localization.of(context)
+                            .loginCheckEmailForPasswordReset),
                       ),
                     );
                   },
                   child: Text(
-                    "Forgot your password?",
+                    Localization.of(context).loginPasswordReset,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!

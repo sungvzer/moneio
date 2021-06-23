@@ -19,6 +19,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'it';
 
+  static String m0(characters) =>
+      "Le password devono essere lunghe almeno ${characters} caratteri";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "actionCancel": MessageLookupByLibrary.simpleMessage("Annulla"),
@@ -80,6 +83,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Inserisci una data"),
         "insertTimePrompt":
             MessageLookupByLibrary.simpleMessage("Inserisci un\'ora"),
+        "loginCheckEmailForPasswordReset": MessageLookupByLibrary.simpleMessage(
+            "Controlla la tua e-mail per ulteriori istruzioni"),
+        "loginContinue": MessageLookupByLibrary.simpleMessage("Accedi"),
+        "loginEmailAddress":
+            MessageLookupByLibrary.simpleMessage("Indirizzo e-mail"),
+        "loginEmailRequired": MessageLookupByLibrary.simpleMessage(
+            "È necessaria un\'e-mail per accedere"),
+        "loginPassword": MessageLookupByLibrary.simpleMessage("Password"),
+        "loginPasswordRequired": MessageLookupByLibrary.simpleMessage(
+            "È necessaria una password per accedere"),
+        "loginPasswordReset": MessageLookupByLibrary.simpleMessage(
+            "Hai dimenticato la password?"),
+        "loginSignUp": MessageLookupByLibrary.simpleMessage("Registrati"),
         "settingsDarkThemeDescription":
             MessageLookupByLibrary.simpleMessage("Accogli la notte"),
         "settingsDarkThemeTitle":
@@ -94,6 +110,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Formato leggibile"),
         "settingsSyncToCloudTitle": MessageLookupByLibrary.simpleMessage(
             "Sincronizza le impostazioni col cloud"),
+        "signUpCredentialsLabel":
+            MessageLookupByLibrary.simpleMessage("E-mail e password"),
+        "signUpEmailRequired": MessageLookupByLibrary.simpleMessage(
+            "È necessaria un\'e-mail per registrarsi"),
+        "signUpInformationLabel": MessageLookupByLibrary.simpleMessage(
+            "Informazioni personali (opzionali)"),
+        "signUpPasswordCaseError": MessageLookupByLibrary.simpleMessage(
+            "Le password devono contenere almeno un carattere maiuscolo"),
+        "signUpPasswordLengthError": m0,
+        "signUpPasswordRequired": MessageLookupByLibrary.simpleMessage(
+            "È necessaria una password per registrarsi"),
         "statisticsCategories":
             MessageLookupByLibrary.simpleMessage("Categorie"),
         "statisticsCountBy": MessageLookupByLibrary.simpleMessage("Conta per"),
@@ -179,6 +206,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Modifiche non salvate"),
         "transactionViewUnsavedChangesText":
             MessageLookupByLibrary.simpleMessage(
-                "Ci sono modifiche non salvate.\nSalvarle ora?")
+                "Ci sono modifiche non salvate.\nSalvarle ora?"),
+        "userPersonalBirthday":
+            MessageLookupByLibrary.simpleMessage("Data di nascita"),
+        "userPersonalName": MessageLookupByLibrary.simpleMessage("Nome"),
+        "userPersonalSurname": MessageLookupByLibrary.simpleMessage("Cognome")
       };
 }

@@ -90,5 +90,30 @@
     "transactionViewUnsavedChangesPrompt": "Unsaved changes",
     "transactionViewUnsavedChangesText": "There are some unsaved changes.\nSave them now?",
     "transactionViewUnsavedChangesApply": "Apply",
-    "transactionViewUnsavedChangesDiscard": "Discard"
+    "transactionViewUnsavedChangesDiscard": "Discard",
+    "loginEmailAddress": "E-mail address",
+    "loginPassword": "Password",
+    "loginEmailRequired": "An e-mail is required to login",
+    "loginPasswordRequired": "A password is required to login",
+    "loginPasswordReset": "Forgot your password?",
+    "loginContinue": "Login",
+    "loginCheckEmailForPasswordReset": "Check your email for further instructions",
+    "loginSignUp": "Sign up",
+    "signUpInformationLabel": "Account information (optional)",
+    "signUpCredentialsLabel": "E-mail and password",
+    "signUpPasswordRequired": "A password is required to sign up",
+    "signUpPasswordLengthError": "Passwords must be at least {characters} characters long",
+    "@signUpPasswordLengthError": {
+        "placeholders": {
+            "characters": {
+                "example": "6",
+                "description": "Minimum length for the password"
+            }
+        }
+    },
+    "signUpPasswordCaseError": "Passwords must contain at least an uppercase letter",
+    "signUpEmailRequired": "An e-mail is required to sign up",
+    "userPersonalName": "Name",
+    "userPersonalSurname": "Surname",
+    "userPersonalBirthday": "Birthday"
 }

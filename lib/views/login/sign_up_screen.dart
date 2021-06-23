@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/colors.dart';
 import 'package:moneio/helpers/auth/auth_exception_handler.dart';
 
@@ -109,11 +110,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'E-mail Address'),
+              decoration: InputDecoration(
+                  labelText: Localization.of(context).loginEmailAddress),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
                 if (value!.trim().toLowerCase() == "") {
-                  return "An e-mail is required to sign up.";
+                  return Localization.of(context).signUpEmailRequired;
                 }
                 return null;
               },
@@ -121,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Password',
+                labelText: Localization.of(context).loginPassword,
                 suffixIcon: IconButton(
                   icon: Icon(
                     _passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -141,15 +143,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               // 1. Should be at least 8 characters long
               // 2. Should contain at least an uppercase letter
               validator: (value) {
-                if (value == null) return "A password is required to sign up";
+                if (value == null)
+                  return Localization.of(context).signUpPasswordRequired;
 
-                if (value.isEmpty) return "A password is required to sign up";
+                if (value.isEmpty)
+                  return Localization.of(context).signUpPasswordRequired;
 
                 if (value.length > 0 && value.length < 8) {
-                  return "Passwords should be at least 8 characters long";
+                  return Localization.of(context).signUpPasswordLengthError(8);
                 }
                 if (!value.contains(RegExp("[A-Z]+"))) {
-                  return "Passwords should contain at least an uppercase letter";
+                  return Localization.of(context).signUpPasswordCaseError;
                 }
 
                 return null;
@@ -158,22 +162,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ],
         ),
-        title: const Text("E-mail and password"),
+        title: Text(Localization.of(context).signUpCredentialsLabel),
       ),
       Step(
         isActive: true,
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(
+                  labelText: Localization.of(context).userPersonalName),
               controller: _controllers["name"]!,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Surname'),
+              decoration: InputDecoration(
+                  labelText: Localization.of(context).userPersonalSurname),
               controller: _controllers["surname"]!,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: "Birthday"),
+              decoration: InputDecoration(
+                  labelText: Localization.of(context).userPersonalBirthday),
               controller: _controllers["birthday"]!,
               readOnly: true,
               onTap: () => showDatePicker(
@@ -194,7 +201,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             )
           ],
         ),
-        title: const Text("Account information (optional)"),
+        title: Text(Localization.of(context).signUpInformationLabel),
       ),
     ];
 
@@ -216,10 +223,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           // leading: Container(),
           centerTitle: true,
           title: Title(
-            title: "mone.io",
+            title: Localization.of(context).appName,
             color: ColorPalette.ImperialPrimer,
             child: Text(
-              "mone.io",
+              Localization.of(context).appName,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline6!,
             ),

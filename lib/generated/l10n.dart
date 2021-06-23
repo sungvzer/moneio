@@ -959,6 +959,176 @@ class Localization {
       args: [],
     );
   }
+
+  /// `E-mail address`
+  String get loginEmailAddress {
+    return Intl.message(
+      'E-mail address',
+      name: 'loginEmailAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get loginPassword {
+    return Intl.message(
+      'Password',
+      name: 'loginPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An e-mail is required to login`
+  String get loginEmailRequired {
+    return Intl.message(
+      'An e-mail is required to login',
+      name: 'loginEmailRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A password is required to login`
+  String get loginPasswordRequired {
+    return Intl.message(
+      'A password is required to login',
+      name: 'loginPasswordRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot your password?`
+  String get loginPasswordReset {
+    return Intl.message(
+      'Forgot your password?',
+      name: 'loginPasswordReset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get loginContinue {
+    return Intl.message(
+      'Login',
+      name: 'loginContinue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check your email for further instructions`
+  String get loginCheckEmailForPasswordReset {
+    return Intl.message(
+      'Check your email for further instructions',
+      name: 'loginCheckEmailForPasswordReset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
+  String get loginSignUp {
+    return Intl.message(
+      'Sign up',
+      name: 'loginSignUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account information (optional)`
+  String get signUpInformationLabel {
+    return Intl.message(
+      'Account information (optional)',
+      name: 'signUpInformationLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-mail and password`
+  String get signUpCredentialsLabel {
+    return Intl.message(
+      'E-mail and password',
+      name: 'signUpCredentialsLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A password is required to sign up`
+  String get signUpPasswordRequired {
+    return Intl.message(
+      'A password is required to sign up',
+      name: 'signUpPasswordRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords must be at least {characters} characters long`
+  String signUpPasswordLengthError(Object characters) {
+    return Intl.message(
+      'Passwords must be at least $characters characters long',
+      name: 'signUpPasswordLengthError',
+      desc: '',
+      args: [characters],
+    );
+  }
+
+  /// `Passwords must contain at least an uppercase letter`
+  String get signUpPasswordCaseError {
+    return Intl.message(
+      'Passwords must contain at least an uppercase letter',
+      name: 'signUpPasswordCaseError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An e-mail is required to sign up`
+  String get signUpEmailRequired {
+    return Intl.message(
+      'An e-mail is required to sign up',
+      name: 'signUpEmailRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get userPersonalName {
+    return Intl.message(
+      'Name',
+      name: 'userPersonalName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Surname`
+  String get userPersonalSurname {
+    return Intl.message(
+      'Surname',
+      name: 'userPersonalSurname',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Birthday`
+  String get userPersonalBirthday {
+    return Intl.message(
+      'Birthday',
+      name: 'userPersonalBirthday',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Localization> {

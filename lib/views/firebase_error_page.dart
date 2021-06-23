@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
 import 'package:moneio/helpers/constants.dart';
 
@@ -57,7 +58,9 @@ class FirebaseErrorPageState extends State<FirebaseErrorPage> {
                       "Reload",
                       // style: Theme.of(context).textTheme.button,
                     ),
-                    onPressed: () => setState(() {}),
+                    onPressed: () {
+                      Phoenix.rebirth(context);
+                    },
                   )
                 ],
               ),

@@ -19,25 +19,28 @@ import 'package:moneio/views/login_router.dart';
 import 'package:moneio/views/settings/settings_page.dart';
 import 'package:moneio/views/stats/stats_page.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider<FirestoreBloc>(
-          create: (context) => FirestoreBloc(),
-        ),
-        BlocProvider<PreferenceBloc>(
-          create: (context) => PreferenceBloc(),
-        )
-      ],
-      child: MultiProvider(
+    Phoenix(
+      child: MultiBlocProvider(
         providers: [
-          ChangeNotifierProvider<ThemeNotifier>(
-              create: (_) => ThemeNotifier(_)),
+          BlocProvider<FirestoreBloc>(
+            create: (context) => FirestoreBloc(),
+          ),
+          BlocProvider<PreferenceBloc>(
+            create: (context) => PreferenceBloc(),
+          )
         ],
-        child: FirebaseApplication(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<ThemeNotifier>(
+                create: (_) => ThemeNotifier(_)),
+          ],
+          child: FirebaseApplication(),
+        ),
       ),
     ),
   );

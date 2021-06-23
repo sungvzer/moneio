@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:moneio/bloc/preference/preference_bloc.dart';
+import 'package:moneio/generated/l10n.dart';
 import 'package:moneio/helpers/constants.dart';
 
 class FirebaseErrorPage extends StatefulWidget {
@@ -50,12 +51,13 @@ class FirebaseErrorPageState extends State<FirebaseErrorPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Something went wrong starting mone.io, try restarting the application.",
+                    Localization.of(context)
+                        .errorUnknown(Localization.of(context).appName),
                     textAlign: TextAlign.center,
                   ),
                   TextButton(
                     child: Text(
-                      "Reload",
+                      Localization.of(context).errorReload,
                       // style: Theme.of(context).textTheme.button,
                     ),
                     onPressed: () {

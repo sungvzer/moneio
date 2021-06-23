@@ -19,7 +19,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'it';
 
-  static String m0(characters) =>
+  static String m0(appName) =>
+      "Qualcosa è andato storto avviando ${appName}, prova a riavviare l\'app";
+
+  static String m1(characters) =>
       "Le password devono essere lunghe almeno ${characters} caratteri";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -35,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "appName": MessageLookupByLibrary.simpleMessage("mone.io"),
         "categoryEmoji": MessageLookupByLibrary.simpleMessage("Emoji"),
         "categoryName": MessageLookupByLibrary.simpleMessage("Nome"),
+        "errorReload": MessageLookupByLibrary.simpleMessage("Riavvia"),
+        "errorUnknown": m0,
         "homeAddATransactionTooltip":
             MessageLookupByLibrary.simpleMessage("Aggiungi una transazione"),
         "homeAscendingSort":
@@ -118,7 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Informazioni personali (opzionali)"),
         "signUpPasswordCaseError": MessageLookupByLibrary.simpleMessage(
             "Le password devono contenere almeno un carattere maiuscolo"),
-        "signUpPasswordLengthError": m0,
+        "signUpPasswordLengthError": m1,
         "signUpPasswordRequired": MessageLookupByLibrary.simpleMessage(
             "È necessaria una password per registrarsi"),
         "statisticsCategories":

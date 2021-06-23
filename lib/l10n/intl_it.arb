@@ -115,5 +115,15 @@
     "signUpEmailRequired": "È necessaria un'e-mail per registrarsi",
     "userPersonalName": "Nome",
     "userPersonalSurname": "Cognome",
-    "userPersonalBirthday": "Data di nascita"
+    "userPersonalBirthday": "Data di nascita",
+    "errorReload": "Riavvia",
+    "errorUnknown": "Qualcosa è andato storto avviando {appName}, prova a riavviare l'app",
+    "@errorUnknown": {
+        "appName": {
+            "characters": {
+                "example": "mone.io",
+                "description": "Application name, use `appName` for this"
+            }
+        }
+    }
 }

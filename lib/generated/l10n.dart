@@ -1129,6 +1129,26 @@ class Localization {
       args: [],
     );
   }
+
+  /// `Reload`
+  String get errorReload {
+    return Intl.message(
+      'Reload',
+      name: 'errorReload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong starting {appName}, try restarting the application`
+  String errorUnknown(Object appName) {
+    return Intl.message(
+      'Something went wrong starting $appName, try restarting the application',
+      name: 'errorUnknown',
+      desc: '',
+      args: [appName],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Localization> {

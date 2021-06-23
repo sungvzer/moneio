@@ -115,5 +115,15 @@
     "signUpEmailRequired": "An e-mail is required to sign up",
     "userPersonalName": "Name",
     "userPersonalSurname": "Surname",
-    "userPersonalBirthday": "Birthday"
+    "userPersonalBirthday": "Birthday",
+    "errorReload": "Reload",
+    "errorUnknown": "Something went wrong starting {appName}, try restarting the application",
+    "@errorUnknown": {
+        "appName": {
+            "characters": {
+                "example": "mone.io",
+                "description": "Application name, use `appName` for this"
+            }
+        }
+    }
 }

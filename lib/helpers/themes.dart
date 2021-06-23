@@ -63,6 +63,21 @@ class ThemeNotifier with ChangeNotifier {
   };
 
   var _darkTheme = ThemeData(
+    colorScheme: ColorScheme(
+      primary: ColorPalette.ImperialPrimer,
+      secondary: ColorPalette.LightBlueBallerina,
+      background: ColorPalette.ImperialPrimer,
+      brightness: Brightness.dark,
+      error: ColorPalette.Amour,
+      onBackground: ColorPalette.LightBlueBallerina,
+      onError: ColorPalette.LightBlueBallerina,
+      onPrimary: ColorPalette.LightBlueBallerina,
+      onSecondary: ColorPalette.ImperialPrimer,
+      surface: ColorPalette.ImperialPrimer,
+      onSurface: ColorPalette.LightBlueBallerina,
+      primaryVariant: ColorPalette.ImperialPrimer,
+      secondaryVariant: ColorPalette.LightBlueBallerina,
+    ),
     appBarTheme: AppBarTheme(
       centerTitle: true,
     ),
@@ -133,6 +148,21 @@ class ThemeNotifier with ChangeNotifier {
   );
 
   var _lightTheme = ThemeData(
+    colorScheme: ColorScheme(
+      primary: ColorPalette.DarkMountainMeadow,
+      secondary: ColorPalette.ImperialPrimer,
+      background: ColorPalette.White,
+      brightness: Brightness.light,
+      error: ColorPalette.Amour,
+      onBackground: ColorPalette.ImperialPrimer,
+      onError: ColorPalette.White,
+      onPrimary: ColorPalette.ImperialPrimer,
+      onSecondary: ColorPalette.ImperialPrimer,
+      surface: ColorPalette.White,
+      onSurface: ColorPalette.ImperialPrimer,
+      primaryVariant: ColorPalette.DarkMountainMeadow,
+      secondaryVariant: ColorPalette.ImperialPrimer,
+    ),
     appBarTheme: AppBarTheme(
       centerTitle: true,
       iconTheme: IconThemeData(

@@ -181,14 +181,14 @@ class _LoginFormState extends State<LoginForm> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   child: Text(
-                    "Login",
+                    Localization.of(context).loginContinue,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Poppins"),
                   ),
                   style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(Size(100, 0)),
+                    minimumSize: MaterialStateProperty.all<Size>(Size(150, 0)),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                       EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                     ),
@@ -217,14 +217,14 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 ElevatedButton(
                   child: Text(
-                    "Sign up",
+                    Localization.of(context).loginSignUp,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Poppins"),
                   ),
                   style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(Size(100, 0)),
+                    minimumSize: MaterialStateProperty.all<Size>(Size(150, 0)),
                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                       EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                     ),
